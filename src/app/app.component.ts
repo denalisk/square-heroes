@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { GameObject } from './game-object.model';
+import { Player } from './player.model';
 
 @Component({
   selector: 'app-root',
@@ -12,6 +13,7 @@ export class AppComponent implements OnInit {
   objectsArray: GameObject[] = [];
   canvas = null;
   ctx = null;
+  player = null;
   velocityVector: number[] = [0,0];
 
   ngOnInit() {
@@ -25,6 +27,7 @@ export class AppComponent implements OnInit {
         this.keyState[e.keyCode || e.which] = false;
     },true);
 
+    this.player = new Player();
     this.generateWorld();
   }
 
@@ -41,6 +44,52 @@ export class AppComponent implements OnInit {
       this.objectsArray.push(new GameObject("enemy"));
     }
     this.gameLoop();
+  }
+
+  attack(){
+    console.log("Attack at direction " + this.player.direction)
+    for(var i = 0; i < this.objectsArray.length; i++) {
+      console.log(this.objectsArray[i]);
+      if(this.player.direction === "north") {
+        if( this.objectsArray[i].xCoord < this.player.xCoord + this.player.xDimension &&
+          this.objectsArray[i].xCoord + this.objectsArray[i].xDimension > this.player.xCoord &&
+          this.objectsArray[i].yCoord < this.player.yCoord + this.player.yDimension &&
+          this.objectsArray[i].yDimension + this.objectsArray[i].yCoord > this.player.yCoord) {
+            console.log("Collision!");
+            this.objectsArray.slice(i, 1);
+        }
+      }
+
+      if(this.player.direction === "south") {
+        if( this.objectsArray[i].xCoord < this.player.xCoord + this.player.xDimension &&
+          this.objectsArray[i].xCoord + this.objectsArray[i].xDimension > this.player.xCoord &&
+          this.objectsArray[i].yCoord < this.player.yCoord + this.player.yDimension &&
+          this.objectsArray[i].yDimension + this.objectsArray[i].yCoord > this.player.yCoord) {
+            console.log("Collision!");
+            this.objectsArray.slice(i, 1);
+        }
+      }
+
+      if(this.player.direction === "east") {
+        if( this.objectsArray[i].xCoord < this.player.xCoord + this.player.xDimension &&
+          this.objectsArray[i].xCoord + this.objectsArray[i].xDimension > this.player.xCoord &&
+          this.objectsArray[i].yCoord < this.player.yCoord + this.player.yDimension &&
+          this.objectsArray[i].yDimension + this.objectsArray[i].yCoord > this.player.yCoord) {
+            console.log("Collision!");
+            this.objectsArray.slice(i, 1);
+        }
+      }
+
+      if(this.player.direction === "west") {
+        if( this.objectsArray[i].xCoord < this.player.xCoord + this.player.xDimension &&
+          this.objectsArray[i].xCoord + this.objectsArray[i].xDimension > this.player.xCoord &&
+          this.objectsArray[i].yCoord < this.player.yCoord + this.player.yDimension &&
+          this.objectsArray[i].yDimension + this.objectsArray[i].yCoord > this.player.yCoord - 5) {
+            console.log("Collision!");
+            this.objectsArray.slice(i, 1);
+        }
+      }
+    }
   }
 
 
@@ -66,18 +115,26 @@ export class AppComponent implements OnInit {
       current.velocityVector = [0,0];
       if (current.keyState[38] || current.keyState[87]){
         current.velocityVector[1] += 1.5;
+        current.player.direction = "north";
       }
 
       if (current.keyState[40] || current.keyState[83]){
         current.velocityVector[1] += -1.5;
+        current.player.direction = "south";
 
       }
       if (current.keyState[37] || current.keyState[65]){
         current.velocityVector[0] += 1.5;
+        current.player.direction = "west";
 
       }
       if (current.keyState[39] || current.keyState[68]){
         current.velocityVector[0] += -1.5;
+        current.player.direction = "east";
+      }
+
+      if (current.keyState[32]){
+        current.attack();
       }
 
       for(let gameObject of current.objectsArray) {
@@ -91,7 +148,7 @@ export class AppComponent implements OnInit {
 
     // Player rebuild
     current.ctx.beginPath();
-    current.ctx.rect(((current.canvas.width / 2) -5), ((current.canvas.height / 2) - 5), 10, 10);
+    current.ctx.rect(((current.canvas.width / 2)), ((current.canvas.height / 2) - 5), 10, 10);
     current.ctx.fillStyle = "blue";
     current.ctx.fill();
     current.ctx.closePath();
