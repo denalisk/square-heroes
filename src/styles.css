@@ -1,0 +1,7 @@
+/* You can add global styles to this file, and also import other style files */
+#game {
+  height: 600px;
+  width: 800px;
+  background-color: #90af77;
+  border: 2px solid white;
+}
