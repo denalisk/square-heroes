@@ -45,6 +45,20 @@ export class AppComponent implements OnInit {
     }
   }
 
+  useInventory(item: Item) {
+    if(item.type === "consumable") {
+      if(item.name === "Health Potion") {
+        this.player.health += 30;
+      }
+    } else if(item.type === "headSlot") {
+      this.player.headSlot = item;
+    } else if(item.type === "chestSlot") {
+      this.player.chestSlot = item;
+    } else if(item.type === "legSlot") {
+      this.player.legSlot = item;
+    }
+
+  }
 
   //////INITIALIZATION///////
   ngOnInit() {
