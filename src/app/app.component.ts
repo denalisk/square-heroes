@@ -100,7 +100,7 @@ export class AppComponent implements OnInit {
   // }
 
   enemyAggro(enemy) {
-    var aggroRadius = 50;
+    var aggroRadius = 100;
       if(enemy.xCoord < (this.canvas.width / 2 - (aggroRadius / 2)) + this.player.xDimension + aggroRadius && enemy.xCoord + enemy.xDimension > (this.canvas.width / 2 - (aggroRadius / 2)) && enemy.yCoord < (this.canvas.height / 2) - (aggroRadius / 2) + this.player.yDimension + aggroRadius && enemy.yDimension + enemy.yCoord > (this.canvas.height / 2) - (aggroRadius / 2)) {
         var vector: number[] = [0, 0];
         if(this.playerXCoord < enemy.xCoord) {
