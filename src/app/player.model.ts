@@ -4,11 +4,21 @@ export class Player {
   public direction: string = "south";
   public xAttack = 0;
   public yAttack = 0;
+  //EXPERIENCE & LEVEL
+  public experience = 0;
+  public level = 1;
+  public skillPoints = 0;
   //STATS
   public strengthLvl = 1;
   public attackLvl = 1;
   public defenseLvl = 1;
   public healthLvl = 50;
+  //GEAR
+  public mainHand: string = "bear knuckles";
+  public offHand: string = "bear knuckles";
+  public headGear: string = "cap";
+  public chestPiece: string = "tabard";
+  public legPiece: string = "kilt";
 
   getXAttack() {
     if(this.direction === "west") {
