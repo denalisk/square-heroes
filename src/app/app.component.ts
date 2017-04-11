@@ -87,6 +87,7 @@ export class AppComponent implements OnInit {
 
   gameLoop() {
     var current = this;
+    var attacking: boolean = false;
     var gameTick = setInterval(function(){
       current.velocityVector = [0,0];
       if (current.keyState[38] || current.keyState[87]){
@@ -110,7 +111,13 @@ export class AppComponent implements OnInit {
       }
 
       if (current.keyState[32]){
-        current.attack();
+        if(attacking === false) {
+          current.attack();
+          attacking = true;
+          setTimeout(function(){
+            attacking = false;
+          }, 500);
+        }
       }
 
       for(let gameObject of current.objectsArray) {
