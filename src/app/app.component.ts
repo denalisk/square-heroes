@@ -76,8 +76,76 @@ export class AppComponent implements OnInit {
                 console.log(this.objectsArray[i].health);
               }
             }
+            //DEATH OF ENEMY
             if(this.objectsArray[i].health < 0) {
+              var xCoord: number = this.objectsArray[i].xCoord;
+              var yCoord: number = this.objectsArray[i].yCoord;
               this.objectsArray.splice(i, 1);
+              // DROPROLL CHANCE
+              var dropRoll = Math.floor(Math.random() * (Math.floor(100) - Math.ceil(0)) + Math.ceil(0));
+              if (dropRoll < 100) {
+                dropRoll = Math.floor(Math.random() * (Math.floor(100) - Math.ceil(0)) + Math.ceil(0));
+                if (dropRoll < 100) {
+                  dropRoll = Math.floor(Math.random() * (Math.floor(100) - Math.ceil(0)) + Math.ceil(0));
+                  if (dropRoll < 100) {
+
+                    this.objectsArray.push(new GameObject("item"));
+                    this.objectsArray[this.objectsArray.length-1].xCoord = xCoord +1
+                    this.objectsArray[this.objectsArray.length-1].yCoord = yCoord +1
+                    console.log("Your Drop Is an Atk!:");
+                  } else if (dropRoll < 50) {
+                    var newItem = new GameObject("item");
+                    newItem.xCoord = xCoord;
+                    newItem.yCoord = yCoord;
+                    this.objectsArray.push(newItem);
+                    console.log("Your Drop Is a Str!:");
+                  } else if (dropRoll < 75) {
+                    var newItem = new GameObject("item");
+                    newItem.xCoord = xCoord;
+                    newItem.yCoord = yCoord;
+                    this.objectsArray.push(newItem);
+                    console.log("Your Drop Is a Def!:");
+                  } else {
+                    var newItem = new GameObject("item");
+                    newItem.xCoord = xCoord;
+                    newItem.yCoord = yCoord;
+                    this.objectsArray.push(newItem);
+                    console.log("Your Drop Is a Hp!:");
+                  }
+                } else {
+                  dropRoll = Math.floor(Math.random() * (Math.floor(100) - Math.ceil(0)) + Math.ceil(0));
+                  if (dropRoll < 25) {
+                    var newItem = new GameObject("item");
+                    newItem.xCoord = xCoord;
+                    newItem.yCoord = yCoord;
+                    this.objectsArray.push(newItem);
+                    console.log("Your Drop Is a Helm!:");
+                  } else if (dropRoll < 50) {
+                    var newItem = new GameObject("item");
+                    newItem.xCoord = xCoord;
+                    newItem.yCoord = yCoord;
+                    this.objectsArray.push(newItem);
+                    console.log("Your Drop Is a Plate!:");
+                  } else if (dropRoll < 75) {
+                    var newItem = new GameObject("item");
+                    newItem.xCoord = xCoord;
+                    newItem.yCoord = yCoord;
+                    this.objectsArray.push(newItem);
+                    console.log("Your Drop Is a Greves!:");
+                  } else {
+                    var newItem = new GameObject("item");
+                    newItem.xCoord = xCoord;
+                    newItem.yCoord = yCoord;
+                    this.objectsArray.push(newItem);
+                    console.log("Your Drop Is a Wep!:");
+                  }
+                }
+                console.log(this.objectsArray[this.objectsArray.length - 1])
+                console.log(xCoord + " " + yCoord)
+                console.log(this.objectsArray[this.objectsArray.length - 1].xCoord + " " + this.objectsArray[this.objectsArray.length - 1].yCoord)
+              } else {
+                console.log("Your Drop Is A None!");
+              }
             }
           } else {
             //TREE IS BEING ATTACKED
@@ -93,6 +161,13 @@ export class AppComponent implements OnInit {
       this.ctx.beginPath();
       this.ctx.rect(Math.floor(gameObject.xCoord), Math.floor(gameObject.yCoord), Math.floor(gameObject.xDimension), Math.floor(gameObject.yDimension));
       this.ctx.fillStyle = "green";
+      this.ctx.fill();
+      this.ctx.closePath();
+    } else if (gameObject.type === "item") {
+      console.log(gameObject)
+      this.ctx.beginPath();
+      this.ctx.rect(Math.floor(gameObject.xCoord), Math.floor(gameObject.yCoord), Math.floor(gameObject.xDimension), Math.floor(gameObject.yDimension));
+      this.ctx.fillStyle = "yellow";
       this.ctx.fill();
       this.ctx.closePath();
     } else {
