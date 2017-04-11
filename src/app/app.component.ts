@@ -15,6 +15,8 @@ export class AppComponent implements OnInit {
   ctx = null;
   player = null;
   velocityVector: number[] = [0,0];
+  playerXCoord = null;
+  playerYCoord = null;
 
   //////INITIALIZATION///////
   ngOnInit() {
@@ -29,6 +31,8 @@ export class AppComponent implements OnInit {
     },true);
 
     this.player = new Player();
+    this.playerXCoord = ((this.canvas.width / 2) - 5);
+    this.playerYCoord = ((this.canvas.height / 2) - 5)
     this.generateWorld();
   }
 
@@ -86,6 +90,21 @@ export class AppComponent implements OnInit {
       }
     }
   }
+
+
+  // if (rect1.x < rect2.x + rect2.width &&
+  //    rect1.x + rect1.width > rect2.x &&
+  //    rect1.y < rect2.y + rect2.height &&
+  //    rect1.height + rect1.y > rect2.y) {
+  //     // collision detected!
+  // }
+
+  enemyAggro(enemy) {
+    var aggroRadius = 50;
+      if(enemy.xCoord < (this.canvas.width / 2 - (aggroRadius / 2)) + this.player.xDimension + aggroRadius && enemy.xCoord + enemy.xDimension > (this.canvas.width / 2 - (aggroRadius / 2)) && enemy.yCoord < (this.canvas.height / 2) - (aggroRadius / 2) + this.player.yDimension + aggroRadius && enemy.yDimension + enemy.yCoord > (this.canvas.height / 2) - (aggroRadius / 2)) {
+          console.log("Aggro!")
+        }
+    }
 
   //PLACE OBJECTS FROM ARRAY
   placeObject(gameObject: GameObject) {
@@ -173,7 +192,10 @@ export class AppComponent implements OnInit {
 
       //MOVE GAME WORLD
       for(let gameObject of current.objectsArray) {
-        gameObject.move(current.velocityVector)
+        gameObject.move(current.velocityVector);
+        if(gameObject.type === "enemy") {
+          current.enemyAggro(gameObject);
+        }
       }
     current.ctx.clearRect(0, 0, current.canvas.width, current.canvas.height);
 
