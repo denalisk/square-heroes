@@ -72,6 +72,10 @@ export class AppComponent implements OnInit {
     for(var i = 0; i < numberOfTrees; i++) {
       this.objectsArray.push(new GameObject("tree"));
     }
+    //Mountains
+    for (let index = 0; index < 10; index++) {
+      this.generateMountain();
+    }
     //Enemies
     var numberOfEnemies = Math.floor(Math.random() * (Math.floor(40) - Math.ceil(20)) + Math.ceil(20))
 
@@ -212,12 +216,32 @@ export class AppComponent implements OnInit {
     this.ctx.lineTo(gameObject.xCoord, gameObject.yCoord + 5);
     this.ctx.fillStyle = "green"
     this.ctx.fill();
+    this.ctx.closePath();
   }
+
+  drawMountain(gameObject: GameObject) {
+    let x = gameObject.xCoord;
+    let y = gameObject.yCoord;
+    let xy = [x, y];
+    this.ctx.beginPath();
+    this.ctx.moveTo(x + 40, y);
+    this.ctx.lineTo(x, y - 24);
+    this.ctx.lineTo(x-40, y);
+    this.ctx.lineTo(x + 40, y);
+    this.ctx.fillStyle = 'brown';
+    this.ctx.fill();
+    this.ctx.closePath();
+  }
+
+
   //PLACE OBJECTS FROM ARRAY
   placeObject(gameObject: GameObject) {
 
     if(gameObject.type === "tree") {
       this.drawTree(gameObject);
+    } else if (gameObject.type === 'mountain') {
+      this.drawMountain(gameObject);
+    }
 
 
       // this.ctx.beginPath();
@@ -226,7 +250,7 @@ export class AppComponent implements OnInit {
       // this.ctx.fill();
       // this.ctx.closePath();
 
-    } else {
+    else {
       this.ctx.beginPath();
       this.ctx.rect(Math.floor(gameObject.xCoord), Math.floor(gameObject.yCoord), Math.floor(gameObject.xDimension), Math.floor(gameObject.yDimension));
       this.ctx.fillStyle = "red";
