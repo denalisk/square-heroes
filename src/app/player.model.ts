@@ -15,14 +15,14 @@ export class Player {
   public health = 50;
   public damageModifier = (this.strengthLvl * 2);
   //GEAR
-  public mainHand: Item = new Item("Bear Knuckles", "mainHand");
-  public offHand: Item;
-  public headSlot: Item = new Item("Cap", "headSlot");
-  public chestSlot: Item = new Item("Tabard", "chestSlot");
-  public legSlot: Item = new Item("Torn skirt", "legSlot");
+  public mainHand: Item = new Item("Nothing", "Nothing", [0], ["Nothing"]);
+  public offHand: Item = new Item("Nothing", "Nothing", [0], ["Nothing"]);
+  public headSlot: Item = new Item("Nothing", "Nothing", [0], ["Nothing"]);
+  public chestSlot: Item = new Item("Nothing", "Nothing", [0], ["Nothing"]);
+  public legSlot: Item = new Item("Nothing", "Nothing", [0], ["Nothing"]);
 
-  public inventory: Item[] = [this.mainHand, this.headSlot, this.chestSlot, this.legSlot, {name: "Health Potion", type: "Item"}];
-  public healthPotions = 0;
+  public inventory: Item[] = [new Item("Bear Knuckles", "duoSet", [5], ["attack"]), new Item("Cap", "headSlot", [1], ["defense"]), new Item("Tabard", "chestSlot", [1], ["defense"]), new Item("Torn skirt", "legSlot", [1], ["defense"]), new Item("Health Potion", "Item", [30], ["health"]), new Item("God Sword", "twoHander", [5000], ["strength"]), new Item("Off Hand Scimitar", "offHand", [500, 300], ["attack", "strength"]), new Item("Main Hand Scimitar", "mainHand", [500, 300], ["attack", "strength"])];
+  public healthPotions = 1;
 
   godMode(strength: number, attack: number, defense: number, health: number) {
     this.strengthLvl = strength;
@@ -54,5 +54,6 @@ export class Player {
 
 export class Item {
 
-  constructor(public name: string, public type: string) { }
+
+  constructor(public name: string, public type: string, public bonus: number[], public stat: string[]){  }
 }
