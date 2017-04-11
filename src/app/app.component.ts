@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { GameObject } from './game-object.model';
+import { GameObject, Enemy } from './game-object.model';
 import { Player } from './player.model';
 
 @Component({
@@ -10,7 +10,7 @@ import { Player } from './player.model';
 export class AppComponent implements OnInit {
   keyState = {};
   title = 'Square Heroes';
-  objectsArray: GameObject[] = [];
+  objectsArray = [];
   canvas = null;
   ctx = null;
   player = null;
@@ -41,7 +41,7 @@ export class AppComponent implements OnInit {
     var numberOfEnemies = Math.floor(Math.random() * (Math.floor(40) - Math.ceil(20)) + Math.ceil(20))
 
     for(var i = 0; i < numberOfEnemies; i++) {
-      this.objectsArray.push(new GameObject("enemy"));
+      this.objectsArray.push(new Enemy("enemy"));
     }
     this.gameLoop();
   }
@@ -54,9 +54,15 @@ export class AppComponent implements OnInit {
     for(var i = 0; i < this.objectsArray.length; i++) {
 
       if( this.objectsArray[i].xCoord < (this.canvas.width / 2 - 5) + this.player.xAttack + this.player.xDimension && this.objectsArray[i].xCoord + this.objectsArray[i].xDimension > (this.canvas.width / 2 - 5) + this.player.xAttack && this.objectsArray[i].yCoord < (this.canvas.height / 2 - 5) + this.player.yAttack + this.player.yDimension && this.objectsArray[i].yDimension + this.objectsArray[i].yCoord > (this.canvas.height / 2 - 5) + this.player.yAttack) {
-          this.objectsArray.splice(i, 1);
+          if(this.objectsArray[i].type === "enemy") {
+            this.objectsArray[i].health -= 10;
+            if(this.objectsArray[i].health < 0) {
+              this.objectsArray.splice(i, 1);
+            }
+          } else {
+            this.objectsArray.splice(i, 1);
+          }
       }
-
     }
   }
 

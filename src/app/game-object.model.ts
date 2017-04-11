@@ -11,6 +11,8 @@ export class GameObject {
     this.xCoord += vector[0];
     this.yCoord += vector[1];
   }
+}
 
-
+export class Enemy extends GameObject {
+  public health: number = Math.floor(Math.random() * (Math.floor(100) - Math.ceil(200)) + Math.ceil(100));
 }
