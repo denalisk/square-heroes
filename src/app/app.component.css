@@ -1,0 +1,41 @@
+.body {
+  margin-top: 50px;
+}
+
+.game {
+  margin-left: 50px;
+}
+
+.player-info, .combat-info, .inventory, .equipment, .health {
+  position: absolute;
+}
+
+.equipment {
+  margin-left: 800px;
+  width: 200px;
+}
+
+.player-info {
+  margin: 10px;
+}
+
+.health {
+  text-align: center;
+  top: 400px;
+  left: 450px;
+  width: 100px;
+}
+
+.health button {
+  opacity: 0.8;
+}
+
+.combat-info {
+  margin: 200px 10px 10px 10px;
+}
+
+.inventory {
+  margin-top: 200px;
+  margin-left: 800px;
+  width: 200px;
+}
