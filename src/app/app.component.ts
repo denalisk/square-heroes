@@ -102,6 +102,19 @@ export class AppComponent implements OnInit {
   enemyAggro(enemy) {
     var aggroRadius = 50;
       if(enemy.xCoord < (this.canvas.width / 2 - (aggroRadius / 2)) + this.player.xDimension + aggroRadius && enemy.xCoord + enemy.xDimension > (this.canvas.width / 2 - (aggroRadius / 2)) && enemy.yCoord < (this.canvas.height / 2) - (aggroRadius / 2) + this.player.yDimension + aggroRadius && enemy.yDimension + enemy.yCoord > (this.canvas.height / 2) - (aggroRadius / 2)) {
+        var vector: number[] = [0, 0];
+        if(this.playerXCoord < enemy.xCoord) {
+          vector[0] = -.5;
+        } else {
+          vector[0] = .5;
+        }
+
+        if(this.playerYCoord < enemy.yCoord) {
+          vector[1] = -.5;
+        } else {
+          vector[1] = .5;
+        }
+          enemy.move(vector);
           console.log("Aggro!")
         }
     }
