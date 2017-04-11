@@ -148,7 +148,7 @@ export class AppComponent implements OnInit {
               }
               this.objectsArray.splice(i, 1);
             }
-          } else {
+          } else if (this.objectsArray[i].type === "tree"){
             //TREE IS BEING ATTACKED
             this.objectsArray.splice(i, 1);
           }
@@ -160,7 +160,8 @@ export class AppComponent implements OnInit {
   enemyAttack(enemy) {
     if(!enemy.enemyAttacking) {
       enemy.enemyAttacking = true;
-      this.player.health -= enemy.rollForDamage();
+      //Calculate damage of enemy damage minus defense
+      this.player.health -= enemy.rollForDamage() - this.player.defenseLvl;
       setTimeout(function(){
         enemy.enemyAttacking = false;
       }, 500);
@@ -347,6 +348,13 @@ export class AppComponent implements OnInit {
     current.ctx.fillStyle = "blue";
     current.ctx.fill();
     current.ctx.closePath();
+
+    //Check character death PLACEHOLDER GAME OVER EVENT
+    if(current.player.health <= 0) {
+      clearInterval(gameTick);
+      current.ctx.font = "10px Arial";
+      current.ctx.fillText("GAME OVER, REFRESH TO RESTART",10,50);
+    }
   }, 20);
   }
 }
