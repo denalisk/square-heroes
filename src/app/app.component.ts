@@ -15,6 +15,8 @@ export class AppComponent implements OnInit {
   ctx = null;
   player = null;
   velocityVector: number[] = [0,0];
+  playerXCoord = null;
+  playerYCoord = null;
   //VARIABLES FOR DICE ROLLS, DAMAGE DONE
   dmgRoll = 0;
   atkRoll = 0;
@@ -43,6 +45,7 @@ export class AppComponent implements OnInit {
     }
   }
 
+
   //////INITIALIZATION///////
   ngOnInit() {
     this.canvas = document.getElementById("game");
@@ -56,6 +59,8 @@ export class AppComponent implements OnInit {
     },true);
 
     this.player = new Player();
+    this.playerXCoord = ((this.canvas.width / 2) - 5);
+    this.playerYCoord = ((this.canvas.height / 2) - 5)
     this.generateWorld();
   }
 
@@ -138,6 +143,39 @@ export class AppComponent implements OnInit {
       }
     }
   }
+
+
+  // if (rect1.x < rect2.x + rect2.width &&
+  //    rect1.x + rect1.width > rect2.x &&
+  //    rect1.y < rect2.y + rect2.height &&
+  //    rect1.height + rect1.y > rect2.y) {
+  //     // collision detected!
+  // }
+
+  enemyAggro(enemy) {
+    var aggroRadius = 100;
+      if(enemy.xCoord < (this.canvas.width / 2 - (aggroRadius / 2)) + this.player.xDimension + aggroRadius && enemy.xCoord + enemy.xDimension > (this.canvas.width / 2 - (aggroRadius / 2)) && enemy.yCoord < (this.canvas.height / 2) - (aggroRadius / 2) + this.player.yDimension + aggroRadius && enemy.yDimension + enemy.yCoord > (this.canvas.height / 2) - (aggroRadius / 2)) {
+        //MOVE TOWARDS PLAYER
+        var vector: number[] = [0, 0];
+        if(this.playerXCoord < enemy.xCoord) {
+          vector[0] = -.5;
+        } else {
+          vector[0] = .5;
+        }
+
+        if(this.playerYCoord < enemy.yCoord) {
+          vector[1] = -.5;
+        } else {
+          vector[1] = .5;
+        }
+
+        if(enemy.xCoord < (this.canvas.width / 2 - 10) + this.player.xDimension + 10 && enemy.xCoord + enemy.xDimension > (this.canvas.width / 2 - 10) && enemy.yCoord < (this.canvas.height / 2 - 10) + this.player.yDimension + 10 && enemy.yDimension + enemy.yCoord > (this.canvas.height / 2 - 10)) {
+          //ENEMY IS IN ATTACK RANGE
+          vector = [0, 0];
+        }
+          enemy.move(vector);
+        }
+    }
 
   //PLACE OBJECTS FROM ARRAY
   placeObject(gameObject: GameObject) {
@@ -225,7 +263,10 @@ export class AppComponent implements OnInit {
 
       //MOVE GAME WORLD
       for(let gameObject of current.objectsArray) {
-        gameObject.move(current.velocityVector)
+        gameObject.move(current.velocityVector);
+        if(gameObject.type === "enemy") {
+          current.enemyAggro(gameObject);
+        }
       }
     current.ctx.clearRect(0, 0, current.canvas.width, current.canvas.height);
 
