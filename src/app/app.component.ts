@@ -75,12 +75,40 @@ export class AppComponent implements OnInit {
 
   //PLACE OBJECTS FROM ARRAY
   placeObject(gameObject: GameObject) {
+
     if(gameObject.type === "tree") {
+
       this.ctx.beginPath();
-      this.ctx.rect(Math.floor(gameObject.xCoord), Math.floor(gameObject.yCoord), Math.floor(gameObject.xDimension), Math.floor(gameObject.yDimension));
-      this.ctx.fillStyle = "green";
+      this.ctx.moveTo(gameObject.xCoord, gameObject.yCoord + (gameObject.yDimension / 2));
+      this.ctx.lineTo(gameObject.xCoord + 10, gameObject.yCoord + (gameObject.yDimension / 2));
+      this.ctx.lineTo(gameObject.xCoord + 5, gameObject.yCoord + (gameObject.yDimension / 2) - 5);
+      this.ctx.lineTo(gameObject.xCoord, gameObject.yCoord + (gameObject.yDimension / 2));
+      this.ctx.fillStyle = "green"
       this.ctx.fill();
-      this.ctx.closePath();
+
+      this.ctx.beginPath();
+      this.ctx.moveTo(gameObject.xCoord, gameObject.yCoord + 2);
+      this.ctx.lineTo(gameObject.xCoord + 10, gameObject.yCoord + 2);
+      this.ctx.lineTo(gameObject.xCoord + 5, gameObject.yCoord + 2 - 5);
+      this.ctx.lineTo(gameObject.xCoord, gameObject.yCoord + 2);
+      this.ctx.fillStyle = "green"
+      this.ctx.fill();
+
+      this.ctx.beginPath();
+      this.ctx.moveTo(gameObject.xCoord, gameObject.yCoord + 5);
+      this.ctx.lineTo(gameObject.xCoord + 10, gameObject.yCoord + 5);
+      this.ctx.lineTo(gameObject.xCoord + 5, gameObject.yCoord);
+      this.ctx.lineTo(gameObject.xCoord, gameObject.yCoord + 5);
+      this.ctx.fillStyle = "green"
+      this.ctx.fill();
+
+
+      // this.ctx.beginPath();
+      // this.ctx.rect(Math.floor(gameObject.xCoord), Math.floor(gameObject.yCoord), Math.floor(gameObject.xDimension), Math.floor(gameObject.yDimension));
+      // this.ctx.fillStyle = "green";
+      // this.ctx.fill();
+      // this.ctx.closePath();
+
     } else {
       this.ctx.beginPath();
       this.ctx.rect(Math.floor(gameObject.xCoord), Math.floor(gameObject.yCoord), Math.floor(gameObject.xDimension), Math.floor(gameObject.yDimension));
