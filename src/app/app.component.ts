@@ -82,6 +82,7 @@ export class AppComponent implements OnInit {
   }
 
   generateMountain() {
+    // This functions will create a mountain object and push it to the objectsArray
     let newMountain = new GameObject('mountain');
     newMountain.shape = 'triangle';
     this.objectsArray.push(newMountain);
@@ -184,34 +185,39 @@ export class AppComponent implements OnInit {
         }
     }
 
+  ///////////////////DRAWING FUNCTIONS/////////////////////////
+
+  drawTree(gameObject: GameObject) {
+    // This function draws trees given an object with coordinates
+    this.ctx.beginPath();
+    this.ctx.moveTo(gameObject.xCoord, gameObject.yCoord + (gameObject.yDimension / 2));
+    this.ctx.lineTo(gameObject.xCoord + 10, gameObject.yCoord + (gameObject.yDimension / 2));
+    this.ctx.lineTo(gameObject.xCoord + 5, gameObject.yCoord + (gameObject.yDimension / 2) - 5);
+    this.ctx.lineTo(gameObject.xCoord, gameObject.yCoord + (gameObject.yDimension / 2));
+    this.ctx.fillStyle = "green"
+    this.ctx.fill();
+
+    this.ctx.beginPath();
+    this.ctx.moveTo(gameObject.xCoord, gameObject.yCoord + 2);
+    this.ctx.lineTo(gameObject.xCoord + 10, gameObject.yCoord + 2);
+    this.ctx.lineTo(gameObject.xCoord + 5, gameObject.yCoord + 2 - 5);
+    this.ctx.lineTo(gameObject.xCoord, gameObject.yCoord + 2);
+    this.ctx.fillStyle = "green"
+    this.ctx.fill();
+
+    this.ctx.beginPath();
+    this.ctx.moveTo(gameObject.xCoord, gameObject.yCoord + 5);
+    this.ctx.lineTo(gameObject.xCoord + 10, gameObject.yCoord + 5);
+    this.ctx.lineTo(gameObject.xCoord + 5, gameObject.yCoord);
+    this.ctx.lineTo(gameObject.xCoord, gameObject.yCoord + 5);
+    this.ctx.fillStyle = "green"
+    this.ctx.fill();
+  }
   //PLACE OBJECTS FROM ARRAY
   placeObject(gameObject: GameObject) {
 
     if(gameObject.type === "tree") {
-
-      this.ctx.beginPath();
-      this.ctx.moveTo(gameObject.xCoord, gameObject.yCoord + (gameObject.yDimension / 2));
-      this.ctx.lineTo(gameObject.xCoord + 10, gameObject.yCoord + (gameObject.yDimension / 2));
-      this.ctx.lineTo(gameObject.xCoord + 5, gameObject.yCoord + (gameObject.yDimension / 2) - 5);
-      this.ctx.lineTo(gameObject.xCoord, gameObject.yCoord + (gameObject.yDimension / 2));
-      this.ctx.fillStyle = "green"
-      this.ctx.fill();
-
-      this.ctx.beginPath();
-      this.ctx.moveTo(gameObject.xCoord, gameObject.yCoord + 2);
-      this.ctx.lineTo(gameObject.xCoord + 10, gameObject.yCoord + 2);
-      this.ctx.lineTo(gameObject.xCoord + 5, gameObject.yCoord + 2 - 5);
-      this.ctx.lineTo(gameObject.xCoord, gameObject.yCoord + 2);
-      this.ctx.fillStyle = "green"
-      this.ctx.fill();
-
-      this.ctx.beginPath();
-      this.ctx.moveTo(gameObject.xCoord, gameObject.yCoord + 5);
-      this.ctx.lineTo(gameObject.xCoord + 10, gameObject.yCoord + 5);
-      this.ctx.lineTo(gameObject.xCoord + 5, gameObject.yCoord);
-      this.ctx.lineTo(gameObject.xCoord, gameObject.yCoord + 5);
-      this.ctx.fillStyle = "green"
-      this.ctx.fill();
+      this.drawTree(gameObject);
 
 
       // this.ctx.beginPath();
