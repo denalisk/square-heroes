@@ -34,6 +34,7 @@ export class AppComponent implements OnInit {
       {
         this.player.strengthLvl += 1;
         this.player.skillPoints -= 1;
+        this.player.damageModifier += 2;
       }else if(stat === "defense")
       {
         this.player.defenseLvl += 1;

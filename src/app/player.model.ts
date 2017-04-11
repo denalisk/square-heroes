@@ -9,17 +9,20 @@ export class Player {
   public level = 1;
   public skillPoints = 0;
   //STATS
-  public strengthLvl = 1;
-  public attackLvl = 1;
+  public strengthLvl = 10;
+  public attackLvl = 40;
   public defenseLvl = 1;
   public health = 50;
   public damageModifier = (this.strengthLvl * 2);
   //GEAR
-  public mainHand: string = "bear knuckles";
-  public offHand: string = "bear knuckles";
-  public headGear: string = "cap";
-  public chestPiece: string = "tabard";
-  public legPiece: string = "kilt";
+  public mainHand: Item = new Item("Bear Knuckles", "mainHand");
+  public offHand: Item;
+  public headSlot: Item = new Item("Cap", "headSlot");
+  public chestSlot: Item = new Item("Tabard", "chestSlot");
+  public legSlot: Item = new Item("Torn skirt", "legSlot");
+
+  public inventory: Item[] = [this.mainHand, this.headSlot, this.chestSlot, this.legSlot, {name: "Health Potion",type: "Item"}];
+  public healthPotions = 0;
 
   getXAttack() {
     if(this.direction === "west") {
@@ -40,4 +43,9 @@ export class Player {
       this.yAttack = 0;
     }
   }
+}
+
+export class Item {
+
+  constructor(public name: string, public type: string) { }
 }

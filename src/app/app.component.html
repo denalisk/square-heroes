@@ -3,6 +3,7 @@
     {{title}}
   </h1>
   <div class="row">
+    <!-- PLAYER -->
     <div class="col-md-4">
       <h1>Player Info</h1>
       <h3>Health: {{player.health}} <button class="healthBtn">Use Health Potion</button></h3>
@@ -16,8 +17,8 @@
         <h4>Defense: {{player.defenseLvl}} <button class="addDef" (click)="addSkill('defense')">Add Skill Point</button></h4>
       </ul>
     </div>
+    <!-- COMBAT -->
     <div class="col-md-3">
-      <!-- Combat Information -->
       <h1>Combat Info</h1>
       <ul>
         <h4>Attack Roll: {{atkRoll}} <span *ngIf="hitBool === true">HIT!</span> <span *ngIf="hitBool === false">MISSED!</span></h4>
@@ -35,6 +36,26 @@
           </div>
         </div>
       </ul>
+    </div>
+    <!-- INVENTORY -->
+    <div class="col-md-3">
+      <h1>INVENTORY</h1>
+
+      <ul *ngFor="let item of player.inventory">
+        <div class="healthPotions" *ngIf="item.name === 'Health Potion'">
+          <h3>Health Potions: {{player.healthPotions}}</h3>
+        </div>
+        <li>{{item.name}}</li>
+      </ul>
+    </div>
+    <!-- EQUIPED -->
+    <div class="col-md-2">
+      <h1>EQUIPED</h1>
+        <h4 *ngIf="player.mainHand">Main Hand: <em>{{player.mainHand.name}}</em></h4>
+        <h4 *ngIf="player.offHand">Off Hand: <em>{{player.offHand.name}}</em></h4>
+        <h4 *ngIf="player.headSlot">Head Slot: <em>{{player.headSlot.name}}</em></h4>
+        <h4 *ngIf="player.chestSlot">Chest Slot: <em>{{player.chestSlot.name}}</em></h4>
+        <h4 *ngIf="player.legSlot">Leg Slot: <em>{{player.legSlot.name}}</em></h4>
     </div>
   </div>
   <canvas id="game"></canvas>
