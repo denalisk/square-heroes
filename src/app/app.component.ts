@@ -157,13 +157,6 @@ export class AppComponent implements OnInit {
   }
 
 
-  // if (rect1.x < rect2.x + rect2.width &&
-  //    rect1.x + rect1.width > rect2.x &&
-  //    rect1.y < rect2.y + rect2.height &&
-  //    rect1.height + rect1.y > rect2.y) {
-  //     // collision detected!
-  // }
-
   enemyAggro(enemy) {
     var aggroRadius = 100;
       if(enemy.xCoord < (this.canvas.width / 2 - (aggroRadius / 2)) + this.player.xDimension + aggroRadius && enemy.xCoord + enemy.xDimension > (this.canvas.width / 2 - (aggroRadius / 2)) && enemy.yCoord < (this.canvas.height / 2) - (aggroRadius / 2) + this.player.yDimension + aggroRadius && enemy.yDimension + enemy.yCoord > (this.canvas.height / 2) - (aggroRadius / 2)) {
@@ -241,16 +234,7 @@ export class AppComponent implements OnInit {
       this.drawTree(gameObject);
     } else if (gameObject.type === 'mountain') {
       this.drawMountain(gameObject);
-    }
-
-
-      // this.ctx.beginPath();
-      // this.ctx.rect(Math.floor(gameObject.xCoord), Math.floor(gameObject.yCoord), Math.floor(gameObject.xDimension), Math.floor(gameObject.yDimension));
-      // this.ctx.fillStyle = "green";
-      // this.ctx.fill();
-      // this.ctx.closePath();
-
-    else {
+    } else {
       this.ctx.beginPath();
       this.ctx.rect(Math.floor(gameObject.xCoord), Math.floor(gameObject.yCoord), Math.floor(gameObject.xDimension), Math.floor(gameObject.yDimension));
       this.ctx.fillStyle = "red";

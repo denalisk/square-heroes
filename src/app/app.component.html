@@ -1,62 +1,61 @@
-<div class="container">
+<div class="body">
   <h1>
     {{title}}
   </h1>
-  <div class="row">
+
+  <div class="game">
     <!-- PLAYER -->
-    <div class="col-md-4">
-      <h1>Player Info</h1>
-      <h3>Health: {{player.health}} <button class="healthBtn">Use Health Potion</button></h3>
-      <h3>Level {{player.level}}</h3>
-      <h3>Experience {{player.experience}}</h3>
-      <h3>Skill Points: {{player.skillPoints}}</h3>
-      <h3>Stats: </h3>
-      <ul>
-        <h4>Attack: {{player.attackLvl}} <button class="addAtk" (click)="addSkill('attack')">Add Skill Point</button></h4>
-        <h4>Strength: {{player.strengthLvl}} <button class="addStr" (click)="addSkill('strength')">Add Skill Point</button></h4>
-        <h4>Defense: {{player.defenseLvl}} <button class="addDef" (click)="addSkill('defense')">Add Skill Point</button></h4>
-      </ul>
+    <div class="player-info">
+      <h4>Level {{player.level}}</h4>
+      <p>Experience {{player.experience}}</p>
+      <div class="health">
+        <h4>Health: {{player.health}} </h4> <button class="healthBtn">Use Health Potion</button>
+      </div>
+    </div>
+    <div class="stats" *ngIf="player.skillPoints > 0">
+      <h3>Level up!</h3>
+      <p>Skill Points: {{player.skillPoints}}</p>
+      <h4>Stats: </h4>
+      <p>Attack: {{player.attackLvl}} <button class="addAtk" (click)="addSkill('attack')">Add Skill Point</button></p>
+      <p>Strength: {{player.strengthLvl}} <button class="addStr" (click)="addSkill('strength')">Add Skill Point</button></p>
+      <p>Defense: {{player.defenseLvl}} <button class="addDef" (click)="addSkill('defense')">Add Skill Point</button></p>
     </div>
     <!-- COMBAT -->
-    <div class="col-md-3">
-      <h1>Combat Info</h1>
-      <ul>
-        <h4>Attack Roll: {{atkRoll}} <span *ngIf="hitBool === true">HIT!</span> <span *ngIf="hitBool === false">MISSED!</span></h4>
-        <li>(If its greater than 50 minus your attack level you hit)</li>
+    <div class="combat-info">
+      <h4>Combat Info</h4>
+        <p>Attack Roll: {{atkRoll}} <span *ngIf="hitBool === true">HIT!</span> <span *ngIf="hitBool === false">MISSED!</span></p>
         <!-- If user hits and enemy is still alive.... -->
         <div class="enemyAlive" *ngIf="currentEnemy">
           <div class="hitSuccess" *ngIf="hitBool === true && currentEnemy.health > 0">
-            <h4>Damage Roll: {{dmgRoll}}</h4>
+            <p>Damage Roll: {{dmgRoll}}</p>
             <li>Damage Modifier: +{{player.damageModifier}}</li>
-            <h4>Damage Done: {{damageDone}}</h4>
-            <h4>Enemy HP: {{currentEnemy.health}}</h4>
+            <p>Damage Done: {{damageDone}}</p>
+            <p>Enemy HP: {{currentEnemy.health}}</p>
           </div>
           <div class="enemyKilled" *ngIf="currentEnemy.health <= 0">
             <h4>You killed the enemy!</h4>
           </div>
         </div>
-      </ul>
     </div>
     <!-- INVENTORY -->
-    <div class="col-md-3">
-      <h1>INVENTORY</h1>
-
-      <ul *ngFor="let item of player.inventory">
+    <div class="inventory">
+      <h4>Inventory</h4>
+      <div *ngFor="let item of player.inventory">
         <div class="healthPotions" *ngIf="item.name === 'Health Potion'">
-          <h3>Health Potions: {{player.healthPotions}}</h3>
+          <p>Health Potions: {{player.healthPotions}}</p>
         </div>
-        <li>{{item.name}}</li>
-      </ul>
+        <p>{{item.name}}</p>
+      </div>
     </div>
     <!-- EQUIPED -->
-    <div class="col-md-2">
-      <h1>EQUIPED</h1>
-        <h4 *ngIf="player.mainHand">Main Hand: <em>{{player.mainHand.name}}</em></h4>
-        <h4 *ngIf="player.offHand">Off Hand: <em>{{player.offHand.name}}</em></h4>
-        <h4 *ngIf="player.headSlot">Head Slot: <em>{{player.headSlot.name}}</em></h4>
-        <h4 *ngIf="player.chestSlot">Chest Slot: <em>{{player.chestSlot.name}}</em></h4>
-        <h4 *ngIf="player.legSlot">Leg Slot: <em>{{player.legSlot.name}}</em></h4>
+    <div class="equipment">
+      <h4>Equipment</h4>
+        <p *ngIf="player.mainHand">Main Hand: <em>{{player.mainHand.name}}</em></p>
+        <p *ngIf="player.offHand">Off Hand: <em>{{player.offHand.name}}</em></p>
+        <p *ngIf="player.headSlot">Head Slot: <em>{{player.headSlot.name}}</em></p>
+        <p *ngIf="player.chestSlot">Chest Slot: <em>{{player.chestSlot.name}}</em></p>
+        <p *ngIf="player.legSlot">Leg Slot: <em>{{player.legSlot.name}}</em></p>
     </div>
+    <canvas id="game"></canvas>
   </div>
-  <canvas id="game"></canvas>
 </div>
