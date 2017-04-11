@@ -21,8 +21,15 @@ export class Player {
   public chestSlot: Item = new Item("Tabard", "chestSlot");
   public legSlot: Item = new Item("Torn skirt", "legSlot");
 
-  public inventory: Item[] = [this.mainHand, this.headSlot, this.chestSlot, this.legSlot, {name: "Health Potion",type: "Item"}];
+  public inventory: Item[] = [this.mainHand, this.headSlot, this.chestSlot, this.legSlot, {name: "Health Potion", type: "Item"}];
   public healthPotions = 0;
+
+  godMode(strength: number, attack: number, defense: number, health: number) {
+    this.strengthLvl = strength;
+    this.defenseLvl = defense;
+    this.attackLvl = attack;
+    this.health = health;
+  }
 
   getXAttack() {
     if(this.direction === "west") {

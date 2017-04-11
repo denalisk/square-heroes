@@ -59,8 +59,9 @@ export class AppComponent implements OnInit {
     },true);
 
     this.player = new Player();
+    this.player.godMode(1000, 1000, 10, 1000);
     this.playerXCoord = ((this.canvas.width / 2) - 5);
-    this.playerYCoord = ((this.canvas.height / 2) - 5)
+    this.playerYCoord = ((this.canvas.height / 2) - 5);
     this.generateWorld();
   }
 
