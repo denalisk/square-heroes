@@ -46,22 +46,14 @@ export class AppComponent implements OnInit {
     this.gameLoop();
   }
 
+
   attack() {
     console.log("Attack at direction " + this.player.direction)
     this.player.getXAttack();
     this.player.getYAttack();
     for(var i = 0; i < this.objectsArray.length; i++) {
 
-      if( this.objectsArray[i].xCoord < (this.canvas.width / 2 - 5) + this.player.xAttack + this.player.xDimension &&
-
-
-        this.objectsArray[i].xCoord + this.objectsArray[i].xDimension > (this.canvas.width / 2 - 5) + this.player.xAttack &&
-
-
-        this.objectsArray[i].yCoord < (this.canvas.height / 2 - 5) + this.player.yAttack + this.player.yDimension &&
-
-
-        this.objectsArray[i].yDimension + this.objectsArray[i].yCoord > (this.canvas.height / 2 - 5) + this.player.yAttack) {
+      if( this.objectsArray[i].xCoord < (this.canvas.width / 2 - 5) + this.player.xAttack + this.player.xDimension && this.objectsArray[i].xCoord + this.objectsArray[i].xDimension > (this.canvas.width / 2 - 5) + this.player.xAttack && this.objectsArray[i].yCoord < (this.canvas.height / 2 - 5) + this.player.yAttack + this.player.yDimension && this.objectsArray[i].yDimension + this.objectsArray[i].yCoord > (this.canvas.height / 2 - 5) + this.player.yAttack) {
           this.objectsArray.splice(i, 1);
       }
 
@@ -127,6 +119,40 @@ export class AppComponent implements OnInit {
 
     for(let object of current.objectsArray){
       current.placeObject(object);
+    }
+
+    //Player attack (NEEDS REFACTOR)
+
+    if(attacking && current.player.direction === "south") {
+        current.ctx.beginPath();
+        current.ctx.rect(((current.canvas.width / 2) - 5), ((current.canvas.height / 2) + 5), 3, 8);
+        current.ctx.fillStyle = "blue";
+        current.ctx.fill();
+        current.ctx.closePath();
+    }
+
+    if(attacking && current.player.direction === "north") {
+        current.ctx.beginPath();
+        current.ctx.rect(((current.canvas.width / 2) + 2), ((current.canvas.height / 2) - 10), 3, 8);
+        current.ctx.fillStyle = "blue";
+        current.ctx.fill();
+        current.ctx.closePath();
+    }
+
+    if(attacking && current.player.direction === "west") {
+        current.ctx.beginPath();
+        current.ctx.rect(((current.canvas.width / 2) - 10), ((current.canvas.height / 2) + 2), 8, 3);
+        current.ctx.fillStyle = "blue";
+        current.ctx.fill();
+        current.ctx.closePath();
+    }
+
+    if(attacking && current.player.direction === "east") {
+        current.ctx.beginPath();
+        current.ctx.rect(((current.canvas.width / 2) + 5), ((current.canvas.height / 2) + 2), 8, 3);
+        current.ctx.fillStyle = "blue";
+        current.ctx.fill();
+        current.ctx.closePath();
     }
 
     // Player rebuild
