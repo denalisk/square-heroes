@@ -15,6 +15,32 @@ export class AppComponent implements OnInit {
   ctx = null;
   player = null;
   velocityVector: number[] = [0,0];
+  //VARIABLES FOR DICE ROLLS, DAMAGE DONE
+  dmgRoll = 0;
+  atkRoll = 0;
+  damageDone = 0;
+  currentEnemy = null;
+  hitBool: boolean;
+
+  //ADD SKILL POINTS INTO SKILL FUNCTION
+  addSkill(stat: string) {
+    if(this.player.skillPoints > 0)
+    {
+      if(stat === "attack")
+      {
+        this.player.attackLvl += 1;
+        this.player.skillPoints -= 1;
+      }else if(stat === "strength")
+      {
+        this.player.strengthLvl += 1;
+        this.player.skillPoints -= 1;
+      }else if(stat === "defense")
+      {
+        this.player.defenseLvl += 1;
+        this.player.skillPoints -= 1;
+      }
+    }
+  }
 
   //////INITIALIZATION///////
   ngOnInit() {
@@ -59,24 +85,30 @@ export class AppComponent implements OnInit {
       if( this.objectsArray[i].xCoord < (this.canvas.width / 2 - 5) + this.player.xAttack + this.player.xDimension && this.objectsArray[i].xCoord + this.objectsArray[i].xDimension > (this.canvas.width / 2 - 5) + this.player.xAttack && this.objectsArray[i].yCoord < (this.canvas.height / 2 - 5) + this.player.yAttack + this.player.yDimension && this.objectsArray[i].yDimension + this.objectsArray[i].yCoord > (this.canvas.height / 2 - 5) + this.player.yAttack) {
         //COLLISION FOUND
           if(this.objectsArray[i].type === "enemy") {
+            this.currentEnemy = this.objectsArray[i];
             //ENEMY IS BEING ATTACKED
             //ATTACK AND DAMAGE ROLLS FOR COMBAT
             //ATTACK ROLL
-            var atkRoll = Math.floor(Math.random() * (Math.floor(100) - Math.ceil(1)) + Math.ceil(1));
-            console.log(atkRoll + ' atk roll');
-            if(atkRoll > (50 - this.player.attackLvl))
+            this.atkRoll = Math.floor(Math.random() * (Math.floor(100) - Math.ceil(1)) + Math.ceil(1));
+            console.log(this.atkRoll + ' atk roll');
+            if(this.atkRoll > (50 - this.player.attackLvl))
             {
+              this.hitBool = true;
               //DAMAGE ROLL
-              var dmgRoll = Math.floor(Math.random() * (Math.floor(10) - Math.ceil(0)) + Math.ceil(0));
-              console.log(dmgRoll + ' dmg roll');
-              if(dmgRoll != 0)
+              this.dmgRoll = Math.floor(Math.random() * (Math.floor(10) - Math.ceil(0)) + Math.ceil(0));
+              console.log(this.dmgRoll + ' dmg roll');
+              if(this.dmgRoll != 0)
               {
-                dmgRoll = dmgRoll + (this.player.strengthLvl * 2);
-                this.objectsArray[i].health -= dmgRoll;
+                this.damageDone = this.dmgRoll + (this.player.strengthLvl * 2);
+                console.log(this.damageDone + ' damage done');
+                this.objectsArray[i].health -= this.damageDone;
                 console.log(this.objectsArray[i].health + ' enemy health');
               }
             }
-            if(this.objectsArray[i].health < 0) {
+            else{
+              this.hitBool = false;
+            }
+            if(this.objectsArray[i].health <= 0) {
               //EXPERIENCE DROP
               var expDrop = Math.floor(Math.random() * (Math.floor(10) - Math.ceil(5)) + Math.ceil(5));
               console.log(expDrop + ' experience drop');

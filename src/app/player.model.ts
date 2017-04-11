@@ -12,7 +12,8 @@ export class Player {
   public strengthLvl = 1;
   public attackLvl = 1;
   public defenseLvl = 1;
-  public healthLvl = 50;
+  public health = 50;
+  public damageModifier = (this.strengthLvl * 2);
   //GEAR
   public mainHand: string = "bear knuckles";
   public offHand: string = "bear knuckles";

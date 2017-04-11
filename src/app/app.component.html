@@ -1,4 +1,41 @@
-<h1>
-  {{title}}
-</h1>
-<canvas id="game"></canvas>
+<div class="container">
+  <h1>
+    {{title}}
+  </h1>
+  <div class="row">
+    <div class="col-md-4">
+      <h1>Player Info</h1>
+      <h3>Health: {{player.health}} <button class="healthBtn">Use Health Potion</button></h3>
+      <h3>Level {{player.level}}</h3>
+      <h3>Experience {{player.experience}}</h3>
+      <h3>Skill Points: {{player.skillPoints}}</h3>
+      <h3>Stats: </h3>
+      <ul>
+        <h4>Attack: {{player.attackLvl}} <button class="addAtk" (click)="addSkill('attack')">Add Skill Point</button></h4>
+        <h4>Strength: {{player.strengthLvl}} <button class="addStr" (click)="addSkill('strength')">Add Skill Point</button></h4>
+        <h4>Defense: {{player.defenseLvl}} <button class="addDef" (click)="addSkill('defense')">Add Skill Point</button></h4>
+      </ul>
+    </div>
+    <div class="col-md-3">
+      <!-- Combat Information -->
+      <h1>Combat Info</h1>
+      <ul>
+        <h4>Attack Roll: {{atkRoll}} <span *ngIf="hitBool === true">HIT!</span> <span *ngIf="hitBool === false">MISSED!</span></h4>
+        <li>(If its greater than 50 minus your attack level you hit)</li>
+        <!-- If user hits and enemy is still alive.... -->
+        <div class="enemyAlive" *ngIf="currentEnemy">
+          <div class="hitSuccess" *ngIf="hitBool === true && currentEnemy.health > 0">
+            <h4>Damage Roll: {{dmgRoll}}</h4>
+            <li>Damage Modifier: +{{player.damageModifier}}</li>
+            <h4>Damage Done: {{damageDone}}</h4>
+            <h4>Enemy HP: {{currentEnemy.health}}</h4>
+          </div>
+          <div class="enemyKilled" *ngIf="currentEnemy.health <= 0">
+            <h4>You killed the enemy!</h4>
+          </div>
+        </div>
+      </ul>
+    </div>
+  </div>
+  <canvas id="game"></canvas>
+</div>
