@@ -4,6 +4,7 @@ export class GameObject {
   public yCoord: number = Math.floor(Math.random() * (Math.floor(500) - Math.ceil(-500)) + Math.ceil(-500));
   public xCoord: number = Math.floor(Math.random() * (Math.floor(500) - Math.ceil(-500)) + Math.ceil(-500));
   public color: string = "black";
+  public direction: string;
 
   constructor(public type: string) {};
 
@@ -12,5 +13,11 @@ export class GameObject {
     this.yCoord += vector[1];
   }
 
-
+  setProperties(xCoord: number, yCoord: number, xDimension: number, yDimension: number, color: string) {
+    this.yCoord = yCoord;
+    this.xCoord = xCoord;
+    this.xDimension = xDimension;
+    this.yDimension = yDimension;
+    this.color = color;
+  }
 }

@@ -10,13 +10,17 @@ import { Player } from './player.model';
 export class AppComponent implements OnInit {
   keyState = {};
   title = 'Square Heroes';
-  objectsArray: GameObject[] = [];
-  canvas = null;
-  ctx = null;
-  player = null;
+  objectsArray: GameObject[] = [new GameObject('object')];
   velocityVector: number[] = [0,0];
 
+  player = new GameObject('player');
+
+
+  canvas = null;
+  ctx = null;
+
   ngOnInit() {
+    this.objectsArray[0].setProperties(0, 0, 40, 40, 'black');
     this.canvas = document.getElementById("game");
     this.ctx = this.canvas.getContext("2d");
 
@@ -27,53 +31,58 @@ export class AppComponent implements OnInit {
         this.keyState[e.keyCode || e.which] = false;
     },true);
 
-    this.player = new Player();
-    this.generateWorld();
-  }
+// CREATE PLAYER PROPERTIES
+    this.player.yDimension = 10;
+    this.player.xDimension = 10;
+    this.player.xCoord = (this.canvas.width / 2) - this.player.xDimension/2;
+    this.player.yCoord = (this.canvas.height / 2) -this.player.yDimension/2;
+    this.player.color = "red";
+// FINISH PLAYER PROPERTIES
 
-  generateWorld() {
-    //Trees
-    var numberOfTrees = Math.floor(Math.random() * (Math.floor(40) - Math.ceil(20)) + Math.ceil(20));
-    for(var i = 0; i < numberOfTrees; i++) {
-      this.objectsArray.push(new GameObject("tree"));
-    }
-    //Enemies
-    var numberOfEnemies = Math.floor(Math.random() * (Math.floor(40) - Math.ceil(20)) + Math.ceil(20))
-
-    for(var i = 0; i < numberOfEnemies; i++) {
-      this.objectsArray.push(new GameObject("enemy"));
-    }
     this.gameLoop();
   }
 
 
-  attack() {
-    console.log("Attack at direction " + this.player.direction)
-    this.player.getXAttack();
-    this.player.getYAttack();
-    for(var i = 0; i < this.objectsArray.length; i++) {
+  placeObject(gameObject: GameObject) {
+    this.ctx.beginPath();
+    this.ctx.rect(gameObject.xCoord, gameObject.yCoord, gameObject.xDimension, gameObject.yDimension);
+    this.ctx.fillStyle = gameObject.color;
+    this.ctx.fill();
+    this.ctx.closePath();
+  }
 
-      if( this.objectsArray[i].xCoord < (this.canvas.width / 2 - 5) + this.player.xAttack + this.player.xDimension && this.objectsArray[i].xCoord + this.objectsArray[i].xDimension > (this.canvas.width / 2 - 5) + this.player.xAttack && this.objectsArray[i].yCoord < (this.canvas.height / 2 - 5) + this.player.yAttack + this.player.yDimension && this.objectsArray[i].yDimension + this.objectsArray[i].yCoord > (this.canvas.height / 2 - 5) + this.player.yAttack) {
-          this.objectsArray.splice(i, 1);
-      }
-
+  checkCollisions() {
+    let current = this;
+    for (let item of this.objectsArray) {
+      if(current.checkCollide(item)) {
+            console.log("BAM");
+            let checkItem = new GameObject('object');
+            let holdVector: number[] = [current.velocityVector[0], current.velocityVector[1]];
+            checkItem.setProperties(item.xCoord, item.yCoord, item.xDimension, item.yDimension, item.color);
+            checkItem.move([-5 * holdVector[0],0]);
+            if (!(current.checkCollide(checkItem))) {
+              console.log("collision on x-axis");
+              current.velocityVector[0] = 0;
+            }
+            checkItem.move([holdVector[0], -holdVector[1]]);
+            if (!(current.checkCollide(checkItem))) {
+              console.log("collision on y-axis");
+              current.velocityVector[1] = 0;
+            }
+          }
     }
   }
 
-
-  placeObject(gameObject: GameObject) {
-    if(gameObject.type === "tree") {
-      this.ctx.beginPath();
-      this.ctx.rect(Math.floor(gameObject.xCoord), Math.floor(gameObject.yCoord), Math.floor(gameObject.xDimension), Math.floor(gameObject.yDimension));
-      this.ctx.fillStyle = "green";
-      this.ctx.fill();
-      this.ctx.closePath();
+  checkCollide(item: GameObject) {
+    var current = this;
+    if (item.xCoord < current.player.xCoord + current.player.xDimension &&
+        item.xCoord + item.xDimension > current.player.xCoord &&
+        item.yCoord < current.player.yCoord + current.player.yDimension &&
+        item.yDimension + item.yCoord > current.player.yCoord) {
+          console.log("collide true");
+          return true;
     } else {
-      this.ctx.beginPath();
-      this.ctx.rect(Math.floor(gameObject.xCoord), Math.floor(gameObject.yCoord), Math.floor(gameObject.xDimension), Math.floor(gameObject.yDimension));
-      this.ctx.fillStyle = "red";
-      this.ctx.fill();
-      this.ctx.closePath();
+          return false;
     }
   }
 
@@ -102,63 +111,22 @@ export class AppComponent implements OnInit {
         current.player.direction = "east";
       }
 
-      if (current.keyState[32]){
-        if(attacking === false) {
-          current.attack();
-          attacking = true;
-          setTimeout(function(){
-            attacking = false;
-          }, 500);
-        }
-      }
-
       for(let gameObject of current.objectsArray) {
         gameObject.move(current.velocityVector)
       }
+
+    current.checkCollisions();
+    current.objectsArray[0].move(current.velocityVector);
     current.ctx.clearRect(0, 0, current.canvas.width, current.canvas.height);
 
     for(let object of current.objectsArray){
       current.placeObject(object);
     }
 
-    //Player attack (NEEDS REFACTOR)
-
-    if(attacking && current.player.direction === "south") {
-        current.ctx.beginPath();
-        current.ctx.rect(((current.canvas.width / 2) - 5), ((current.canvas.height / 2) + 5), 3, 8);
-        current.ctx.fillStyle = "blue";
-        current.ctx.fill();
-        current.ctx.closePath();
-    }
-
-    if(attacking && current.player.direction === "north") {
-        current.ctx.beginPath();
-        current.ctx.rect(((current.canvas.width / 2) + 2), ((current.canvas.height / 2) - 10), 3, 8);
-        current.ctx.fillStyle = "blue";
-        current.ctx.fill();
-        current.ctx.closePath();
-    }
-
-    if(attacking && current.player.direction === "west") {
-        current.ctx.beginPath();
-        current.ctx.rect(((current.canvas.width / 2) - 10), ((current.canvas.height / 2) + 2), 8, 3);
-        current.ctx.fillStyle = "blue";
-        current.ctx.fill();
-        current.ctx.closePath();
-    }
-
-    if(attacking && current.player.direction === "east") {
-        current.ctx.beginPath();
-        current.ctx.rect(((current.canvas.width / 2) + 5), ((current.canvas.height / 2) + 2), 8, 3);
-        current.ctx.fillStyle = "blue";
-        current.ctx.fill();
-        current.ctx.closePath();
-    }
-
     // Player rebuild
     current.ctx.beginPath();
-    current.ctx.rect(((current.canvas.width / 2) - 5), ((current.canvas.height / 2) - 5), 10, 10);
-    current.ctx.fillStyle = "blue";
+    current.placeObject(current.player);
+    current.ctx.fillStyle = "red";
     current.ctx.fill();
     current.ctx.closePath();
   }, 20);
