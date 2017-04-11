@@ -6,7 +6,7 @@
   margin-left: 50px;
 }
 
-.player-info, .combat-info, .inventory, .equipment, .health {
+.player-info, .combat-info, .inventory, .equipment, .health, .stats {
   position: absolute;
 }
 
@@ -38,4 +38,11 @@
   margin-top: 200px;
   margin-left: 800px;
   width: 200px;
+}
+
+.stats {
+  margin-left: 450px;
+}
+.stats button {
+  opacity: 0.8;
 }

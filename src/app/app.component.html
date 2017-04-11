@@ -8,18 +8,17 @@
     <div class="player-info">
       <h4>Level {{player.level}}</h4>
       <p>Experience {{player.experience}}</p>
-      <div *ngIf="player.skillPoints > 0">
-        <h3>Level up!</h3>
-        <p>Skill Points: {{player.skillPoints}}</p>
-        <h4>Stats: </h4>
-        <p>Attack: {{player.attackLvl}} <button class="addAtk" (click)="addSkill('attack')">Add Skill Point</button></p>
-        <p>Strength: {{player.strengthLvl}} <button class="addStr" (click)="addSkill('strength')">Add Skill Point</button></p>
-        <p>Defense: {{player.defenseLvl}} <button class="addDef" (click)="addSkill('defense')">Add Skill Point</button></p>
-      </div>
       <div class="health">
         <h4>Health: {{player.health}} </h4> <button class="healthBtn">Use Health Potion</button>
       </div>
-
+    </div>
+    <div class="stats" *ngIf="player.skillPoints > 0">
+      <h3>Level up!</h3>
+      <p>Skill Points: {{player.skillPoints}}</p>
+      <h4>Stats: </h4>
+      <p>Attack: {{player.attackLvl}} <button class="addAtk" (click)="addSkill('attack')">Add Skill Point</button></p>
+      <p>Strength: {{player.strengthLvl}} <button class="addStr" (click)="addSkill('strength')">Add Skill Point</button></p>
+      <p>Defense: {{player.defenseLvl}} <button class="addDef" (click)="addSkill('defense')">Add Skill Point</button></p>
     </div>
     <!-- COMBAT -->
     <div class="combat-info">
