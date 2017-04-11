@@ -72,8 +72,9 @@ export class AppComponent implements OnInit {
     },true);
 
     this.player = new Player();
+    this.player.godMode(1000, 1000, 10, 1000);
     this.playerXCoord = ((this.canvas.width / 2) - 5);
-    this.playerYCoord = ((this.canvas.height / 2) - 5)
+    this.playerYCoord = ((this.canvas.height / 2) - 5);
     this.generateWorld();
   }
 
@@ -84,6 +85,10 @@ export class AppComponent implements OnInit {
     for(var i = 0; i < numberOfTrees; i++) {
       this.objectsArray.push(new GameObject("tree"));
     }
+    //Mountains
+    for (let index = 0; index < 10; index++) {
+      this.generateMountain();
+    }
     //Enemies
     var numberOfEnemies = Math.floor(Math.random() * (Math.floor(40) - Math.ceil(20)) + Math.ceil(20))
 
@@ -91,6 +96,13 @@ export class AppComponent implements OnInit {
       this.objectsArray.push(new Enemy("enemy"));
     }
     this.gameLoop();
+  }
+
+  generateMountain() {
+    // This functions will create a mountain object and push it to the objectsArray
+    let newMountain = new GameObject('mountain');
+    newMountain.shape = 'triangle';
+    this.objectsArray.push(newMountain);
   }
 
   //////////ATTACK//////////////
@@ -183,35 +195,58 @@ export class AppComponent implements OnInit {
         }
     }
 
+  ///////////////////DRAWING FUNCTIONS/////////////////////////
+
+  drawTree(gameObject: GameObject) {
+    // This function draws trees given an object with coordinates
+    this.ctx.beginPath();
+    this.ctx.moveTo(gameObject.xCoord, gameObject.yCoord + (gameObject.yDimension / 2));
+    this.ctx.lineTo(gameObject.xCoord + 10, gameObject.yCoord + (gameObject.yDimension / 2));
+    this.ctx.lineTo(gameObject.xCoord + 5, gameObject.yCoord + (gameObject.yDimension / 2) - 5);
+    this.ctx.lineTo(gameObject.xCoord, gameObject.yCoord + (gameObject.yDimension / 2));
+    this.ctx.fillStyle = "green"
+    this.ctx.fill();
+
+    this.ctx.beginPath();
+    this.ctx.moveTo(gameObject.xCoord, gameObject.yCoord + 2);
+    this.ctx.lineTo(gameObject.xCoord + 10, gameObject.yCoord + 2);
+    this.ctx.lineTo(gameObject.xCoord + 5, gameObject.yCoord + 2 - 5);
+    this.ctx.lineTo(gameObject.xCoord, gameObject.yCoord + 2);
+    this.ctx.fillStyle = "green"
+    this.ctx.fill();
+
+    this.ctx.beginPath();
+    this.ctx.moveTo(gameObject.xCoord, gameObject.yCoord + 5);
+    this.ctx.lineTo(gameObject.xCoord + 10, gameObject.yCoord + 5);
+    this.ctx.lineTo(gameObject.xCoord + 5, gameObject.yCoord);
+    this.ctx.lineTo(gameObject.xCoord, gameObject.yCoord + 5);
+    this.ctx.fillStyle = "green"
+    this.ctx.fill();
+    this.ctx.closePath();
+  }
+
+  drawMountain(gameObject: GameObject) {
+    let x = gameObject.xCoord;
+    let y = gameObject.yCoord;
+    let xy = [x, y];
+    this.ctx.beginPath();
+    this.ctx.moveTo(x + 40, y);
+    this.ctx.lineTo(x, y - 24);
+    this.ctx.lineTo(x-40, y);
+    this.ctx.lineTo(x + 40, y);
+    this.ctx.fillStyle = 'brown';
+    this.ctx.fill();
+    this.ctx.closePath();
+  }
+
+
   //PLACE OBJECTS FROM ARRAY
   placeObject(gameObject: GameObject) {
 
     if(gameObject.type === "tree") {
-
-      this.ctx.beginPath();
-      this.ctx.moveTo(gameObject.xCoord, gameObject.yCoord + (gameObject.yDimension / 2));
-      this.ctx.lineTo(gameObject.xCoord + 10, gameObject.yCoord + (gameObject.yDimension / 2));
-      this.ctx.lineTo(gameObject.xCoord + 5, gameObject.yCoord + (gameObject.yDimension / 2) - 5);
-      this.ctx.lineTo(gameObject.xCoord, gameObject.yCoord + (gameObject.yDimension / 2));
-      this.ctx.fillStyle = "green"
-      this.ctx.fill();
-
-      this.ctx.beginPath();
-      this.ctx.moveTo(gameObject.xCoord, gameObject.yCoord + 2);
-      this.ctx.lineTo(gameObject.xCoord + 10, gameObject.yCoord + 2);
-      this.ctx.lineTo(gameObject.xCoord + 5, gameObject.yCoord + 2 - 5);
-      this.ctx.lineTo(gameObject.xCoord, gameObject.yCoord + 2);
-      this.ctx.fillStyle = "green"
-      this.ctx.fill();
-
-      this.ctx.beginPath();
-      this.ctx.moveTo(gameObject.xCoord, gameObject.yCoord + 5);
-      this.ctx.lineTo(gameObject.xCoord + 10, gameObject.yCoord + 5);
-      this.ctx.lineTo(gameObject.xCoord + 5, gameObject.yCoord);
-      this.ctx.lineTo(gameObject.xCoord, gameObject.yCoord + 5);
-      this.ctx.fillStyle = "green"
-      this.ctx.fill();
-
+      this.drawTree(gameObject);
+    } else if (gameObject.type === 'mountain') {
+      this.drawMountain(gameObject);
     } else {
       this.ctx.beginPath();
       this.ctx.rect(Math.floor(gameObject.xCoord), Math.floor(gameObject.yCoord), Math.floor(gameObject.xDimension), Math.floor(gameObject.yDimension));

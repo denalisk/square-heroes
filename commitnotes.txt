@@ -1,0 +1,2 @@
+Add a shape property to game-object
+Create a generate mountains function
