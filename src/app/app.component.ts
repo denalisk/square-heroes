@@ -72,15 +72,34 @@ export class AppComponent implements OnInit {
             {
               //DAMAGE ROLL
               var dmgRoll = Math.floor(Math.random() * (Math.floor(10) - Math.ceil(0)) + Math.ceil(0));
-              console.log(dmgRoll + ' dmg roll')
+              console.log(dmgRoll + ' dmg roll');
               if(dmgRoll != 0)
               {
                 dmgRoll = dmgRoll + (this.player.strengthLvl * 2);
                 this.objectsArray[i].health -= dmgRoll;
-                console.log(this.objectsArray[i].health);
+                console.log(this.objectsArray[i].health + ' enemy health');
               }
             }
             if(this.objectsArray[i].health < 0) {
+              //EXPERIENCE DROP
+              var expDrop = Math.floor(Math.random() * (Math.floor(10) - Math.ceil(5)) + Math.ceil(5));
+              console.log(expDrop + ' experience drop');
+              this.player.experience += expDrop;
+              console.log(this.player.experience + ' player experience before level');
+              //LEVEL UP
+              //EVERY LEVEL, EXPERIENCE NEEDED TO LEVEL UP IS DOUBLED
+              if(this.player.experience >= (this.player.level * 30))
+              {
+                //LEVEL GAIN
+                this.player.level += 1;
+                //SKILL POINT GAIN
+                this.player.skillPoints += 2;
+                console.log(this.player.level + ' player level');
+                //RESET EXPERIENCE
+                this.player.experience = 0;
+                console.log(this.player.experience + ' player experience after level');
+                console.log(this.player.skillPoints + ' player skill points');
+              }
               this.objectsArray.splice(i, 1);
             }
           } else {
