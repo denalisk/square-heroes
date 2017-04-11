@@ -133,6 +133,10 @@ export class AppComponent implements OnInit {
         } else {
           vector[1] = .5;
         }
+
+        if(enemy.xCoord < (this.canvas.width / 2 - 10) + this.player.xDimension + 10 && enemy.xCoord + enemy.xDimension > (this.canvas.width / 2 - 10) && enemy.yCoord < (this.canvas.height / 2 - 10) + this.player.yDimension + 10 && enemy.yDimension + enemy.yCoord > (this.canvas.height / 2 - 10)) {
+          vector = [0, 0];
+        }
           enemy.move(vector);
           console.log("Aggro!")
         }
