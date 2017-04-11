@@ -81,6 +81,12 @@ export class AppComponent implements OnInit {
     this.gameLoop();
   }
 
+  generateMountain() {
+    let newMountain = new GameObject('mountain');
+    newMountain.shape = 'triangle';
+    this.objectsArray.push(newMountain);
+  }
+
   //////////ATTACK//////////////
   attack() {
     console.log("Attack at direction " + this.player.direction)
