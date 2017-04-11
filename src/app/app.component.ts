@@ -15,6 +15,36 @@ export class AppComponent implements OnInit {
   ctx = null;
   player = null;
   velocityVector: number[] = [0,0];
+  playerXCoord = null;
+  playerYCoord = null;
+  //VARIABLES FOR DICE ROLLS, DAMAGE DONE
+  dmgRoll = 0;
+  atkRoll = 0;
+  damageDone = 0;
+  currentEnemy = null;
+  hitBool: boolean;
+
+  //ADD SKILL POINTS INTO SKILL FUNCTION
+  addSkill(stat: string) {
+    if(this.player.skillPoints > 0)
+    {
+      if(stat === "attack")
+      {
+        this.player.attackLvl += 1;
+        this.player.skillPoints -= 1;
+      }else if(stat === "strength")
+      {
+        this.player.strengthLvl += 1;
+        this.player.skillPoints -= 1;
+        this.player.damageModifier += 2;
+      }else if(stat === "defense")
+      {
+        this.player.defenseLvl += 1;
+        this.player.skillPoints -= 1;
+      }
+    }
+  }
+
 
   //////INITIALIZATION///////
   ngOnInit() {
@@ -29,6 +59,9 @@ export class AppComponent implements OnInit {
     },true);
 
     this.player = new Player();
+    this.player.godMode(1000, 1000, 10, 1000);
+    this.playerXCoord = ((this.canvas.width / 2) - 5);
+    this.playerYCoord = ((this.canvas.height / 2) - 5);
     this.generateWorld();
   }
 
@@ -39,6 +72,10 @@ export class AppComponent implements OnInit {
     for(var i = 0; i < numberOfTrees; i++) {
       this.objectsArray.push(new GameObject("tree"));
     }
+    //Mountains
+    for (let index = 0; index < 10; index++) {
+      this.generateMountain();
+    }
     //Enemies
     var numberOfEnemies = Math.floor(Math.random() * (Math.floor(40) - Math.ceil(20)) + Math.ceil(20))
 
@@ -48,6 +85,7 @@ export class AppComponent implements OnInit {
     this.gameLoop();
   }
 
+<<<<<<< HEAD
   //////////ITEM WHEN ENIME DIES////////////
   generateItem(xCoord, yCoord, type) {
     var roll;
@@ -73,6 +111,13 @@ export class AppComponent implements OnInit {
 
     this.objectsArray.push(newItem);
     console.log("You Got a " + newitem.name + " drop")
+=======
+  generateMountain() {
+    // This functions will create a mountain object and push it to the objectsArray
+    let newMountain = new GameObject('mountain');
+    newMountain.shape = 'triangle';
+    this.objectsArray.push(newMountain);
+>>>>>>> 48c33465466f6d43403681dfdc72bc181d582fdb
   }
 
   //////////ATTACK//////////////
@@ -86,27 +131,56 @@ export class AppComponent implements OnInit {
       if( this.objectsArray[i].xCoord < (this.canvas.width / 2 - 5) + this.player.xAttack + this.player.xDimension && this.objectsArray[i].xCoord + this.objectsArray[i].xDimension > (this.canvas.width / 2 - 5) + this.player.xAttack && this.objectsArray[i].yCoord < (this.canvas.height / 2 - 5) + this.player.yAttack + this.player.yDimension && this.objectsArray[i].yDimension + this.objectsArray[i].yCoord > (this.canvas.height / 2 - 5) + this.player.yAttack) {
         //COLLISION FOUND
           if(this.objectsArray[i].type === "enemy") {
+            this.currentEnemy = this.objectsArray[i];
             //ENEMY IS BEING ATTACKED
             //ATTACK AND DAMAGE ROLLS FOR COMBAT
             //ATTACK ROLL
-            var atkRoll = Math.floor(Math.random() * (Math.floor(100) - Math.ceil(1)) + Math.ceil(1));
-            console.log(atkRoll + ' atk roll');
-            if(atkRoll > (50 - this.player.attackLvl))
+            this.atkRoll = Math.floor(Math.random() * (Math.floor(100) - Math.ceil(1)) + Math.ceil(1));
+            console.log(this.atkRoll + ' atk roll');
+            if(this.atkRoll > (50 - this.player.attackLvl))
             {
+              this.hitBool = true;
               //DAMAGE ROLL
-              var dmgRoll = Math.floor(Math.random() * (Math.floor(10) - Math.ceil(0)) + Math.ceil(0));
-              console.log(dmgRoll + ' dmg roll')
-              if(dmgRoll != 0)
+              this.dmgRoll = Math.floor(Math.random() * (Math.floor(10) - Math.ceil(0)) + Math.ceil(0));
+              console.log(this.dmgRoll + ' dmg roll');
+              if(this.dmgRoll != 0)
               {
-                dmgRoll = dmgRoll + (this.player.strengthLvl * 2);
-                this.objectsArray[i].health -= dmgRoll;
-                console.log(this.objectsArray[i].health);
+                this.damageDone = this.dmgRoll + (this.player.strengthLvl * 2);
+                console.log(this.damageDone + ' damage done');
+                this.objectsArray[i].health -= this.damageDone;
+                console.log(this.objectsArray[i].health + ' enemy health');
               }
             }
+<<<<<<< HEAD
             //DEATH OF ENEMY
             if(this.objectsArray[i].health < 0) {
               var xCoord: number = this.objectsArray[i].xCoord;
               var yCoord: number = this.objectsArray[i].yCoord;
+=======
+            else{
+              this.hitBool = false;
+            }
+            if(this.objectsArray[i].health <= 0) {
+              //EXPERIENCE DROP
+              var expDrop = Math.floor(Math.random() * (Math.floor(10) - Math.ceil(5)) + Math.ceil(5));
+              console.log(expDrop + ' experience drop');
+              this.player.experience += expDrop;
+              console.log(this.player.experience + ' player experience before level');
+              //LEVEL UP
+              //EVERY LEVEL, EXPERIENCE NEEDED TO LEVEL UP IS DOUBLED
+              if(this.player.experience >= (this.player.level * 30))
+              {
+                //LEVEL GAIN
+                this.player.level += 1;
+                //SKILL POINT GAIN
+                this.player.skillPoints += 2;
+                console.log(this.player.level + ' player level');
+                //RESET EXPERIENCE
+                this.player.experience = 0;
+                console.log(this.player.experience + ' player experience after level');
+                console.log(this.player.skillPoints + ' player skill points');
+              }
+>>>>>>> 48c33465466f6d43403681dfdc72bc181d582fdb
               this.objectsArray.splice(i, 1);
               // DROPROLL CHANCE
               var dropRoll = Math.floor(Math.random() * (Math.floor(100) - Math.ceil(0)) + Math.ceil(0));
@@ -120,7 +194,11 @@ export class AppComponent implements OnInit {
                 console.log("nope")
               }
             }
+<<<<<<< HEAD
           } else if (this.objectsArray[i].type !== "item") {
+=======
+          } else if (this.objectsArray[i].type === "tree"){
+>>>>>>> 48c33465466f6d43403681dfdc72bc181d582fdb
             //TREE IS BEING ATTACKED
             this.objectsArray.splice(i, 1);
           }
@@ -128,9 +206,95 @@ export class AppComponent implements OnInit {
     }
   }
 
+  //ENEMY ATTACK
+  enemyAttack(enemy) {
+    if(!enemy.enemyAttacking) {
+      enemy.enemyAttacking = true;
+      //Calculate damage of enemy damage minus defense
+      this.player.health -= enemy.rollForDamage() - this.player.defenseLvl;
+      setTimeout(function(){
+        enemy.enemyAttacking = false;
+      }, 500);
+    }
+  }
+
+  //AGGRO
+  enemyAggro(enemy) {
+    var aggroRadius = 100;
+      if(enemy.xCoord < (this.canvas.width / 2 - (aggroRadius / 2)) + this.player.xDimension + aggroRadius && enemy.xCoord + enemy.xDimension > (this.canvas.width / 2 - (aggroRadius / 2)) && enemy.yCoord < (this.canvas.height / 2) - (aggroRadius / 2) + this.player.yDimension + aggroRadius && enemy.yDimension + enemy.yCoord > (this.canvas.height / 2) - (aggroRadius / 2)) {
+        //MOVE TOWARDS PLAYER
+        var vector: number[] = [0, 0];
+        if(this.playerXCoord < enemy.xCoord) {
+          vector[0] = -.5;
+        } else {
+          vector[0] = .5;
+        }
+
+        if(this.playerYCoord < enemy.yCoord) {
+          vector[1] = -.5;
+        } else {
+          vector[1] = .5;
+        }
+
+        if(enemy.xCoord < (this.canvas.width / 2 - 10) + this.player.xDimension + 10 && enemy.xCoord + enemy.xDimension > (this.canvas.width / 2 - 10) && enemy.yCoord < (this.canvas.height / 2 - 10) + this.player.yDimension + 10 && enemy.yDimension + enemy.yCoord > (this.canvas.height / 2 - 10)) {
+          //ENEMY IS IN ATTACK RANGE
+          this.enemyAttack(enemy);
+          vector = [0, 0];
+        }
+          enemy.move(vector);
+        }
+    }
+
+  ///////////////////DRAWING FUNCTIONS/////////////////////////
+
+  drawTree(gameObject: GameObject) {
+    // This function draws trees given an object with coordinates
+    this.ctx.beginPath();
+    this.ctx.moveTo(gameObject.xCoord, gameObject.yCoord + (gameObject.yDimension / 2));
+    this.ctx.lineTo(gameObject.xCoord + 10, gameObject.yCoord + (gameObject.yDimension / 2));
+    this.ctx.lineTo(gameObject.xCoord + 5, gameObject.yCoord + (gameObject.yDimension / 2) - 5);
+    this.ctx.lineTo(gameObject.xCoord, gameObject.yCoord + (gameObject.yDimension / 2));
+    this.ctx.fillStyle = "green"
+    this.ctx.fill();
+
+    this.ctx.beginPath();
+    this.ctx.moveTo(gameObject.xCoord, gameObject.yCoord + 2);
+    this.ctx.lineTo(gameObject.xCoord + 10, gameObject.yCoord + 2);
+    this.ctx.lineTo(gameObject.xCoord + 5, gameObject.yCoord + 2 - 5);
+    this.ctx.lineTo(gameObject.xCoord, gameObject.yCoord + 2);
+    this.ctx.fillStyle = "green"
+    this.ctx.fill();
+
+    this.ctx.beginPath();
+    this.ctx.moveTo(gameObject.xCoord, gameObject.yCoord + 5);
+    this.ctx.lineTo(gameObject.xCoord + 10, gameObject.yCoord + 5);
+    this.ctx.lineTo(gameObject.xCoord + 5, gameObject.yCoord);
+    this.ctx.lineTo(gameObject.xCoord, gameObject.yCoord + 5);
+    this.ctx.fillStyle = "green"
+    this.ctx.fill();
+    this.ctx.closePath();
+  }
+
+  drawMountain(gameObject: GameObject) {
+    let x = gameObject.xCoord;
+    let y = gameObject.yCoord;
+    let xy = [x, y];
+    this.ctx.beginPath();
+    this.ctx.moveTo(x + 40, y);
+    this.ctx.lineTo(x, y - 24);
+    this.ctx.lineTo(x-40, y);
+    this.ctx.lineTo(x + 40, y);
+    this.ctx.fillStyle = 'brown';
+    this.ctx.fill();
+    this.ctx.closePath();
+  }
+
+
   //PLACE OBJECTS FROM ARRAY
   placeObject(gameObject: GameObject) {
+
     if(gameObject.type === "tree") {
+<<<<<<< HEAD
       this.ctx.beginPath();
       this.ctx.rect(Math.floor(gameObject.xCoord), Math.floor(gameObject.yCoord), Math.floor(gameObject.xDimension), Math.floor(gameObject.yDimension));
       this.ctx.fillStyle = "green";
@@ -142,6 +306,11 @@ export class AppComponent implements OnInit {
       this.ctx.fillStyle = "yellow";
       this.ctx.fill();
       this.ctx.closePath();
+=======
+      this.drawTree(gameObject);
+    } else if (gameObject.type === 'mountain') {
+      this.drawMountain(gameObject);
+>>>>>>> 48c33465466f6d43403681dfdc72bc181d582fdb
     } else {
       this.ctx.beginPath();
       this.ctx.rect(Math.floor(gameObject.xCoord), Math.floor(gameObject.yCoord), Math.floor(gameObject.xDimension), Math.floor(gameObject.yDimension));
@@ -192,7 +361,10 @@ export class AppComponent implements OnInit {
 
       //MOVE GAME WORLD
       for(let gameObject of current.objectsArray) {
-        gameObject.move(current.velocityVector)
+        gameObject.move(current.velocityVector);
+        if(gameObject.type === "enemy") {
+          current.enemyAggro(gameObject);
+        }
       }
     current.ctx.clearRect(0, 0, current.canvas.width, current.canvas.height);
 
@@ -240,6 +412,13 @@ export class AppComponent implements OnInit {
     current.ctx.fillStyle = "blue";
     current.ctx.fill();
     current.ctx.closePath();
+
+    //Check character death PLACEHOLDER GAME OVER EVENT
+    if(current.player.health <= 0) {
+      clearInterval(gameTick);
+      current.ctx.font = "10px Arial";
+      current.ctx.fillText("GAME OVER, REFRESH TO RESTART",10,50);
+    }
   }, 20);
   }
 }
