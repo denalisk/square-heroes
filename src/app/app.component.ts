@@ -57,7 +57,6 @@ export class AppComponent implements OnInit {
     } else if(item.type === "legSlot") {
       this.player.legSlot = item;
     }
-
   }
 
   //////INITIALIZATION///////
