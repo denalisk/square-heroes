@@ -16,6 +16,7 @@ export class AppComponent implements OnInit {
   player = null;
   velocityVector: number[] = [0,0];
 
+  //////INITIALIZATION///////
   ngOnInit() {
     this.canvas = document.getElementById("game");
     this.ctx = this.canvas.getContext("2d");
@@ -31,6 +32,7 @@ export class AppComponent implements OnInit {
     this.generateWorld();
   }
 
+  /////////WORLD GENERATION/////////
   generateWorld() {
     //Trees
     var numberOfTrees = Math.floor(Math.random() * (Math.floor(40) - Math.ceil(20)) + Math.ceil(20));
@@ -46,27 +48,32 @@ export class AppComponent implements OnInit {
     this.gameLoop();
   }
 
-
+  //////////ATTACK//////////////
   attack() {
     console.log("Attack at direction " + this.player.direction)
     this.player.getXAttack();
     this.player.getYAttack();
     for(var i = 0; i < this.objectsArray.length; i++) {
 
+      //COLLISION DETETION
       if( this.objectsArray[i].xCoord < (this.canvas.width / 2 - 5) + this.player.xAttack + this.player.xDimension && this.objectsArray[i].xCoord + this.objectsArray[i].xDimension > (this.canvas.width / 2 - 5) + this.player.xAttack && this.objectsArray[i].yCoord < (this.canvas.height / 2 - 5) + this.player.yAttack + this.player.yDimension && this.objectsArray[i].yDimension + this.objectsArray[i].yCoord > (this.canvas.height / 2 - 5) + this.player.yAttack) {
+        //COLLISION FOUND
           if(this.objectsArray[i].type === "enemy") {
+            //ENEMY IS BEING ATTACKED
             this.objectsArray[i].health -= 10;
+            console.log(this.objectsArray[i].health)
             if(this.objectsArray[i].health < 0) {
               this.objectsArray.splice(i, 1);
             }
           } else {
+            //TREE IS BEING ATTACKED
             this.objectsArray.splice(i, 1);
           }
       }
     }
   }
 
-
+  //PLACE OBJECTS FROM ARRAY
   placeObject(gameObject: GameObject) {
     if(gameObject.type === "tree") {
       this.ctx.beginPath();
@@ -88,26 +95,30 @@ export class AppComponent implements OnInit {
     var attacking: boolean = false;
     var gameTick = setInterval(function(){
       current.velocityVector = [0,0];
+      ///////////CONTROLS////////////
+      //UP
       if (current.keyState[38] || current.keyState[87]){
         current.velocityVector[1] += 1.5;
         current.player.direction = "north";
       }
-
+      //DOWN
       if (current.keyState[40] || current.keyState[83]){
         current.velocityVector[1] += -1.5;
         current.player.direction = "south";
 
       }
+      //LEFT
       if (current.keyState[37] || current.keyState[65]){
         current.velocityVector[0] += 1.5;
         current.player.direction = "west";
 
       }
+      //RIGHT
       if (current.keyState[39] || current.keyState[68]){
         current.velocityVector[0] += -1.5;
         current.player.direction = "east";
       }
-
+      //ATTACK
       if (current.keyState[32]){
         if(attacking === false) {
           current.attack();
@@ -118,6 +129,7 @@ export class AppComponent implements OnInit {
         }
       }
 
+      //MOVE GAME WORLD
       for(let gameObject of current.objectsArray) {
         gameObject.move(current.velocityVector)
       }
@@ -127,7 +139,7 @@ export class AppComponent implements OnInit {
       current.placeObject(object);
     }
 
-    //Player attack (NEEDS REFACTOR)
+    //Player attack animations(NEEDS REFACTOR)
 
     if(attacking && current.player.direction === "south") {
         current.ctx.beginPath();
