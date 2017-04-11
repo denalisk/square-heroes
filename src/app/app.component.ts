@@ -60,8 +60,22 @@ export class AppComponent implements OnInit {
         //COLLISION FOUND
           if(this.objectsArray[i].type === "enemy") {
             //ENEMY IS BEING ATTACKED
-            this.objectsArray[i].health -= 10;
-            console.log(this.objectsArray[i].health)
+            //ATTACK AND DAMAGE ROLLS FOR COMBAT
+            //ATTACK ROLL
+            var atkRoll = Math.floor(Math.random() * (Math.floor(100) - Math.ceil(1)) + Math.ceil(1));
+            console.log(atkRoll + ' atk roll');
+            if(atkRoll > (50 - this.player.attackLvl))
+            {
+              //DAMAGE ROLL
+              var dmgRoll = Math.floor(Math.random() * (Math.floor(10) - Math.ceil(0)) + Math.ceil(0));
+              console.log(dmgRoll + ' dmg roll')
+              if(dmgRoll != 0)
+              {
+                dmgRoll = dmgRoll + (this.player.strengthLvl * 2);
+                this.objectsArray[i].health -= dmgRoll;
+                console.log(this.objectsArray[i].health);
+              }
+            }
             if(this.objectsArray[i].health < 0) {
               this.objectsArray.splice(i, 1);
             }
