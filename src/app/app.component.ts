@@ -138,7 +138,6 @@ export class AppComponent implements OnInit {
           vector = [0, 0];
         }
           enemy.move(vector);
-          console.log("Aggro!")
         }
     }
 
