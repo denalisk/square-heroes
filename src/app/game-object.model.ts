@@ -16,4 +16,8 @@ export class GameObject {
 
 export class Enemy extends GameObject {
   public health: number = Math.floor(Math.random() * (Math.floor(100) - Math.ceil(200)) + Math.ceil(100));
+  public attacking: boolean = false;
+  rollForDamage() {
+    return Math.floor(Math.random() * (Math.floor(this.xDimension) - Math.ceil(1)) + Math.ceil(this.xDimension))
+  }
 }

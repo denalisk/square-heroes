@@ -156,7 +156,18 @@ export class AppComponent implements OnInit {
     }
   }
 
+  //ENEMY ATTACK
+  enemyAttack(enemy) {
+    if(!enemy.enemyAttacking) {
+      enemy.enemyAttacking = true;
+      this.player.health -= enemy.rollForDamage();
+      setTimeout(function(){
+        enemy.enemyAttacking = false;
+      }, 500);
+    }
+  }
 
+  //AGGRO
   enemyAggro(enemy) {
     var aggroRadius = 100;
       if(enemy.xCoord < (this.canvas.width / 2 - (aggroRadius / 2)) + this.player.xDimension + aggroRadius && enemy.xCoord + enemy.xDimension > (this.canvas.width / 2 - (aggroRadius / 2)) && enemy.yCoord < (this.canvas.height / 2) - (aggroRadius / 2) + this.player.yDimension + aggroRadius && enemy.yDimension + enemy.yCoord > (this.canvas.height / 2) - (aggroRadius / 2)) {
@@ -176,6 +187,7 @@ export class AppComponent implements OnInit {
 
         if(enemy.xCoord < (this.canvas.width / 2 - 10) + this.player.xDimension + 10 && enemy.xCoord + enemy.xDimension > (this.canvas.width / 2 - 10) && enemy.yCoord < (this.canvas.height / 2 - 10) + this.player.yDimension + 10 && enemy.yDimension + enemy.yCoord > (this.canvas.height / 2 - 10)) {
           //ENEMY IS IN ATTACK RANGE
+          this.enemyAttack(enemy);
           vector = [0, 0];
         }
           enemy.move(vector);
