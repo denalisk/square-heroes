@@ -33,12 +33,12 @@ export class AppComponent implements OnInit {
 
   generateWorld() {
     //Trees
-    var numberOfTrees = Math.floor(Math.random() * (Math.floor(40) - Math.ceil(30)) + Math.ceil(30));
+    var numberOfTrees = Math.floor(Math.random() * (Math.floor(40) - Math.ceil(20)) + Math.ceil(20));
     for(var i = 0; i < numberOfTrees; i++) {
       this.objectsArray.push(new GameObject("tree"));
     }
     //Enemies
-    var numberOfEnemies = Math.floor(Math.random() * (Math.floor(30) - Math.ceil(20)) + Math.ceil(20))
+    var numberOfEnemies = Math.floor(Math.random() * (Math.floor(40) - Math.ceil(20)) + Math.ceil(20))
 
     for(var i = 0; i < numberOfEnemies; i++) {
       this.objectsArray.push(new GameObject("enemy"));
@@ -46,49 +46,25 @@ export class AppComponent implements OnInit {
     this.gameLoop();
   }
 
-  attack(){
+  attack() {
     console.log("Attack at direction " + this.player.direction)
+    this.player.getXAttack();
+    this.player.getYAttack();
     for(var i = 0; i < this.objectsArray.length; i++) {
-      console.log(this.objectsArray[i]);
-      if(this.player.direction === "north") {
-        if( this.objectsArray[i].xCoord < this.player.xCoord + this.player.xDimension &&
-          this.objectsArray[i].xCoord + this.objectsArray[i].xDimension > this.player.xCoord &&
-          this.objectsArray[i].yCoord < this.player.yCoord + this.player.yDimension &&
-          this.objectsArray[i].yDimension + this.objectsArray[i].yCoord > this.player.yCoord) {
-            console.log("Collision!");
-            this.objectsArray.slice(i, 1);
-        }
+
+      if( this.objectsArray[i].xCoord < (this.canvas.width / 2 - 5) + this.player.xAttack + this.player.xDimension &&
+
+
+        this.objectsArray[i].xCoord + this.objectsArray[i].xDimension > (this.canvas.width / 2 - 5) + this.player.xAttack &&
+
+
+        this.objectsArray[i].yCoord < (this.canvas.height / 2 - 5) + this.player.yAttack + this.player.yDimension &&
+
+
+        this.objectsArray[i].yDimension + this.objectsArray[i].yCoord > (this.canvas.height / 2 - 5) + this.player.yAttack) {
+          this.objectsArray.splice(i, 1);
       }
 
-      if(this.player.direction === "south") {
-        if( this.objectsArray[i].xCoord < this.player.xCoord + this.player.xDimension &&
-          this.objectsArray[i].xCoord + this.objectsArray[i].xDimension > this.player.xCoord &&
-          this.objectsArray[i].yCoord < this.player.yCoord + this.player.yDimension &&
-          this.objectsArray[i].yDimension + this.objectsArray[i].yCoord > this.player.yCoord) {
-            console.log("Collision!");
-            this.objectsArray.slice(i, 1);
-        }
-      }
-
-      if(this.player.direction === "east") {
-        if( this.objectsArray[i].xCoord < this.player.xCoord + this.player.xDimension &&
-          this.objectsArray[i].xCoord + this.objectsArray[i].xDimension > this.player.xCoord &&
-          this.objectsArray[i].yCoord < this.player.yCoord + this.player.yDimension &&
-          this.objectsArray[i].yDimension + this.objectsArray[i].yCoord > this.player.yCoord) {
-            console.log("Collision!");
-            this.objectsArray.slice(i, 1);
-        }
-      }
-
-      if(this.player.direction === "west") {
-        if( this.objectsArray[i].xCoord < this.player.xCoord + this.player.xDimension &&
-          this.objectsArray[i].xCoord + this.objectsArray[i].xDimension > this.player.xCoord &&
-          this.objectsArray[i].yCoord < this.player.yCoord + this.player.yDimension &&
-          this.objectsArray[i].yDimension + this.objectsArray[i].yCoord > this.player.yCoord - 5) {
-            console.log("Collision!");
-            this.objectsArray.slice(i, 1);
-        }
-      }
     }
   }
 
@@ -148,7 +124,7 @@ export class AppComponent implements OnInit {
 
     // Player rebuild
     current.ctx.beginPath();
-    current.ctx.rect(((current.canvas.width / 2)), ((current.canvas.height / 2) - 5), 10, 10);
+    current.ctx.rect(((current.canvas.width / 2) - 5), ((current.canvas.height / 2) - 5), 10, 10);
     current.ctx.fillStyle = "blue";
     current.ctx.fill();
     current.ctx.closePath();
