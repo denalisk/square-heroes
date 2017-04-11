@@ -48,6 +48,33 @@ export class AppComponent implements OnInit {
     this.gameLoop();
   }
 
+  //////////ITEM WHEN ENIME DIES////////////
+  generateItem(xCoord, yCoord, type) {
+    var roll;
+    var highArray = [["Health Potion", "consumable"],["Strength Potion", "consumable"],["Attack Potion", "consumable"],["Health Potion", "consumable"]];
+    var lowArray = [["Iron Helm", "headSlot"],["Iron Chestplate", "chestSlot"],["Iron Greves", "legSlot"],["Sword", "mainHand"],["Shield", "offHand"],["Claymore", "twoHander"]];
+
+    //TODO: i need item type
+
+    newItem.xCoord = xCoord;
+    newItem.yCoord = yCoord;
+    newItem.yDimension = 5;
+    newItem.xDimension = 5;
+
+    if(type === "high") {
+      roll = Math.floor(Math.random() * (Math.floor(highArray.length-1) - Math.ceil(0)) + Math.ceil(0));
+      newitem.name = highArray[roll][0];
+      newitem.type = highArray[roll][1];
+    } else {
+      roll = Math.floor(Math.random() * (Math.floor(highArray.length-1) - Math.ceil(0)) + Math.ceil(0));
+      newitem.name = lowArray[roll][0];
+      newitem.type = lowArray[roll][1];
+    }
+
+    this.objectsArray.push(newItem);
+    console.log("You Got a " + newitem.name + " drop")
+  }
+
   //////////ATTACK//////////////
   attack() {
     console.log("Attack at direction " + this.player.direction)
@@ -83,71 +110,17 @@ export class AppComponent implements OnInit {
               this.objectsArray.splice(i, 1);
               // DROPROLL CHANCE
               var dropRoll = Math.floor(Math.random() * (Math.floor(100) - Math.ceil(0)) + Math.ceil(0));
-              if (dropRoll < 100) {
-                dropRoll = Math.floor(Math.random() * (Math.floor(100) - Math.ceil(0)) + Math.ceil(0));
-                if (dropRoll < 100) {
-                  dropRoll = Math.floor(Math.random() * (Math.floor(100) - Math.ceil(0)) + Math.ceil(0));
-                  if (dropRoll < 100) {
-
-                    this.objectsArray.push(new GameObject("item"));
-                    this.objectsArray[this.objectsArray.length-1].xCoord = xCoord +1
-                    this.objectsArray[this.objectsArray.length-1].yCoord = yCoord +1
-                    console.log("Your Drop Is an Atk!:");
-                  } else if (dropRoll < 50) {
-                    var newItem = new GameObject("item");
-                    newItem.xCoord = xCoord;
-                    newItem.yCoord = yCoord;
-                    this.objectsArray.push(newItem);
-                    console.log("Your Drop Is a Str!:");
-                  } else if (dropRoll < 75) {
-                    var newItem = new GameObject("item");
-                    newItem.xCoord = xCoord;
-                    newItem.yCoord = yCoord;
-                    this.objectsArray.push(newItem);
-                    console.log("Your Drop Is a Def!:");
-                  } else {
-                    var newItem = new GameObject("item");
-                    newItem.xCoord = xCoord;
-                    newItem.yCoord = yCoord;
-                    this.objectsArray.push(newItem);
-                    console.log("Your Drop Is a Hp!:");
-                  }
+              if (dropRoll < 60) {
+                if (dropRoll < 36) {
+                  this.generateItem(xCoord, yCoord, 'high');
                 } else {
-                  dropRoll = Math.floor(Math.random() * (Math.floor(100) - Math.ceil(0)) + Math.ceil(0));
-                  if (dropRoll < 25) {
-                    var newItem = new GameObject("item");
-                    newItem.xCoord = xCoord;
-                    newItem.yCoord = yCoord;
-                    this.objectsArray.push(newItem);
-                    console.log("Your Drop Is a Helm!:");
-                  } else if (dropRoll < 50) {
-                    var newItem = new GameObject("item");
-                    newItem.xCoord = xCoord;
-                    newItem.yCoord = yCoord;
-                    this.objectsArray.push(newItem);
-                    console.log("Your Drop Is a Plate!:");
-                  } else if (dropRoll < 75) {
-                    var newItem = new GameObject("item");
-                    newItem.xCoord = xCoord;
-                    newItem.yCoord = yCoord;
-                    this.objectsArray.push(newItem);
-                    console.log("Your Drop Is a Greves!:");
-                  } else {
-                    var newItem = new GameObject("item");
-                    newItem.xCoord = xCoord;
-                    newItem.yCoord = yCoord;
-                    this.objectsArray.push(newItem);
-                    console.log("Your Drop Is a Wep!:");
-                  }
+                  this.generateItem(xCoord, yCoord, 'low')
                 }
-                console.log(this.objectsArray[this.objectsArray.length - 1])
-                console.log(xCoord + " " + yCoord)
-                console.log(this.objectsArray[this.objectsArray.length - 1].xCoord + " " + this.objectsArray[this.objectsArray.length - 1].yCoord)
               } else {
-                console.log("Your Drop Is A None!");
+                console.log("nope")
               }
             }
-          } else {
+          } else if (this.objectsArray[i].type !== "item") {
             //TREE IS BEING ATTACKED
             this.objectsArray.splice(i, 1);
           }
@@ -164,7 +137,6 @@ export class AppComponent implements OnInit {
       this.ctx.fill();
       this.ctx.closePath();
     } else if (gameObject.type === "item") {
-      console.log(gameObject)
       this.ctx.beginPath();
       this.ctx.rect(Math.floor(gameObject.xCoord), Math.floor(gameObject.yCoord), Math.floor(gameObject.xDimension), Math.floor(gameObject.yDimension));
       this.ctx.fillStyle = "yellow";
