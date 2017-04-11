@@ -4,6 +4,11 @@ export class Player {
   public direction: string = "south";
   public xAttack = 0;
   public yAttack = 0;
+  //STATS
+  public strengthLvl = 1;
+  public attackLvl = 1;
+  public defenseLvl = 1;
+  public healthLvl = 50;
 
   getXAttack() {
     if(this.direction === "west") {
