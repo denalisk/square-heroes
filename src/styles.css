@@ -1,7 +1,12 @@
 /* You can add global styles to this file, and also import other style files */
+body {
+  background: black !important;
+}
+
 #game {
   height: 500px;
   width: 1000px;
   background-color: #c9e5b3;
   border: 2px solid white;
+  box-shadow: 0 0 6px 3px #85e86f;
 }
