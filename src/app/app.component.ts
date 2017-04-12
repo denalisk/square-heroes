@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { GameObject, Enemy } from './game-object.model';
+import { GameObject, Enemy, Item } from './game-object.model';
 import { Player } from './player.model';
 
 @Component({
@@ -92,6 +92,34 @@ export class AppComponent implements OnInit {
     this.objectsArray.push(newMountain);
   }
 
+  //////////ITEM WHEN ENIME DIES////////////
+  generateItem(xCoord, yCoord, thing) {
+    var roll;
+    var highArray = [["Health Potion", "consumable"],["Strength Potion", "consumable"],["Attack Potion", "consumable"],["Health Potion", "consumable"]];
+    var lowArray = [["Iron Helm", "headSlot"],["Iron Chestplate", "chestSlot"],["Iron Greves", "legSlot"],["Sword", "mainHand"],["Shield", "offHand"],["Claymore", "twoHander"]];
+
+    var newItem = new Item("item");
+
+    newItem.xCoord = xCoord;
+    newItem.yCoord = yCoord;
+    newItem.yDimension = 5;
+    newItem.xDimension = 5;
+    newItem.type = "item";
+
+    if(thing === "high") {
+      roll = Math.floor(Math.random() * (Math.floor(highArray.length-1) - Math.ceil(0)) + Math.ceil(0));
+      newItem.name = highArray[roll][0];
+      newItem.category = highArray[roll][1];
+    } else {
+      roll = Math.floor(Math.random() * (Math.floor(highArray.length-1) - Math.ceil(0)) + Math.ceil(0));
+      newItem.name = lowArray[roll][0];
+      newItem.category = lowArray[roll][1];
+    }
+
+    this.objectsArray.push(newItem);
+    console.log("You Got a " + newItem.name + " drop")
+  }
+
   //////////ATTACK//////////////
   attack() {
     console.log("Attack at direction " + this.player.direction)
@@ -146,7 +174,20 @@ export class AppComponent implements OnInit {
                 console.log(this.player.experience + ' player experience after level');
                 console.log(this.player.skillPoints + ' player skill points');
               }
+              var xCoord: number = this.objectsArray[i].xCoord;
+              var yCoord: number = this.objectsArray[i].yCoord;
               this.objectsArray.splice(i, 1);
+              // DROPROLL CHANCE
+              var dropRoll = Math.floor(Math.random() * (Math.floor(100) - Math.ceil(0)) + Math.ceil(0));
+              if (dropRoll < 60) {
+                if (dropRoll < 36) {
+                  this.generateItem(xCoord, yCoord, 'high');
+                } else {
+                  this.generateItem(xCoord, yCoord, 'low')
+                }
+              } else {
+                console.log("nope")
+              }
             }
           } else if (this.objectsArray[i].type === "tree"){
             //TREE IS BEING ATTACKED
@@ -247,6 +288,12 @@ export class AppComponent implements OnInit {
       this.drawTree(gameObject);
     } else if (gameObject.type === 'mountain') {
       this.drawMountain(gameObject);
+    } else if (gameObject.type === "item") {
+      this.ctx.beginPath();
+      this.ctx.rect(Math.floor(gameObject.xCoord), Math.floor(gameObject.yCoord), Math.floor(gameObject.xDimension), Math.floor(gameObject.yDimension));
+      this.ctx.fillStyle = "yellow";
+      this.ctx.fill();
+      this.ctx.closePath();
     } else {
       this.ctx.beginPath();
       this.ctx.rect(Math.floor(gameObject.xCoord), Math.floor(gameObject.yCoord), Math.floor(gameObject.xDimension), Math.floor(gameObject.yDimension));

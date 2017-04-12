@@ -21,3 +21,11 @@ export class Enemy extends GameObject {
     return Math.floor(Math.random() * (Math.floor(this.xDimension) - Math.ceil(1)) + Math.ceil(this.xDimension))
   }
 }
+
+export class Item extends GameObject {
+  public name: string;
+  public category: string;
+  constructor(public type: string) {
+  super(type)
+}
+}
