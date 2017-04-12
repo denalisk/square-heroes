@@ -139,6 +139,7 @@ export class AppComponent implements OnInit {
       }
     }
   }
+
   //EQUIPING AND USING ITEMS
   useItem(item: UserItem) {
     if(item.type === "consumable") {
@@ -250,6 +251,10 @@ export class AppComponent implements OnInit {
     var newVillage = new Village("village");
     newVillage.setProperties(-800, 170, 500, 500, "gray")
     this.objectsArray.push(newVillage);
+    //Add BOSS to village
+    var bossEnemy = new Enemy('enemy');
+    bossEnemy.setProperties((newVillage.xCoord + (newVillage.xDimension/2)), (newVillage.yCoord + (newVillage.yDimension/2)), 50, 50, "#6b245f");
+    this.objectsArray.push(bossEnemy);
     for(let i = 0; i < newVillage.buildings; i++) {
       var newBuilding = new Building("building", newVillage);
       this.objectsArray.push(newBuilding);
@@ -270,6 +275,7 @@ export class AppComponent implements OnInit {
     for(var i = 0; i < numberOfEnemies; i++) {
       this.objectsArray.push(new Enemy("enemy"));
     }
+
 
     this.gameLoop();
   }
@@ -528,12 +534,12 @@ export class AppComponent implements OnInit {
     } else {
       this.ctx.beginPath();
       this.ctx.rect(Math.floor(gameObject.xCoord), Math.floor(gameObject.yCoord), Math.floor(gameObject.xDimension), Math.floor(gameObject.yDimension));
-      this.ctx.fillStyle = "red";
+      this.ctx.fillStyle = gameObject.color;
       this.ctx.fill();
       this.ctx.closePath();
     }
   }
-
+  
   gameLoop() {
     var current = this;
     var attacking: boolean = false;
@@ -589,34 +595,37 @@ export class AppComponent implements OnInit {
 
     //Player attack animations(NEEDS REFACTOR)
 
+    //REFERENCE
+    //current.ctx.rect(xCoord, yCoord, xDimension, yDimension)   ;
+
     if(attacking && current.player.direction === "south") {
         current.ctx.beginPath();
-        current.ctx.rect(((current.canvas.width / 2) - 5), ((current.canvas.height / 2) + 5), 3, 8);
-        current.ctx.fillStyle = "blue";
+        current.ctx.rect(((current.canvas.width / 2) - 5), ((current.canvas.height / 2) + 5), 3, 5);
+        current.ctx.fillStyle = "teal";
         current.ctx.fill();
         current.ctx.closePath();
     }
 
     if(attacking && current.player.direction === "north") {
         current.ctx.beginPath();
-        current.ctx.rect(((current.canvas.width / 2) + 2), ((current.canvas.height / 2) - 10), 3, 8);
-        current.ctx.fillStyle = "blue";
+        current.ctx.rect(((current.canvas.width / 2) + 2), ((current.canvas.height / 2) - 10), 3, 5);
+        current.ctx.fillStyle = "teal";
         current.ctx.fill();
         current.ctx.closePath();
     }
 
     if(attacking && current.player.direction === "west") {
         current.ctx.beginPath();
-        current.ctx.rect(((current.canvas.width / 2) - 10), ((current.canvas.height / 2) + 2), 8, 3);
-        current.ctx.fillStyle = "blue";
+        current.ctx.rect(((current.canvas.width / 2) - 10), ((current.canvas.height / 2) - 5), 5, 3);
+        current.ctx.fillStyle = "teal";
         current.ctx.fill();
         current.ctx.closePath();
     }
 
     if(attacking && current.player.direction === "east") {
         current.ctx.beginPath();
-        current.ctx.rect(((current.canvas.width / 2) + 5), ((current.canvas.height / 2) + 2), 8, 3);
-        current.ctx.fillStyle = "blue";
+        current.ctx.rect(((current.canvas.width / 2) + 5), ((current.canvas.height / 2) + 2), 5, 3);
+        current.ctx.fillStyle = "teal";
         current.ctx.fill();
         current.ctx.closePath();
     }
