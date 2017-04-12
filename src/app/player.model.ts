@@ -24,7 +24,7 @@ export class Player {
   public chestSlot: UserItem = new UserItem("Nothing", "Nothing", [0], ["Nothing"]);
   public legSlot: UserItem = new UserItem("Nothing", "Nothing", [0], ["Nothing"]);
 
-  public inventory: UserItem[] = [new UserItem("Bear Knuckles", "duoSet", [5], ["attack"]), new UserItem("Cap", "headSlot", [1], ["defense"]), new UserItem("Tabard", "chestSlot", [1], ["defense"]), new UserItem("Torn skirt", "legSlot", [1], ["defense"]), new UserItem("Health Potion", "UserItem", [30], ["health"]), new UserItem("God Sword", "twoHander", [5000], ["strength"]), new UserItem("Off Hand Scimitar", "offHand", [500, 300], ["attack", "strength"]), new UserItem("Main Hand Scimitar", "mainHand", [500, 300], ["attack", "strength"])];
+  public inventory: UserItem[] = [new UserItem("Bear Knuckles", "duoSet", [5], ["attack"]), new UserItem("Cap", "headSlot", [1], ["defense"]), new UserItem("Tabard", "chestSlot", [1], ["defense"]), new UserItem("Torn skirt", "legSlot", [1], ["defense"]), new UserItem("Health Potion", "UserItem", [30], ["health"])];
   //CONSUMABLES
   public healthPotions = 1;
   public strengthPotions = 0;
@@ -36,6 +36,7 @@ export class Player {
     this.defenseLvl = defense;
     this.attackLvl = attack;
     this.health = health;
+    this.inventory.push(new UserItem("God Sword", "twoHander", [5000], ["strength"]), new UserItem("Off Hand Scimitar", "offHand", [500, 300], ["attack", "strength"]), new UserItem("Main Hand Scimitar", "mainHand", [500, 300], ["attack", "strength"]));
   }
 
   getXAttack() {

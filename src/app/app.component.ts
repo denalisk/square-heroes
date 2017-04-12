@@ -184,19 +184,97 @@ export class AppComponent implements OnInit {
 
     } else if(item.type === "headSlot") {
       //UNEQUIP GEAR, SET STATS CORRECTLY, THEN EQUIP NEW GEAR
-      // if(item.name === "Mithril Helm") {
-      //
-      // }
-      this.unequipGear(this.player.headSlot);
-      this.equipGear(item);
-      this.player.headSlot = item;
+      if(item.name === "Iron Helm") {
+        if(this.player.defenseLvl >= 5) {
+          this.unequipGear(this.player.headSlot);
+          this.equipGear(item);
+          this.player.headSlot = item;
+        } else {
+          alert("Defense level needs to be atleast 5 to wear this, noob");
+        }
+      } else if(item.name === "Mithril Helm") {
+        if(this.player.defenseLvl >= 20) {
+          this.unequipGear(this.player.headSlot);
+          this.equipGear(item);
+          this.player.headSlot = item;
+        } else {
+          alert("Defense level needs to be atleast 20 to wear this, scrub");
+        }
+      } else if(item.name === "Robinhood Hat") {
+        if(this.player.defenseLvl >= 40) {
+          this.unequipGear(this.player.headSlot);
+          this.equipGear(item);
+          this.player.headSlot = item;
+        } else {
+          alert("Defense level needs to be atleast 40 to wear this, pleeb");
+        }
+      } else {
+        this.unequipGear(this.player.headSlot);
+        this.equipGear(item);
+        this.player.headSlot = item;
+      }
     } else if(item.type === "chestSlot") {
       //UNEQUIP GEAR, SET STATS CORRECTLY, THEN EQUIP NEW GEAR
-      this.unequipGear(this.player.chestSlot);
-      this.equipGear(item);
-      this.player.chestSlot = item;
+      if(item.name === "Iron Chestplate") {
+        if(this.player.defenseLvl >= 5) {
+          this.unequipGear(this.player.chestSlot);
+          this.equipGear(item);
+          this.player.chestSlot = item;
+        } else {
+          alert("Defense level needs to be atleast 5 to wear this, noob");
+        }
+      } else if(item.name === "Mithril Chestplate") {
+        if(this.player.defenseLvl >= 20) {
+          this.unequipGear(this.player.chestSlot);
+          this.equipGear(item);
+          this.player.chestSlot = item;
+        } else {
+          alert("Defense level needs to be atleast 20 to wear this, scrub");
+        }
+      } else if(item.name === "Gladiator Chestplate") {
+        if(this.player.defenseLvl >= 40) {
+          this.unequipGear(this.player.chestSlot);
+          this.equipGear(item);
+          this.player.chestSlot = item;
+        } else {
+          alert("Defense level needs to be atleast 40 to wear this, pleeb");
+        }
+      } else {
+        this.unequipGear(this.player.chestSlot);
+        this.equipGear(item);
+        this.player.chestSlot = item;
+      }
     } else if(item.type === "legSlot") {
       //UNEQUIP GEAR, SET STATS CORRECTLY, THEN EQUIP NEW GEAR
+      if(item.name === "Iron Greves") {
+        if(this.player.defenseLvl >= 5) {
+          this.unequipGear(this.player.legSlot);
+          this.equipGear(item);
+          this.player.legSlot = item;
+        } else {
+          alert("Defense level needs to be atleast 5 to wear this, noob");
+        }
+        } else if(item.name === "Mithril Greves") {
+        if(this.player.defenseLvl >= 20) {
+          this.unequipGear(this.player.legSlot);
+          this.equipGear(item);
+          this.player.legSlot = item;
+        } else {
+          alert("Defense level needs to be atleast 20 to wear this, scrub");
+        }
+      } else if(item.name === "Chad Legs(ULTIMA)") {
+        if(this.player.defenseLvl >= 40) {
+          this.unequipGear(this.player.legSlot);
+          this.equipGear(item);
+          this.player.legSlot = item;
+        } else {
+          alert("Defense level needs to be atleast 40 to wear these bad boys, pleeb");
+        }
+      } else {
+        this.unequipGear(this.player.legSlot);
+        this.equipGear(item);
+        this.player.legSlot = item;
+      }
       this.unequipGear(this.player.legSlot);
       this.equipGear(item);
       this.player.legSlot = item;
@@ -205,9 +283,35 @@ export class AppComponent implements OnInit {
         this.unequipGear(this.player.offHand);
         this.player.offHand = new UserItem("Nothing", "offHand", [0], ["Nothing"]);
       }
-      this.unequipGear(this.player.mainHand);
-      this.equipGear(item);
-      this.player.mainHand = item;
+      if(item.name === "MH Scimitar") {
+        if(this.player.attackLvl >= 20) {
+          this.unequipGear(this.player.mainHand);
+          this.equipGear(item);
+          this.player.mainHand = item;
+        } else {
+          alert("You need atleast 20 attack to equip this weapon, scrub");
+        }
+      } else if(item.name === "MH Kiteen Bomb") {
+        if(this.player.attackLvl >= 40) {
+          this.unequipGear(this.player.mainHand);
+          this.equipGear(item);
+          this.player.mainHand = item;
+        } else {
+          alert("You need atleast 40 attack throw the kitties");
+        }
+      } else if(item.name === "Blue Light Saber") {
+        if(this.player.attackLvl >= 40) {
+          this.unequipGear(this.player.mainHand);
+          this.equipGear(item);
+          this.player.mainHand = item;
+        } else {
+          alert("You aren't strong enough with the force yet, 40 attack level to wield this weapon, you must have, Skywalker");
+        }
+      } else {
+        this.unequipGear(this.player.mainHand);
+        this.equipGear(item);
+        this.player.mainHand = item;
+      }
     } else if(item.type === "offHand") {
       if(this.player.mainHand.type === "duoSet") {
         this.unequipGear(this.player.mainHand);
@@ -217,22 +321,92 @@ export class AppComponent implements OnInit {
         this.unequipGear(this.player.mainHand);
         this.player.mainHand = new UserItem("Nothing", "mainHand", [0], ["Nothing"]);
       }
+      if(item.name === "OH Scimitar") {
+        if(this.player.attackLvl >= 20) {
+          this.unequipGear(this.player.mainHand);
+          this.equipGear(item);
+          this.player.mainHand = item;
+        } else {
+          alert("You need atleast 20 attack to equip this weapon, scrub");
+        }
+      } else if(item.name === "OH Kiteen Bomb") {
+        if(this.player.attackLvl >= 40) {
+          this.unequipGear(this.player.mainHand);
+          this.equipGear(item);
+          this.player.mainHand = item;
+        } else {
+          alert("You need atleast 40 attack throw the kitties");
+        }
+      } else if(item.name === "Green Light Saber") {
+        if(this.player.attackLvl >= 40) {
+          this.unequipGear(this.player.mainHand);
+          this.equipGear(item);
+          this.player.mainHand = item;
+        } else {
+          alert("You aren't strong enough with the force yet, 40 attack level to wield this weapon, you must have, Skywalker");
+        }
+      }
       this.unequipGear(this.player.offHand);
       this.equipGear(item);
       this.player.offHand = item;
     } else if(item.type === "twoHander") {
-      this.unequipGear(this.player.mainHand);
-      this.unequipGear(this.player.offHand);
-      this.equipGear(item);
-      this.player.mainHand = item;
-      this.player.offHand = new UserItem("Nothing", "offHand", [0], ["Nothing"]);
+      if(item.name === "Claymore") {
+        if(this.player.attackLvl >= 10 && this.player.strengthLvl >= 10) {
+          this.unequipGear(this.player.mainHand);
+          this.unequipGear(this.player.offHand);
+          this.equipGear(item);
+          this.player.mainHand = item;
+          this.player.offHand = new UserItem("Nothing", "offHand", [0], ["Nothing"]);
+        } else {
+          alert("You attack expertise must be 10 or greater to wield these, kneenja");
+        }
+      } else if(item.name === "Katana") {
+          if(this.player.attackLvl >= 20) {
+            this.unequipGear(this.player.mainHand);
+            this.unequipGear(this.player.offHand);
+            this.equipGear(item);
+            this.player.mainHand = item;
+            this.player.offHand = new UserItem("Nothing", "offHand", [0], ["Nothing"]);
+          } else {
+            alert("You think you can wield the Katana, young one, try again when your attack level is 20");
+          }
+        } else if(item.name === "Illidan's Warglaive") {
+          if(this.player.attackLvl >= 40) {
+            this.unequipGear(this.player.mainHand);
+            this.unequipGear(this.player.offHand);
+            this.equipGear(item);
+            this.player.mainHand = item;
+            this.player.offHand = new UserItem("Nothing", "offHand", [0], ["Nothing"]);
+          } else {
+            alert("Come back when your attack level is atleast 40 you stupid demon hunter");
+          }
+        } else {
+          this.unequipGear(this.player.mainHand);
+          this.unequipGear(this.player.offHand);
+          this.equipGear(item);
+          this.player.mainHand = item;
+          this.player.offHand = new UserItem("Nothing", "offHand", [0], ["Nothing"]);
+        }
     } else if(item.type === "duoSet") {
-      this.unequipGear(this.player.mainHand);
-      this.unequipGear(this.player.offHand);
-      this.player.mainHand = item;
-      this.player.offHand = item;
-      this.equipGear(this.player.mainHand);
-      this.equipGear(this.player.offHand);
+      if(item.name === "Nunchucks") {
+        if(this.player.attackLvl >= 15) {
+          this.unequipGear(this.player.mainHand);
+          this.unequipGear(this.player.offHand);
+          this.player.mainHand = item;
+          this.player.offHand = item;
+          this.equipGear(this.player.mainHand);
+          this.equipGear(this.player.offHand);
+        } else {
+          alert("You attack expertise must be 15 or greater to wield these, kneenja");
+        }
+      } else {
+        this.unequipGear(this.player.mainHand);
+        this.unequipGear(this.player.offHand);
+        this.player.mainHand = item;
+        this.player.offHand = item;
+        this.equipGear(this.player.mainHand);
+        this.equipGear(this.player.offHand);
+      }
     }
   }
 
