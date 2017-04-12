@@ -44,6 +44,7 @@ export class AppComponent implements OnInit {
       } else if (current.objectsArray[index].type === "item") {
         if (current.checkCollide(current.objectsArray[index])) {
           current.player.inventory.push(current.objectsArray[index].userItem);
+          current.objectsArray.splice(index);
         }
       }
     }
