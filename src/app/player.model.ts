@@ -4,6 +4,9 @@ export class Player {
   public direction: string = "south";
   public xAttack = 0;
   public yAttack = 0;
+  // WEAPON DIMENSIONS
+  public weaponXSize: number = 30;
+  public weaponYSize: number = 5;
   //EXPERIENCE & LEVEL
   public experience = 0;
   public level = 1;
@@ -37,9 +40,9 @@ export class Player {
 
   getXAttack() {
     if(this.direction === "west") {
-      this.xAttack = -1 * this.xDimension;
+      this.xAttack = -1 * this.weaponXSize;
     } else if(this.direction === "east") {
-      this.xAttack = 1 * this.xDimension;
+      this.xAttack = 1 * this.weaponXSize;
     } else {
       this.xAttack = 0;
     }
@@ -47,9 +50,9 @@ export class Player {
 
   getYAttack() {
     if(this.direction === "south") {
-      this.yAttack =  1 * this.yDimension;
+      this.yAttack =  1 * this.weaponYSize;
     } else if(this.direction === "north") {
-      this.yAttack =  -1 * this.yDimension;
+      this.yAttack =  -1 * this.weaponYSize;
     } else {
       this.yAttack = 0;
     }

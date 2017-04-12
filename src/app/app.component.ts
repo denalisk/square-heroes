@@ -386,7 +386,7 @@ export class AppComponent implements OnInit {
     this.player.getYAttack();
     for(var i = 0; i < this.objectsArray.length; i++) {
       //COLLISION DETETION
-      if( this.objectsArray[i].xCoord < (this.canvas.width / 2 - 5) + this.player.xAttack + this.player.xDimension && this.objectsArray[i].xCoord + this.objectsArray[i].xDimension > (this.canvas.width / 2 - 5) + this.player.xAttack && this.objectsArray[i].yCoord < (this.canvas.height / 2 - 5) + this.player.yAttack + this.player.yDimension && this.objectsArray[i].yDimension + this.objectsArray[i].yCoord > (this.canvas.height / 2 - 5) + this.player.yAttack) {
+      if( this.objectsArray[i].xCoord < (this.playerXCoord) + this.player.xAttack + this.player.xDimension && this.objectsArray[i].xCoord + this.objectsArray[i].xDimension > (this.playerXCoord) + this.player.xAttack && this.objectsArray[i].yCoord < (this.canvas.height / 2 - 5) + this.player.yAttack + this.player.yDimension && this.objectsArray[i].yDimension + this.objectsArray[i].yCoord > (this.canvas.height / 2 - 5) + this.player.yAttack) {
         //COLLISION FOUND
           if(this.objectsArray[i].type === "enemy") {
             this.currentEnemy = this.objectsArray[i];
@@ -627,6 +627,7 @@ export class AppComponent implements OnInit {
       }
 
       //MOVE GAME WORLD
+      // check for collisions
       current.checkCollisions();
       for(let gameObject of current.objectsArray) {
         gameObject.move(current.velocityVector);
@@ -634,6 +635,7 @@ export class AppComponent implements OnInit {
           current.enemyAggro(gameObject);
         }
       }
+      // CLEAR THE CANVAS
     current.ctx.clearRect(0, 0, current.canvas.width, current.canvas.height);
 
     for(let object of current.objectsArray){
