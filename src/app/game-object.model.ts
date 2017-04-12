@@ -33,6 +33,10 @@ export class Enemy extends GameObject {
   }
 }
 
+export class Boss extends Enemy {
+  
+}
+
 export class Village extends GameObject {
   public collidable: boolean = false;
   public villagers: number = Math.floor(Math.random() * (Math.floor(10) - Math.ceil(5)) + Math.ceil(10));

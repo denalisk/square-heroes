@@ -229,7 +229,16 @@ export class AppComponent implements OnInit {
     //Add BOSS to village
     var bossEnemy = new Enemy('enemy');
     bossEnemy.setProperties((newVillage.xCoord + (newVillage.xDimension/2)), (newVillage.yCoord + (newVillage.yDimension/2)), 50, 50, "#6b245f");
+    console.log("Boss spawned at: " + bossEnemy.xCoord + ", " + bossEnemy.yCoord);
     this.objectsArray.push(bossEnemy);
+    //BOSS Minions
+    for(let i = 10; i < 100; i += 10) {
+      var bossMinion = new Enemy('enemy');
+      bossMinion.setProperties((newVillage.xCoord + (newVillage.xDimension/2) + i), (newVillage.yCoord + (newVillage.yDimension/2) + i), 10, 10, "##774f9b");
+      console.log("Boss enemy spawned at:" + bossMinion.xCoord + ", " + bossMinion.yCoord);
+      this.objectsArray.push(bossMinion);
+    }
+    
     for(let i = 0; i < newVillage.buildings; i++) {
       var newBuilding = new Building("building", newVillage);
       this.objectsArray.push(newBuilding);
