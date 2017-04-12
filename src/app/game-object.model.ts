@@ -31,6 +31,12 @@ export class Enemy extends GameObject {
   }
 }
 
+export class Village extends GameObject {
+  public collidable: boolean = false;
+  public villagers: number = Math.floor(Math.random() * (Math.floor(10) - Math.ceil(5)) + Math.ceil(10));;
+  public buildings: number = Math.floor(Math.random() * (Math.floor(10) - Math.ceil(5)) + Math.ceil(10));;
+}
+
 export class Item extends GameObject {
   public name: string;
   public category: string;
