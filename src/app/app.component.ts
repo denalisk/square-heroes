@@ -15,6 +15,7 @@ export class AppComponent implements OnInit {
   keyState = {};
   title = 'Square Heroes';
   objectsArray = [];
+  animationsArray = [];
   canvas = null;
   ctx = null;
   player = null;
@@ -635,7 +636,20 @@ export class AppComponent implements OnInit {
     this.ctx.closePath();
   }
 
-  drawCustomRectangle( ) {}
+  drawCustomRectangle(xCoord, yCoord, xDimension, yDimension, color, angle) {
+    let point1 = [xCoord, yCoord];
+    let point2 = [(xCoord + Math.cos(angle)*yDimension), (yCoord + Math.sin(angle)*yDimension)];
+    let point3 = [(xCoord + Math.cos(.5-angle)*xDimension), (yCoord - Math.sin(.5-angle)*xDimension)];
+    let point4 = [point2[0] + point3[0], point2[1] - point3[1]];
+    this.ctx.beginPath();
+    this.ctx.moveTo(xCoord, yCoord);
+    this.ctx.lineTo(point2[0], point2[1]);
+    this.ctx.lineTo(point3[0], point3[1]);
+    this.ctx.lineTo(point4[0], point4[1]);
+    this.ctx.fillStyle = 'yellow';
+    this.ctx.fill();
+    this.ctx.closePath();
+  }
 
   attackAnimation(attacking: boolean) {
     let current = this;
