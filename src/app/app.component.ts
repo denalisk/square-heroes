@@ -597,6 +597,7 @@ export class AppComponent implements OnInit {
     this.ctx.rect(Math.floor(gameObject.xCoord), Math.floor(gameObject.yCoord), Math.floor(gameObject.xDimension), Math.floor(gameObject.yDimension));
     this.ctx.fillStyle = gameObject.color;
     this.ctx.fill();
+    this.ctx.stroke();
     this.ctx.closePath();
 
     /////EYES
@@ -612,13 +613,22 @@ export class AppComponent implements OnInit {
     this.ctx.fill();
 
     /////TEETH
-    // this.ctx.beginPath();
-    // this.ctx.moveTo(gameObject.xCoord, gameObject.yCoord + 2);
-    // this.ctx.lineTo(gameObject.xCoord + 10, gameObject.yCoord - 2);
-    // this.ctx.lineTo(gameObject.xCoord + 5, gameObject.yCoord - 2);
-    // this.ctx.lineTo(gameObject.xCoord, gameObject.yCoord + 2);
-    // this.ctx.fillStyle = "white"
-    // this.ctx.fill();
+    //left
+    this.ctx.beginPath();
+    this.ctx.moveTo(gameObject.xCoord + (gameObject.xDimension / 5), gameObject.yCoord + (gameObject.yDimension / 2) );
+    this.ctx.lineTo(gameObject.xCoord + (gameObject.xDimension / 3), gameObject.yCoord + (gameObject.yDimension / 2));
+    this.ctx.lineTo(gameObject.xCoord + (gameObject.xDimension / 4), gameObject.yCoord + (gameObject.yDimension / 1.3));
+    this.ctx.lineTo(gameObject.xCoord + (gameObject.xDimension / 5), gameObject.yCoord + (gameObject.yDimension / 2));
+    this.ctx.fillStyle = "white"
+    this.ctx.fill();
+    //right
+    this.ctx.beginPath();
+    this.ctx.moveTo(gameObject.xCoord + (gameObject.xDimension / 1.6), gameObject.yCoord + (gameObject.yDimension / 2) );
+    this.ctx.lineTo(gameObject.xCoord + (gameObject.xDimension / 1.3), gameObject.yCoord + (gameObject.yDimension / 2));
+    this.ctx.lineTo(gameObject.xCoord + (gameObject.xDimension / 1.5), gameObject.yCoord + (gameObject.yDimension / 1.3));
+    this.ctx.lineTo(gameObject.xCoord + (gameObject.xDimension / 1.6), gameObject.yCoord + (gameObject.yDimension / 2));
+    this.ctx.fillStyle = "white"
+    this.ctx.fill();
   }
 
   //PLACE OBJECTS FROM ARRAY
