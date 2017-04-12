@@ -656,7 +656,12 @@ export class AppComponent implements OnInit {
     if(!enemy.enemyAttacking) {
       enemy.enemyAttacking = true;
       //Calculate damage of enemy damage minus defense
-      this.player.health -= enemy.rollForDamage() - this.player.defenseLvl;
+      var enemyDamage = enemy.rollForDamage() - this.player.defenseLvl;
+      if(enemyDamage > 0) {
+        this.player.health -= enemy.rollForDamage() - this.player.defenseLvl;
+      } else {
+        this.player.health--;
+      }
       setTimeout(function(){
         enemy.enemyAttacking = false;
       }, 500);

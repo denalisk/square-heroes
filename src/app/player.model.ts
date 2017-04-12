@@ -5,7 +5,7 @@ export class Player {
   public xAttack = 0;
   public yAttack = 0;
   // WEAPON DIMENSIONS
-  public weaponXSize: number = 30;
+  public weaponXSize: number = 5;
   public weaponYSize: number = 5;
   //EXPERIENCE & LEVEL
   public experience = 0;
