@@ -129,6 +129,7 @@ export class AppComponent implements OnInit {
       }
     }
   }
+
   //EQUIPING AND USING ITEMS
   useItem(item: UserItem) {
     if(item.type === "consumable") {
@@ -508,7 +509,7 @@ export class AppComponent implements OnInit {
       this.ctx.closePath();
     }
   }
-
+  
   gameLoop() {
     var current = this;
     var attacking: boolean = false;
@@ -564,34 +565,37 @@ export class AppComponent implements OnInit {
 
     //Player attack animations(NEEDS REFACTOR)
 
+    //REFERENCE
+    //current.ctx.rect(xCoord, yCoord, xDimension, yDimension)   ;
+
     if(attacking && current.player.direction === "south") {
         current.ctx.beginPath();
-        current.ctx.rect(((current.canvas.width / 2) - 5), ((current.canvas.height / 2) + 5), 3, 8);
-        current.ctx.fillStyle = "blue";
+        current.ctx.rect(((current.canvas.width / 2) - 5), ((current.canvas.height / 2) + 5), 3, 5);
+        current.ctx.fillStyle = "teal";
         current.ctx.fill();
         current.ctx.closePath();
     }
 
     if(attacking && current.player.direction === "north") {
         current.ctx.beginPath();
-        current.ctx.rect(((current.canvas.width / 2) + 2), ((current.canvas.height / 2) - 10), 3, 8);
-        current.ctx.fillStyle = "blue";
+        current.ctx.rect(((current.canvas.width / 2) + 2), ((current.canvas.height / 2) - 10), 3, 5);
+        current.ctx.fillStyle = "teal";
         current.ctx.fill();
         current.ctx.closePath();
     }
 
     if(attacking && current.player.direction === "west") {
         current.ctx.beginPath();
-        current.ctx.rect(((current.canvas.width / 2) - 10), ((current.canvas.height / 2) + 2), 8, 3);
-        current.ctx.fillStyle = "blue";
+        current.ctx.rect(((current.canvas.width / 2) - 10), ((current.canvas.height / 2) - 5), 5, 3);
+        current.ctx.fillStyle = "teal";
         current.ctx.fill();
         current.ctx.closePath();
     }
 
     if(attacking && current.player.direction === "east") {
         current.ctx.beginPath();
-        current.ctx.rect(((current.canvas.width / 2) + 5), ((current.canvas.height / 2) + 2), 8, 3);
-        current.ctx.fillStyle = "blue";
+        current.ctx.rect(((current.canvas.width / 2) + 5), ((current.canvas.height / 2) + 2), 5, 3);
+        current.ctx.fillStyle = "teal";
         current.ctx.fill();
         current.ctx.closePath();
     }
