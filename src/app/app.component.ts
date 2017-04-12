@@ -610,11 +610,23 @@ export class AppComponent implements OnInit {
     } else if (gameObject.type === "building"){
       this.drawBuilding(gameObject);
     } else {
+      //BODY
       this.ctx.beginPath();
       this.ctx.rect(Math.floor(gameObject.xCoord), Math.floor(gameObject.yCoord), Math.floor(gameObject.xDimension), Math.floor(gameObject.yDimension));
       this.ctx.fillStyle = gameObject.color;
       this.ctx.fill();
       this.ctx.closePath();
+      /////EYES
+      //left
+      this.ctx.beginPath();
+      this.ctx.arc(gameObject.xCoord + (gameObject.xDimension / 4), gameObject.yCoord + (gameObject.xDimension / 4), gameObject.xDimension / 10, 0, 2 * Math.PI);
+      this.ctx.fillStyle = "yellow";
+      this.ctx.fill();
+      //right
+      this.ctx.beginPath();
+      this.ctx.arc(gameObject.xCoord + (gameObject.xDimension / 1.5), gameObject.yCoord + (gameObject.xDimension / 4), gameObject.xDimension / 10, 0, 2 * Math.PI);
+      this.ctx.fillStyle = "yellow";
+      this.ctx.fill();
     }
   }
 
