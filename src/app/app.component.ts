@@ -378,6 +378,7 @@ export class AppComponent implements OnInit {
             }
             //DEATH OF ENEMY
             if(this.objectsArray[i].health <= 0) {
+              this.objectsArray.push(new Enemy("enemy"));
               var xCoord: number = this.objectsArray[i].xCoord;
               var yCoord: number = this.objectsArray[i].yCoord;
               //EXPERIENCE DROP
