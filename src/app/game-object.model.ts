@@ -43,7 +43,7 @@ export class Item extends GameObject {
   public name: string;
   public category: string;
   public userItem: UserItem;
-  
+
   constructor(public type: string) {
   super(type)
   this.collidable = false;
