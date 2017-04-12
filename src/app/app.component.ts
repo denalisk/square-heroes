@@ -47,10 +47,10 @@ export class AppComponent implements OnInit {
 
   checkCollide(item: GameObject) {
     var current = this;
-    if (item.xCoord < current.player.xCoord + current.player.xDimension &&
-        item.xCoord + item.xDimension > current.player.xCoord &&
-        item.yCoord < current.player.yCoord + current.player.yDimension &&
-        item.yDimension + item.yCoord > current.player.yCoord) {
+    if (item.xCoord < current.playerXCoord + current.player.xDimension &&
+        item.xCoord + item.xDimension > current.playerXCoord &&
+        item.yCoord < current.playerYCoord + current.player.yDimension &&
+        item.yDimension + item.yCoord > current.playerYCoord) {
           console.log("collide true");
           return true;
     } else {
@@ -189,7 +189,7 @@ export class AppComponent implements OnInit {
     },true);
 
     this.player = new Player();
-    this.player.godMode(1000, 1000, 10, 1000);
+    this.player.godMode(1000, 1000, 10, 10000);
     this.playerXCoord = ((this.canvas.width / 2) - 5);
     this.playerYCoord = ((this.canvas.height / 2) - 5);
     this.generateWorld();
