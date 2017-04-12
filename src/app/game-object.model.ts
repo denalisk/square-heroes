@@ -3,8 +3,8 @@ import { UserItem } from './player.model';
 export class GameObject {
   public xDimension: number = Math.floor(Math.random() * (Math.floor(10) - Math.ceil(5)) + Math.ceil(10));
   public yDimension: number = this.xDimension;
-  public yCoord: number = Math.floor(Math.random() * (Math.floor(500) - Math.ceil(-500)) + Math.ceil(-500));
-  public xCoord: number = Math.floor(Math.random() * (Math.floor(500) - Math.ceil(-500)) + Math.ceil(-500));
+  public yCoord: number = Math.floor(Math.random() * (Math.floor(1000) - Math.ceil(-1000)) + Math.ceil(-1000));
+  public xCoord: number = Math.floor(Math.random() * (Math.floor(1000) - Math.ceil(-1000)) + Math.ceil(-1000));
   public color: string = 'red';
   public shape: string = 'square';
   public collidable: boolean = true;
@@ -34,7 +34,7 @@ export class Enemy extends GameObject {
 }
 
 export class Boss extends Enemy {
-  
+
 }
 
 export class Village extends GameObject {

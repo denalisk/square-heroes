@@ -300,16 +300,17 @@ export class AppComponent implements OnInit {
     this.generateBoss()
 
     //Trees
-    var numberOfTrees = Math.floor(Math.random() * (Math.floor(40) - Math.ceil(20)) + Math.ceil(20));
+    var numberOfTrees = Math.floor(Math.random() * (Math.floor(100) - Math.ceil(60)) + Math.ceil(100));
     for(var i = 0; i < numberOfTrees; i++) {
       this.objectsArray.push(new GameObject("tree"));
     }
     //Mountains
-    for (let index = 0; index < 10; index++) {
+    var numberofMountains = Math.floor(Math.random() * (Math.floor(60) - Math.ceil(40)) + Math.ceil(60));
+    for(var i = 0; i < numberofMountains; i++) {
       this.generateMountain();
     }
     //Enemies
-    var numberOfEnemies = Math.floor(Math.random() * (Math.floor(40) - Math.ceil(20)) + Math.ceil(20))
+    var numberOfEnemies = Math.floor(Math.random() * (Math.floor(100) - Math.ceil(50)) + Math.ceil(100))
 
     for(var i = 0; i < numberOfEnemies; i++) {
       this.objectsArray.push(new Enemy("enemy"));
