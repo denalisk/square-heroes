@@ -231,8 +231,8 @@ export class AppComponent implements OnInit {
   //////////ITEM WHEN ENIME DIES////////////
   generateItem(xCoord, yCoord, thing) {
     var roll;
-    var highArray = [["Health Potion", "consumable"],["Strength Potion", "consumable"],["Attack Potion", "consumable"],["Health Potion", "consumable"]];
-    var lowArray = [["Iron Helm", "headSlot"],["Iron Chestplate", "chestSlot"],["Iron Greves", "legSlot"],["Sword", "mainHand"],["Shield", "offHand"],["Claymore", "twoHander"]];
+    var highArray: UserItem[] = [new UserItem("Health Potion", "consumable", [30], ["health"]), new UserItem("Strength Potion", "consumable", [30], ["strength"]), new UserItem("Attack Potion", "consumable", [30], ["attack"]), new UserItem("Defense Potion", "consumable", [30], ["defense"])];
+    var lowArray: UserItem[] = [new UserItem("Iron Helm", "headSlot", [15], ["defense"]), new UserItem("Iron Chestplate", "chestSlot", [30], ["defense"]), new UserItem("Iron Greves", "legSlot", [20], ["defense"]), new UserItem("Sword", "mainHand", [20, 20], ["strength", "attack"]), new UserItem("Shield", "offHand", [40], ["defense"]), new UserItem("Claymore", "twoHander", [75], ["strength"])];
 
     var newItem = new Item("item");
 
@@ -240,20 +240,17 @@ export class AppComponent implements OnInit {
     newItem.yCoord = yCoord;
     newItem.yDimension = 5;
     newItem.xDimension = 5;
-    newItem.type = "item";
 
     if(thing === "high") {
       roll = Math.floor(Math.random() * (Math.floor(highArray.length-1) - Math.ceil(0)) + Math.ceil(0));
-      newItem.name = highArray[roll][0];
-      newItem.category = highArray[roll][1];
+      newItem.userItem = highArray[roll];
     } else {
       roll = Math.floor(Math.random() * (Math.floor(highArray.length-1) - Math.ceil(0)) + Math.ceil(0));
-      newItem.name = lowArray[roll][0];
-      newItem.category = lowArray[roll][1];
+      newItem.userItem = lowArray[roll];
     }
 
     this.objectsArray.push(newItem);
-    console.log("You Got a " + newItem.name + " drop")
+    console.log("You Got a " + newItem.userItem.name + " drop")
   }
 
   //////////ATTACK//////////////
