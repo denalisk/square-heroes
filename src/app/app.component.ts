@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { GameObject, Enemy, Item } from './game-object.model';
 import { Player } from './player.model';
+import { Item } from './player.model';
 
 @Component({
   selector: 'app-root',
@@ -40,11 +41,107 @@ export class AppComponent implements OnInit {
       }else if(stat === "defense")
       {
         this.player.defenseLvl += 1;
+        this.player.health += 20;
         this.player.skillPoints -= 1;
       }
     }
   }
 
+  //EQUIP STATS REFACTOR
+  equipGear(item: Item) {
+    for(var i = 0; i < item.stat.length; i++)
+    {
+      if(item.stat[i] === "attack")
+      {
+        this.player.attackLvl += item.bonus[i];
+      } else if(item.stat[i] === "strength")
+      {
+        this.player.strengthLvl += item.bonus[i];
+      } else if(item.stat[i] === "defense")
+      {
+        this.player.defenseLvl += item.bonus[i];
+      }
+    }
+  }
+
+  //UNEQUIP STATS REFACTOR
+  unequipGear(item: Item) {
+    for(var i = 0; i < item.stat.length; i++)
+    {
+      if(item.stat[i] === "attack")
+      {
+        this.player.attackLvl -= item.bonus[i];
+      } else if(item.stat[i] === "strength")
+      {
+        this.player.strengthLvl -= item.bonus[i];
+      } else if(item.stat[i] === "defense")
+      {
+        this.player.defenseLvl -= item.bonus[i];
+      }
+    }
+  }
+  //EQUIPING AND USING ITEMS
+  useItem(item: Item) {
+    if(item.type === "consumable") {
+
+    } else if(item.type === "headSlot") {
+      //UNEQUIP GEAR, SET STATS CORRECTLY, THEN EQUIP NEW GEAR
+      this.unequipGear(this.player.headSlot);
+      this.equipGear(item);
+      this.player.headSlot = item;
+    } else if(item.type === "chestSlot") {
+      //UNEQUIP GEAR, SET STATS CORRECTLY, THEN EQUIP NEW GEAR
+      this.unequipGear(this.player.chestSlot);
+      this.equipGear(item);
+      this.player.chestSlot = item;
+    } else if(item.type === "legSlot") {
+      //UNEQUIP GEAR, SET STATS CORRECTLY, THEN EQUIP NEW GEAR
+      this.unequipGear(this.player.legSlot);
+      this.equipGear(item);
+      this.player.legSlot = item;
+    } else if(item.type === "mainHand") {
+      if(this.player.offHand.type === "duoSet") {
+        this.unequipGear(this.player.offHand);
+        this.player.offHand = new Item("Nothing", "offHand", [0], ["Nothing"]);
+      }
+      this.unequipGear(this.player.mainHand);
+      this.equipGear(item);
+      this.player.mainHand = item;
+    } else if(item.type === "offHand") {
+      if(this.player.mainHand.type === "duoSet") {
+        this.unequipGear(this.player.mainHand);
+        this.player.mainHand = new Item("Nothing", "offHand", [0], ["Nothing"]);
+      }
+      else if(this.player.mainHand.type === "twoHander") {
+        this.unequipGear(this.player.mainHand);
+        this.player.mainHand = new Item("Nothing", "mainHand", [0], ["Nothing"]);
+      }
+      this.unequipGear(this.player.offHand);
+      this.equipGear(item);
+      this.player.offHand = item;
+    } else if(item.type === "twoHander") {
+      this.unequipGear(this.player.mainHand);
+      this.unequipGear(this.player.offHand);
+      this.equipGear(item);
+      this.player.mainHand = item;
+      this.player.offHand = new Item("Nothing", "offHand", [0], ["Nothing"]);
+    } else if(item.type === "duoSet") {
+      this.unequipGear(this.player.mainHand);
+      this.unequipGear(this.player.offHand);
+      this.player.mainHand = item;
+      this.player.offHand = item;
+      this.equipGear(this.player.mainHand);
+      this.equipGear(this.player.offHand);
+    }
+  }
+
+  useHealthPot() {
+    if(this.player.healthPotions > 0)
+    {
+      this.player.health += 50;
+      this.player.healthPotions -= 1;
+    }
+  }
 
   //////INITIALIZATION///////
   ngOnInit() {
@@ -150,11 +247,12 @@ export class AppComponent implements OnInit {
                 this.objectsArray[i].health -= this.damageDone;
                 console.log(this.objectsArray[i].health + ' enemy health');
               }
-            }
-            else{
+            } else{
               this.hitBool = false;
             }
             if(this.objectsArray[i].health <= 0) {
+              var xCoord: number = this.objectsArray[i].xCoord;
+              var yCoord: number = this.objectsArray[i].yCoord;
               //EXPERIENCE DROP
               var expDrop = Math.floor(Math.random() * (Math.floor(10) - Math.ceil(5)) + Math.ceil(5));
               console.log(expDrop + ' experience drop');
@@ -174,8 +272,7 @@ export class AppComponent implements OnInit {
                 console.log(this.player.experience + ' player experience after level');
                 console.log(this.player.skillPoints + ' player skill points');
               }
-              var xCoord: number = this.objectsArray[i].xCoord;
-              var yCoord: number = this.objectsArray[i].yCoord;
+
               this.objectsArray.splice(i, 1);
               // DROPROLL CHANCE
               var dropRoll = Math.floor(Math.random() * (Math.floor(100) - Math.ceil(0)) + Math.ceil(0));
@@ -189,6 +286,7 @@ export class AppComponent implements OnInit {
                 console.log("nope")
               }
             }
+
           } else if (this.objectsArray[i].type === "tree"){
             //TREE IS BEING ATTACKED
             this.objectsArray.splice(i, 1);
@@ -288,6 +386,7 @@ export class AppComponent implements OnInit {
       this.drawTree(gameObject);
     } else if (gameObject.type === 'mountain') {
       this.drawMountain(gameObject);
+
     } else if (gameObject.type === "item") {
       this.ctx.beginPath();
       this.ctx.rect(Math.floor(gameObject.xCoord), Math.floor(gameObject.yCoord), Math.floor(gameObject.xDimension), Math.floor(gameObject.yDimension));
