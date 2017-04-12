@@ -43,6 +43,7 @@ export class AppComponent implements OnInit {
         }
       } else if (current.objectsArray[index].type === "item") {
         if (current.checkCollide(current.objectsArray[index])) {
+          //CHECK IF ITEM IS A POTION, IF SO, ADD IT TO THE POTION LIST
           if(current.objectsArray[index].userItem.name === "Health Potion") {
             current.player.healthPotions += 1;
           } else if(current.objectsArray[index].userItem.name === "Strength Potion") {
@@ -52,7 +53,16 @@ export class AppComponent implements OnInit {
           } else if(current.objectsArray[index].userItem.name === "Defense Potion") {
             current.player.defensePotions += 1;
           } else {
-            current.player.inventory.push(current.objectsArray[index].userItem);
+            var haveItem = false;
+            for(var i = 0; i < current.player.inventory.length; i++)
+            {
+              if(current.player.inventory[i].name === current.objectsArray[index].userItem.name) {
+                haveItem = true;
+              }
+            }
+            if(haveItem === false) {
+              current.player.inventory.push(current.objectsArray[index].userItem);
+            }
           }
 
           current.objectsArray.splice(index);
@@ -132,15 +142,7 @@ export class AppComponent implements OnInit {
   //EQUIPING AND USING ITEMS
   useItem(item: UserItem) {
     if(item.type === "consumable") {
-      if(item.name === "Health Potion") {
-        this.equipGear(item);
-      } else if(item.name === "Strength Potion") {
-        this.equipGear(item);
-      } else if(item.name === "Attack Potion") {
-        this.equipGear(item);
-      } else if(item.name === "Defense Potion") {
-        this.equipGear(item);
-      }
+
 
     } else if(item.type === "headSlot") {
       //UNEQUIP GEAR, SET STATS CORRECTLY, THEN EQUIP NEW GEAR
