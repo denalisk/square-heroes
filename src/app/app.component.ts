@@ -20,7 +20,7 @@ export class AppComponent implements OnInit {
   ctx = null;
 
   ngOnInit() {
-    this.objectsArray[0].setProperties(0, 0, 40, 40, 'black');
+    this.objectsArray[0].setProperties(100, 70, 40, 40, 'black');
     this.canvas = document.getElementById("game");
     this.ctx = this.canvas.getContext("2d");
 
@@ -53,25 +53,22 @@ export class AppComponent implements OnInit {
 
   checkCollisions() {
     let current = this;
+    let holdVector: number[] = [current.velocityVector[0], current.velocityVector[1]];
     for (let item of this.objectsArray) {
-      if(current.checkCollide(item)) {
-            console.log("BAM");
-            let checkItem = new GameObject('object');
-            let holdVector: number[] = [current.velocityVector[0], current.velocityVector[1]];
-            checkItem.setProperties(item.xCoord, item.yCoord, item.xDimension, item.yDimension, item.color);
-            checkItem.move([-5 * holdVector[0],0]);
-            if (!(current.checkCollide(checkItem))) {
-              console.log("collision on x-axis");
-              current.velocityVector[0] = 0;
-            }
-            checkItem.move([holdVector[0], -holdVector[1]]);
-            if (!(current.checkCollide(checkItem))) {
-              console.log("collision on y-axis");
-              current.velocityVector[1] = 0;
-            }
-          }
+      let checkItem = new GameObject('object');
+      checkItem.setProperties(item.xCoord, item.yCoord, item.xDimension, item.yDimension, item.color);
+      checkItem.move([holdVector[0], 0]);
+      if (current.checkCollide(checkItem)) {
+        console.log('collide');
+        current.velocityVector[0] = 0;
+      }
+      checkItem.move([-holdVector[0], holdVector[1]]);
+      if (current.checkCollide(checkItem)) {
+        current.velocityVector[1] = 0;
+      }
     }
   }
+  
 
   checkCollide(item: GameObject) {
     var current = this;
@@ -109,10 +106,6 @@ export class AppComponent implements OnInit {
       if (current.keyState[39] || current.keyState[68]){
         current.velocityVector[0] += -1.5;
         current.player.direction = "east";
-      }
-
-      for(let gameObject of current.objectsArray) {
-        gameObject.move(current.velocityVector)
       }
 
     current.checkCollisions();
