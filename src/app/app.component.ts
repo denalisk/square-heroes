@@ -25,6 +25,7 @@ export class AppComponent implements OnInit {
   currentEnemy = null;
   hitBool: boolean;
   southSwingCounter: number = 0;
+  newVillage;
 
   // COLLISION DETECTION
   checkCollisions() {
@@ -252,26 +253,16 @@ export class AppComponent implements OnInit {
   /////////WORLD GENERATION/////////
   generateWorld() {
     //Village
-    var newVillage = new Village("village");
-    newVillage.setProperties(-800, 170, 500, 500, "gray")
-    this.objectsArray.push(newVillage);
-    //Add BOSS to village
-    var bossEnemy = new Enemy('enemy');
-    bossEnemy.setProperties((newVillage.xCoord + (newVillage.xDimension/2)), (newVillage.yCoord + (newVillage.yDimension/2)), 50, 50, "#6b245f");
-    console.log("Boss spawned at: " + bossEnemy.xCoord + ", " + bossEnemy.yCoord);
-    this.objectsArray.push(bossEnemy);
-    //BOSS Minions
-    for(let i = 10; i < 100; i += 10) {
-      var bossMinion = new Enemy('enemy');
-      bossMinion.setProperties((newVillage.xCoord + (newVillage.xDimension/2) + i), (newVillage.yCoord + (newVillage.yDimension/2) + i), 10, 10, "#774f9b");
-      console.log("Boss enemy spawned at:" + bossMinion.xCoord + ", " + bossMinion.yCoord);
-      this.objectsArray.push(bossMinion);
-    }
+    this.newVillage = new Village("village");
+    this.newVillage.setProperties(-800, 170, 500, 500, "gray")
+    this.objectsArray.push(this.newVillage);
 
-    for(let i = 0; i < newVillage.buildings; i++) {
-      var newBuilding = new Building("building", newVillage);
+    for(let i = 0; i < this.newVillage.buildings; i++) {
+      var newBuilding = new Building("building", this.newVillage);
       this.objectsArray.push(newBuilding);
     }
+
+    this.generateBoss()
 
     //Trees
     var numberOfTrees = Math.floor(Math.random() * (Math.floor(40) - Math.ceil(20)) + Math.ceil(20));
@@ -289,9 +280,24 @@ export class AppComponent implements OnInit {
       this.objectsArray.push(new Enemy("enemy"));
     }
 
-
     this.gameLoop();
   }
+
+  generateBoss() {
+    //Add BOSS to village
+    var bossEnemy = new Enemy('enemy');
+    bossEnemy.setProperties((this.newVillage.xCoord + (this.newVillage.xDimension/2)), (this.newVillage.yCoord + (this.newVillage.yDimension/2)), 50, 50, "#6b245f");
+    console.log("Boss spawned at: " + bossEnemy.xCoord + ", " + bossEnemy.yCoord);
+    this.objectsArray.push(bossEnemy);
+    //BOSS Minions
+    for(let i = 10; i < 100; i += 10) {
+      var bossMinion = new Enemy('enemy');
+      bossMinion.setProperties((this.newVillage.xCoord + (this.newVillage.xDimension/2) + i), (this.newVillage.yCoord + (this.newVillage.yDimension/2) + i), 10, 10, "#774f9b");
+      console.log("Boss enemy spawned at:" + bossMinion.xCoord + ", " + bossMinion.yCoord);
+      this.objectsArray.push(bossMinion);
+    }
+  }
+
 
   generateTree() {
     let newTree = new GameObject('tree');
@@ -346,6 +352,15 @@ export class AppComponent implements OnInit {
     console.log("You Got a " + newItem.userItem.name + " drop")
   }
 
+
+  //RESPAWN
+  respawn() {
+    var current = this;
+    setTimeout(function() {
+      current.objectsArray.push(new Enemy("enemy"));
+    }, 10000);
+  }
+
   //////////ATTACK//////////////
   attack() {
     this.player.getXAttack();
@@ -379,6 +394,15 @@ export class AppComponent implements OnInit {
             }
             //DEATH OF ENEMY
             if(this.objectsArray[i].health <= 0) {
+              //ENEMY RESPAWN
+              if(this.objectsArray[i].color === "#6b245f") {
+                var current = this;
+                setTimeout(function() {
+                  current.generateBoss();
+                }, 60000)
+              } else {
+                this.respawn();
+              }
               var xCoord: number = this.objectsArray[i].xCoord;
               var yCoord: number = this.objectsArray[i].yCoord;
               //EXPERIENCE DROP
