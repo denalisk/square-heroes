@@ -591,6 +591,35 @@ export class AppComponent implements OnInit {
     this.ctx.closePath();
   }
 
+  drawEnemy(gameObject) {
+    //BODY
+    this.ctx.beginPath();
+    this.ctx.rect(Math.floor(gameObject.xCoord), Math.floor(gameObject.yCoord), Math.floor(gameObject.xDimension), Math.floor(gameObject.yDimension));
+    this.ctx.fillStyle = gameObject.color;
+    this.ctx.fill();
+    this.ctx.closePath();
+
+    /////EYES
+    //left
+    this.ctx.beginPath();
+    this.ctx.arc(gameObject.xCoord + (gameObject.xDimension / 4), gameObject.yCoord + (gameObject.xDimension / 4), gameObject.xDimension / 10, 0, 2 * Math.PI);
+    this.ctx.fillStyle = "yellow";
+    this.ctx.fill();
+    //right
+    this.ctx.beginPath();
+    this.ctx.arc(gameObject.xCoord + (gameObject.xDimension / 1.5), gameObject.yCoord + (gameObject.xDimension / 4), gameObject.xDimension / 10, 0, 2 * Math.PI);
+    this.ctx.fillStyle = "yellow";
+    this.ctx.fill();
+
+    /////TEETH
+    // this.ctx.beginPath();
+    // this.ctx.moveTo(gameObject.xCoord, gameObject.yCoord + 2);
+    // this.ctx.lineTo(gameObject.xCoord + 10, gameObject.yCoord - 2);
+    // this.ctx.lineTo(gameObject.xCoord + 5, gameObject.yCoord - 2);
+    // this.ctx.lineTo(gameObject.xCoord, gameObject.yCoord + 2);
+    // this.ctx.fillStyle = "white"
+    // this.ctx.fill();
+  }
 
   //PLACE OBJECTS FROM ARRAY
   placeObject(gameObject) {
@@ -610,23 +639,7 @@ export class AppComponent implements OnInit {
     } else if (gameObject.type === "building"){
       this.drawBuilding(gameObject);
     } else {
-      //BODY
-      this.ctx.beginPath();
-      this.ctx.rect(Math.floor(gameObject.xCoord), Math.floor(gameObject.yCoord), Math.floor(gameObject.xDimension), Math.floor(gameObject.yDimension));
-      this.ctx.fillStyle = gameObject.color;
-      this.ctx.fill();
-      this.ctx.closePath();
-      /////EYES
-      //left
-      this.ctx.beginPath();
-      this.ctx.arc(gameObject.xCoord + (gameObject.xDimension / 4), gameObject.yCoord + (gameObject.xDimension / 4), gameObject.xDimension / 10, 0, 2 * Math.PI);
-      this.ctx.fillStyle = "yellow";
-      this.ctx.fill();
-      //right
-      this.ctx.beginPath();
-      this.ctx.arc(gameObject.xCoord + (gameObject.xDimension / 1.5), gameObject.yCoord + (gameObject.xDimension / 4), gameObject.xDimension / 10, 0, 2 * Math.PI);
-      this.ctx.fillStyle = "yellow";
-      this.ctx.fill();
+      this.drawEnemy(gameObject);
     }
   }
 
@@ -730,6 +743,14 @@ export class AppComponent implements OnInit {
     current.ctx.beginPath();
     current.ctx.rect(((current.canvas.width / 2) - 5), ((current.canvas.height / 2) - 5), 10, 10);
     current.ctx.fillStyle = "blue";
+    current.ctx.fill();
+    current.ctx.closePath();
+    current.ctx.beginPath();
+    current.ctx.moveTo(((current.canvas.width / 2) - 5), ((current.canvas.height / 2) - 5) + 2);
+    current.ctx.lineTo(((current.canvas.width / 2) - 5) + 10, ((current.canvas.height / 2) - 5) - 2);
+    current.ctx.lineTo(((current.canvas.width / 2) - 5) + 5, ((current.canvas.height / 2) - 5) - 2);
+    current.ctx.lineTo(((current.canvas.width / 2) - 5), ((current.canvas.height / 2) - 5) + 2);
+    current.ctx.fillStyle = "white"
     current.ctx.fill();
     current.ctx.closePath();
 
