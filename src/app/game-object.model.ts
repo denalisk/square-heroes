@@ -5,7 +5,7 @@ export class GameObject {
   public yDimension: number = this.xDimension;
   public yCoord: number = Math.floor(Math.random() * (Math.floor(500) - Math.ceil(-500)) + Math.ceil(-500));
   public xCoord: number = Math.floor(Math.random() * (Math.floor(500) - Math.ceil(-500)) + Math.ceil(-500));
-  public color: string = 'black';
+  public color: string = 'red';
   public shape: string = 'square';
   public collidable: boolean = true;
 

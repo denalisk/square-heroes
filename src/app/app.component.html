@@ -41,7 +41,12 @@
     <!-- INVENTORY -->
     <div class="inventory">
       <h4>Inventory</h4>
-      <p>Health Potions: {{player.healthPotions}}</p>
+      <ul>
+        <li>Health Potions: {{player.healthPotions}}</li>
+        <li>Strength Potions: {{player.strengthPotions}}</li>
+        <li>Attack Potions: {{player.attackPotions}}</li>
+        <li>Defense Potions: {{player.defensePotions}}</li>
+      </ul>
       <div *ngFor="let item of player.inventory">
         <div class="healthPotions" *ngIf="item.name !=='Health Potion'">
           <p>{{item.name}} <button (click)="useItem(item)">Use</button></p>
