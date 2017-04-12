@@ -12,6 +12,14 @@ export class GameObject {
     this.xCoord += vector[0];
     this.yCoord += vector[1];
   }
+  
+  setProperties(xCoord: number, yCoord: number, xDimension: number, yDimension: number, color: string) {
+    this.yCoord = yCoord;
+    this.xCoord = xCoord;
+    this.xDimension = xDimension;
+    this.yDimension = yDimension;
+    this.color = color;
+  }
 }
 
 export class Enemy extends GameObject {

@@ -25,6 +25,39 @@ export class AppComponent implements OnInit {
   currentEnemy = null;
   hitBool: boolean;
 
+  // COLLISION DETECTION
+  checkCollisions() {
+    let current = this;
+    let holdVector: number[] = [current.velocityVector[0], current.velocityVector[1]];
+    for (let item of this.objectsArray) {
+      let checkItem = new GameObject('object');
+      checkItem.setProperties(item.xCoord, item.yCoord, item.xDimension, item.yDimension, item.color);
+      checkItem.move([holdVector[0], 0]);
+      if (current.checkCollide(checkItem)) {
+        console.log('collide');
+        current.velocityVector[0] = 0;
+      }
+      checkItem.move([-holdVector[0], holdVector[1]]);
+      if (current.checkCollide(checkItem)) {
+        current.velocityVector[1] = 0;
+      }
+    }
+  }
+
+
+  checkCollide(item: GameObject) {
+    var current = this;
+    if (item.xCoord < current.player.xCoord + current.player.xDimension &&
+        item.xCoord + item.xDimension > current.player.xCoord &&
+        item.yCoord < current.player.yCoord + current.player.yDimension &&
+        item.yDimension + item.yCoord > current.player.yCoord) {
+          console.log("collide true");
+          return true;
+    } else {
+          return false;
+    }
+  }
+
   //ADD SKILL POINTS INTO SKILL FUNCTION
   addSkill(stat: string) {
     if(this.player.skillPoints > 0)
@@ -435,6 +468,7 @@ export class AppComponent implements OnInit {
       }
 
       //MOVE GAME WORLD
+      current.checkCollisions();
       for(let gameObject of current.objectsArray) {
         gameObject.move(current.velocityVector);
         if(gameObject.type === "enemy") {
