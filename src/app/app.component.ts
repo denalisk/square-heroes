@@ -29,7 +29,7 @@ export class AppComponent implements OnInit {
   checkCollisions() {
     let current = this;
     let holdVector: number[] = [current.velocityVector[0], current.velocityVector[1]];
-    for (let item of this.objectsArray) {
+    for (let item of current.objectsArray) {
       if (item.collidable) {
         let checkItem = new GameObject('object');
         checkItem.setProperties(item.xCoord, item.yCoord, item.xDimension, item.yDimension, item.color);
@@ -40,6 +40,11 @@ export class AppComponent implements OnInit {
         checkItem.move([-holdVector[0], holdVector[1]]);
         if (current.checkCollide(checkItem)) {
           current.velocityVector[1] = 0;
+        }
+      } else if (item.type === "item")
+      {
+        if (current.checkCollide(item)) {
+          current.player.inventory.push(item.userItem);
         }
       }
     }
