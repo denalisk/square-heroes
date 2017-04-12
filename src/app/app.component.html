@@ -11,7 +11,11 @@
       <p>Experience {{player.experience}}</p>
       <div class="health">
         <h4>Health: {{player.health}} </h4> <button class="healthBtn" (click)="useHealthPot()">Use Health Potion</button>
-      </div>
+    </div>
+    <div class="potions">
+      <button (click)="useStrengthPot()">STR POT</button>
+      <button (click)="useAttackPot()">ATK POT</button>
+      <button (click)="useDefensePot()">DEF POT</button>
     </div>
     <div class="stats" *ngIf="player.skillPoints > 0">
       <h3>Level up!</h3>

@@ -195,11 +195,33 @@ export class AppComponent implements OnInit {
     }
   }
 
+  //USE POTIONS
   useHealthPot() {
     if(this.player.healthPotions > 0)
     {
       this.player.health += 50;
       this.player.healthPotions -= 1;
+    }
+  }
+  useStrengthPot() {
+    if(this.player.strengthPotions > 0)
+    {
+      this.player.strengthLvl += 50;
+      this.player.strengthPotions -= 1;
+    }
+  }
+  useAttackPot() {
+    if(this.player.attackPotions > 0)
+    {
+      this.player.attackLvl += 50;
+      this.player.attackPotions -= 1;
+    }
+  }
+  useDefensePot() {
+    if(this.player.defensePotions > 0)
+    {
+      this.player.defenseLvl += 50;
+      this.player.defensePotions -= 1;
     }
   }
 
