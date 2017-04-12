@@ -30,16 +30,17 @@ export class AppComponent implements OnInit {
     let current = this;
     let holdVector: number[] = [current.velocityVector[0], current.velocityVector[1]];
     for (let item of this.objectsArray) {
-      let checkItem = new GameObject('object');
-      checkItem.setProperties(item.xCoord, item.yCoord, item.xDimension, item.yDimension, item.color);
-      checkItem.move([holdVector[0], 0]);
-      if (current.checkCollide(checkItem)) {
-        console.log('collide');
-        current.velocityVector[0] = 0;
-      }
-      checkItem.move([-holdVector[0], holdVector[1]]);
-      if (current.checkCollide(checkItem)) {
-        current.velocityVector[1] = 0;
+      if (item.collidable) {
+        let checkItem = new GameObject('object');
+        checkItem.setProperties(item.xCoord, item.yCoord, item.xDimension, item.yDimension, item.color);
+        checkItem.move([holdVector[0], 0]);
+        if (current.checkCollide(checkItem)) {
+          current.velocityVector[0] = 0;
+        }
+        checkItem.move([-holdVector[0], holdVector[1]]);
+        if (current.checkCollide(checkItem)) {
+          current.velocityVector[1] = 0;
+        }
       }
     }
   }
@@ -51,7 +52,6 @@ export class AppComponent implements OnInit {
         item.xCoord + item.xDimension > current.playerXCoord &&
         item.yCoord < current.playerYCoord + current.player.yDimension &&
         item.yDimension + item.yCoord > current.playerYCoord) {
-          console.log("collide true");
           return true;
     } else {
           return false;
@@ -215,9 +215,15 @@ export class AppComponent implements OnInit {
     this.gameLoop();
   }
 
+  generateTree() {
+    let newTree = new GameObject('tree');
+    this.objectsArray.push(newTree);
+  }
+
   generateMountain() {
     // This functions will create a mountain object and push it to the objectsArray
     let newMountain = new GameObject('mountain');
+    newMountain.setProperties(newMountain.xCoord, newMountain.yCoord, 80, 24, 'brown');
     newMountain.shape = 'triangle';
     this.objectsArray.push(newMountain);
   }
@@ -394,12 +400,14 @@ export class AppComponent implements OnInit {
   drawMountain(gameObject: GameObject) {
     let x = gameObject.xCoord;
     let y = gameObject.yCoord;
+    let yDim = gameObject.yDimension;
+    let xDim = gameObject.xDimension;
     let xy = [x, y];
     this.ctx.beginPath();
-    this.ctx.moveTo(x + 40, y);
-    this.ctx.lineTo(x, y - 24);
-    this.ctx.lineTo(x-40, y);
-    this.ctx.lineTo(x + 40, y);
+    this.ctx.moveTo(x, y + yDim);
+    this.ctx.lineTo(x + xDim/2, y);
+    this.ctx.lineTo(x + xDim, y + yDim);
+    this.ctx.lineTo(x, y + yDim);
     this.ctx.fillStyle = 'brown';
     this.ctx.fill();
     this.ctx.closePath();

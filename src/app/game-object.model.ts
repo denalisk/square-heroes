@@ -5,6 +5,7 @@ export class GameObject {
   public xCoord: number = Math.floor(Math.random() * (Math.floor(500) - Math.ceil(-500)) + Math.ceil(-500));
   public color: string = 'black';
   public shape: string = 'square';
+  public collidable: boolean = true;
 
   constructor(public type: string) {};
 
@@ -12,7 +13,7 @@ export class GameObject {
     this.xCoord += vector[0];
     this.yCoord += vector[1];
   }
-  
+
   setProperties(xCoord: number, yCoord: number, xDimension: number, yDimension: number, color: string) {
     this.yCoord = yCoord;
     this.xCoord = xCoord;
