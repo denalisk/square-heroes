@@ -120,7 +120,15 @@ export class AppComponent implements OnInit {
   //EQUIPING AND USING ITEMS
   useItem(item: UserItem) {
     if(item.type === "consumable") {
-
+      if(item.name === "Health Potion") {
+        this.equipGear(item);
+      } else if(item.name === "Strength Potion") {
+        this.equipGear(item);
+      } else if(item.name === "Attack Potion") {
+        this.equipGear(item);
+      } else if(item.name === "Defense Potion") {
+        this.equipGear(item);
+      }
     } else if(item.type === "headSlot") {
       //UNEQUIP GEAR, SET STATS CORRECTLY, THEN EQUIP NEW GEAR
       this.unequipGear(this.player.headSlot);
