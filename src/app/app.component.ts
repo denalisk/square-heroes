@@ -636,17 +636,17 @@ export class AppComponent implements OnInit {
     this.ctx.closePath();
   }
 
-  drawCustomRectangle(xCoord, yCoord, xDimension, yDimension, color, angle) {
-    let point1 = [xCoord, yCoord];
-    let point2 = [(xCoord + Math.cos(angle)*yDimension), (yCoord + Math.sin(angle)*yDimension)];
-    let point3 = [(xCoord + Math.cos(.5-angle)*xDimension), (yCoord - Math.sin(.5-angle)*xDimension)];
+  drawCustomRectangle(frame) {
+    let point1 = [frame.xCoord, frame.yCoord];
+    let point2 = [(frame.xCoord + Math.cos(frame.angle)*frame.yDimension), (frame.yCoord + Math.sin(frame.angle)*frame.yDimension)];
+    let point3 = [(frame.xCoord + Math.cos(.5-frame.angle)*frame.xDimension), (frame.yCoord - Math.sin(.5-frame.angle)*frame.xDimension)];
     let point4 = [point2[0] + point3[0], point2[1] - point3[1]];
     this.ctx.beginPath();
-    this.ctx.moveTo(xCoord, yCoord);
+    this.ctx.moveTo(frame.xCoord, frame.yCoord);
     this.ctx.lineTo(point2[0], point2[1]);
     this.ctx.lineTo(point3[0], point3[1]);
     this.ctx.lineTo(point4[0], point4[1]);
-    this.ctx.fillStyle = 'yellow';
+    this.ctx.fillStyle = frame.color;
     this.ctx.fill();
     this.ctx.closePath();
   }
@@ -661,7 +661,27 @@ export class AppComponent implements OnInit {
       east: [((current.canvas.width / 2) + 5), ((current.canvas.height / 2) + 2), 5, 3]
     }
     if (attacking) {
-      current.drawRectangle(attackRectangle[current.player.direction][0], attackRectangle[current.player.direction][1], attackRectangle[current.player.direction][2], attackRectangle[current.player.direction][3], 'black')
+      let xCoord = attackRectangle[current.player.direction][0];
+      let yCoord = attackRectangle[current.player.direction][1];
+      let point1 = [xCoord, yCoord];
+      let newFrameSet = [];
+      for (let index = .1; index <= .5; index += .1) {
+        let newAnimation = new GameObject('animation');
+        newAnimation.setProperties(attackRectangle[current.player.direction][0], attackRectangle[current.player.direction][1], attackRectangle[current.player.direction][2], attackRectangle[current.player.direction][3], 'yellow');
+        newAnimation.attackAngle = index;
+        newFrameSet.push(newAnimation);
+      }
+      current.animationsArray.push(newFrameSet);
+      console.log(newFrameSet);
+      console.log(current.animationsArray);
+    }
+  }
+
+  playAnimation(frameSet) {
+    for (let animation of frameSet) {
+      let newFrame = animation[0];
+      animation.shift();
+      this.drawCustomRectangle(newFrame);
     }
   }
 
@@ -726,6 +746,7 @@ export class AppComponent implements OnInit {
     //current.ctx.rect(xCoord, yCoord, xDimension, yDimension)   ;
 
     current.attackAnimation(attacking);
+    current.playAnimation(current.animationsArray);
 
     // Player rebuild
     current.ctx.beginPath();

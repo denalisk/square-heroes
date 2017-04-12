@@ -8,6 +8,7 @@ export class GameObject {
   public color: string = 'red';
   public shape: string = 'square';
   public collidable: boolean = true;
+  public attackAngle: number = 0;
 
   constructor(public type: string) {};
 
@@ -34,7 +35,7 @@ export class Enemy extends GameObject {
 }
 
 export class Boss extends Enemy {
-  
+
 }
 
 export class Village extends GameObject {
