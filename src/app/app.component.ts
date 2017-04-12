@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { GameObject, Enemy, Item } from './game-object.model';
+import { GameObject, Enemy, Item, Village } from './game-object.model';
 import { Player } from './player.model';
 import { UserItem } from './player.model';
 
@@ -197,6 +197,10 @@ export class AppComponent implements OnInit {
 
   /////////WORLD GENERATION/////////
   generateWorld() {
+    //Village
+    var newVillage = new Village("village");
+    newVillage.setProperties(0, 0, 120, 120, "gray")
+    this.objectsArray.push(newVillage);
     //Trees
     var numberOfTrees = Math.floor(Math.random() * (Math.floor(40) - Math.ceil(20)) + Math.ceil(20));
     for(var i = 0; i < numberOfTrees; i++) {
@@ -212,6 +216,7 @@ export class AppComponent implements OnInit {
     for(var i = 0; i < numberOfEnemies; i++) {
       this.objectsArray.push(new Enemy("enemy"));
     }
+
     this.gameLoop();
   }
 
@@ -422,6 +427,12 @@ export class AppComponent implements OnInit {
       this.ctx.beginPath();
       this.ctx.rect(Math.floor(gameObject.xCoord), Math.floor(gameObject.yCoord), Math.floor(gameObject.xDimension), Math.floor(gameObject.yDimension));
       this.ctx.fillStyle = "yellow";
+      this.ctx.fill();
+      this.ctx.closePath();
+    } else if (gameObject.type === "village") {
+      this.ctx.beginPath();
+      this.ctx.rect(Math.floor(gameObject.xCoord), Math.floor(gameObject.yCoord), Math.floor(gameObject.xDimension), Math.floor(gameObject.yDimension));
+      this.ctx.fillStyle = gameObject.color;
       this.ctx.fill();
       this.ctx.closePath();
     } else {
