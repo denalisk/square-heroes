@@ -15,13 +15,13 @@ export class Player {
   public health = 50;
   public damageModifier = (this.strengthLvl * 2);
   //GEAR
-  public mainHand: Item = new Item("Nothing", "Nothing", [0], ["Nothing"]);
-  public offHand: Item = new Item("Nothing", "Nothing", [0], ["Nothing"]);
-  public headSlot: Item = new Item("Nothing", "Nothing", [0], ["Nothing"]);
-  public chestSlot: Item = new Item("Nothing", "Nothing", [0], ["Nothing"]);
-  public legSlot: Item = new Item("Nothing", "Nothing", [0], ["Nothing"]);
+  public mainHand: UserItem = new UserItem("Nothing", "Nothing", [0], ["Nothing"]);
+  public offHand: UserItem = new UserItem("Nothing", "Nothing", [0], ["Nothing"]);
+  public headSlot: UserItem = new UserItem("Nothing", "Nothing", [0], ["Nothing"]);
+  public chestSlot: UserItem = new UserItem("Nothing", "Nothing", [0], ["Nothing"]);
+  public legSlot: UserItem = new UserItem("Nothing", "Nothing", [0], ["Nothing"]);
 
-  public inventory: Item[] = [new Item("Bear Knuckles", "duoSet", [5], ["attack"]), new Item("Cap", "headSlot", [1], ["defense"]), new Item("Tabard", "chestSlot", [1], ["defense"]), new Item("Torn skirt", "legSlot", [1], ["defense"]), new Item("Health Potion", "Item", [30], ["health"]), new Item("God Sword", "twoHander", [5000], ["strength"]), new Item("Off Hand Scimitar", "offHand", [500, 300], ["attack", "strength"]), new Item("Main Hand Scimitar", "mainHand", [500, 300], ["attack", "strength"])];
+  public inventory: UserItem[] = [new UserItem("Bear Knuckles", "duoSet", [5], ["attack"]), new UserItem("Cap", "headSlot", [1], ["defense"]), new UserItem("Tabard", "chestSlot", [1], ["defense"]), new UserItem("Torn skirt", "legSlot", [1], ["defense"]), new UserItem("Health Potion", "UserItem", [30], ["health"]), new UserItem("God Sword", "twoHander", [5000], ["strength"]), new UserItem("Off Hand Scimitar", "offHand", [500, 300], ["attack", "strength"]), new UserItem("Main Hand Scimitar", "mainHand", [500, 300], ["attack", "strength"])];
   public healthPotions = 1;
 
   godMode(strength: number, attack: number, defense: number, health: number) {
@@ -52,7 +52,7 @@ export class Player {
   }
 }
 
-export class Item {
+export class UserItem {
 
 
   constructor(public name: string, public type: string, public bonus: number[], public stat: string[]){  }

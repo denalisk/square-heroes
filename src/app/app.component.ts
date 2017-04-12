@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { GameObject, Enemy } from './game-object.model';
+import { GameObject, Enemy, Item } from './game-object.model';
 import { Player } from './player.model';
-import { Item } from './player.model';
+import { UserItem } from './player.model';
 
 @Component({
   selector: 'app-root',
@@ -48,7 +48,7 @@ export class AppComponent implements OnInit {
   }
 
   //EQUIP STATS REFACTOR
-  equipGear(item: Item) {
+  equipGear(item: UserItem) {
     for(var i = 0; i < item.stat.length; i++)
     {
       if(item.stat[i] === "attack")
@@ -65,7 +65,7 @@ export class AppComponent implements OnInit {
   }
 
   //UNEQUIP STATS REFACTOR
-  unequipGear(item: Item) {
+  unequipGear(item: UserItem) {
     for(var i = 0; i < item.stat.length; i++)
     {
       if(item.stat[i] === "attack")
@@ -81,7 +81,7 @@ export class AppComponent implements OnInit {
     }
   }
   //EQUIPING AND USING ITEMS
-  useItem(item: Item) {
+  useItem(item: UserItem) {
     if(item.type === "consumable") {
 
     } else if(item.type === "headSlot") {
@@ -102,7 +102,7 @@ export class AppComponent implements OnInit {
     } else if(item.type === "mainHand") {
       if(this.player.offHand.type === "duoSet") {
         this.unequipGear(this.player.offHand);
-        this.player.offHand = new Item("Nothing", "offHand", [0], ["Nothing"]);
+        this.player.offHand = new UserItem("Nothing", "offHand", [0], ["Nothing"]);
       }
       this.unequipGear(this.player.mainHand);
       this.equipGear(item);
@@ -110,11 +110,11 @@ export class AppComponent implements OnInit {
     } else if(item.type === "offHand") {
       if(this.player.mainHand.type === "duoSet") {
         this.unequipGear(this.player.mainHand);
-        this.player.mainHand = new Item("Nothing", "offHand", [0], ["Nothing"]);
+        this.player.mainHand = new UserItem("Nothing", "offHand", [0], ["Nothing"]);
       }
       else if(this.player.mainHand.type === "twoHander") {
         this.unequipGear(this.player.mainHand);
-        this.player.mainHand = new Item("Nothing", "mainHand", [0], ["Nothing"]);
+        this.player.mainHand = new UserItem("Nothing", "mainHand", [0], ["Nothing"]);
       }
       this.unequipGear(this.player.offHand);
       this.equipGear(item);
@@ -124,7 +124,7 @@ export class AppComponent implements OnInit {
       this.unequipGear(this.player.offHand);
       this.equipGear(item);
       this.player.mainHand = item;
-      this.player.offHand = new Item("Nothing", "offHand", [0], ["Nothing"]);
+      this.player.offHand = new UserItem("Nothing", "offHand", [0], ["Nothing"]);
     } else if(item.type === "duoSet") {
       this.unequipGear(this.player.mainHand);
       this.unequipGear(this.player.offHand);
@@ -182,39 +182,39 @@ export class AppComponent implements OnInit {
     this.gameLoop();
   }
 
-  //////////ITEM WHEN ENIME DIES////////////
-  // generateItem(xCoord, yCoord, type) {
-  //   var roll;
-  //   var highArray = [["Health Potion", "consumable"],["Strength Potion", "consumable"],["Attack Potion", "consumable"],["Health Potion", "consumable"]];
-  //   var lowArray = [["Iron Helm", "headSlot"],["Iron Chestplate", "chestSlot"],["Iron Greves", "legSlot"],["Sword", "mainHand"],["Shield", "offHand"],["Claymore", "twoHander"]];
-  //
-  //   //TODO: i need item type
-  //
-  //   newItem.xCoord = xCoord;
-  //   newItem.yCoord = yCoord;
-  //   newItem.yDimension = 5;
-  //   newItem.xDimension = 5;
-  //
-  //   if(type === "high") {
-  //     roll = Math.floor(Math.random() * (Math.floor(highArray.length-1) - Math.ceil(0)) + Math.ceil(0));
-  //     newitem.name = highArray[roll][0];
-  //     newitem.type = highArray[roll][1];
-  //   } else {
-  //     roll = Math.floor(Math.random() * (Math.floor(highArray.length-1) - Math.ceil(0)) + Math.ceil(0));
-  //     newitem.name = lowArray[roll][0];
-  //     newitem.type = lowArray[roll][1];
-  //   }
-  //
-  //   this.objectsArray.push(newItem);
-  //   console.log("You Got a " + newitem.name + " drop")
-  //
-  // }
-
   generateMountain() {
     // This functions will create a mountain object and push it to the objectsArray
     let newMountain = new GameObject('mountain');
     newMountain.shape = 'triangle';
     this.objectsArray.push(newMountain);
+  }
+
+  //////////ITEM WHEN ENIME DIES////////////
+  generateItem(xCoord, yCoord, thing) {
+    var roll;
+    var highArray = [["Health Potion", "consumable"],["Strength Potion", "consumable"],["Attack Potion", "consumable"],["Health Potion", "consumable"]];
+    var lowArray = [["Iron Helm", "headSlot"],["Iron Chestplate", "chestSlot"],["Iron Greves", "legSlot"],["Sword", "mainHand"],["Shield", "offHand"],["Claymore", "twoHander"]];
+
+    var newItem = new Item("item");
+
+    newItem.xCoord = xCoord;
+    newItem.yCoord = yCoord;
+    newItem.yDimension = 5;
+    newItem.xDimension = 5;
+    newItem.type = "item";
+
+    if(thing === "high") {
+      roll = Math.floor(Math.random() * (Math.floor(highArray.length-1) - Math.ceil(0)) + Math.ceil(0));
+      newItem.name = highArray[roll][0];
+      newItem.category = highArray[roll][1];
+    } else {
+      roll = Math.floor(Math.random() * (Math.floor(highArray.length-1) - Math.ceil(0)) + Math.ceil(0));
+      newItem.name = lowArray[roll][0];
+      newItem.category = lowArray[roll][1];
+    }
+
+    this.objectsArray.push(newItem);
+    console.log("You Got a " + newItem.name + " drop")
   }
 
   //////////ATTACK//////////////
@@ -250,8 +250,8 @@ export class AppComponent implements OnInit {
             }
             //DEATH OF ENEMY
             if(this.objectsArray[i].health <= 0) {
-              var xCoord = this.objectsArray[i].xCoord;
-              var yCoord = this.objectsArray[i].yCoord;
+              var xCoord: number = this.objectsArray[i].xCoord;
+              var yCoord: number = this.objectsArray[i].yCoord;
               //EXPERIENCE DROP
               var expDrop = Math.floor(Math.random() * (Math.floor(10) - Math.ceil(5)) + Math.ceil(5));
               this.player.experience += expDrop;
@@ -266,6 +266,7 @@ export class AppComponent implements OnInit {
                 //RESET EXPERIENCE
                 this.player.experience = 0;
               }
+
               this.objectsArray.splice(i, 1);
               // DROPROLL CHANCE
               var dropRoll = Math.floor(Math.random() * (Math.floor(100) - Math.ceil(0)) + Math.ceil(0));
@@ -279,8 +280,8 @@ export class AppComponent implements OnInit {
                 console.log("nope")
               }
             }
-          } else if (this.objectsArray[i].type === "tree"){
 
+          } else if (this.objectsArray[i].type === "tree"){
             //TREE IS BEING ATTACKED
             this.objectsArray.splice(i, 1);
           }
@@ -379,6 +380,12 @@ export class AppComponent implements OnInit {
       this.drawTree(gameObject);
     } else if (gameObject.type === 'mountain') {
       this.drawMountain(gameObject);
+    } else if (gameObject.type === "item") {
+      this.ctx.beginPath();
+      this.ctx.rect(Math.floor(gameObject.xCoord), Math.floor(gameObject.yCoord), Math.floor(gameObject.xDimension), Math.floor(gameObject.yDimension));
+      this.ctx.fillStyle = "yellow";
+      this.ctx.fill();
+      this.ctx.closePath();
     } else {
       this.ctx.beginPath();
       this.ctx.rect(Math.floor(gameObject.xCoord), Math.floor(gameObject.yCoord), Math.floor(gameObject.xDimension), Math.floor(gameObject.yDimension));
