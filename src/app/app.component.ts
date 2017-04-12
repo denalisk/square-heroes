@@ -182,48 +182,46 @@ export class AppComponent implements OnInit {
     this.gameLoop();
   }
 
-<<<<<<< HEAD
   //////////ITEM WHEN ENIME DIES////////////
-  generateItem(xCoord, yCoord, type) {
-    var roll;
-    var highArray = [["Health Potion", "consumable"],["Strength Potion", "consumable"],["Attack Potion", "consumable"],["Health Potion", "consumable"]];
-    var lowArray = [["Iron Helm", "headSlot"],["Iron Chestplate", "chestSlot"],["Iron Greves", "legSlot"],["Sword", "mainHand"],["Shield", "offHand"],["Claymore", "twoHander"]];
+  // generateItem(xCoord, yCoord, type) {
+  //   var roll;
+  //   var highArray = [["Health Potion", "consumable"],["Strength Potion", "consumable"],["Attack Potion", "consumable"],["Health Potion", "consumable"]];
+  //   var lowArray = [["Iron Helm", "headSlot"],["Iron Chestplate", "chestSlot"],["Iron Greves", "legSlot"],["Sword", "mainHand"],["Shield", "offHand"],["Claymore", "twoHander"]];
+  //
+  //   //TODO: i need item type
+  //
+  //   newItem.xCoord = xCoord;
+  //   newItem.yCoord = yCoord;
+  //   newItem.yDimension = 5;
+  //   newItem.xDimension = 5;
+  //
+  //   if(type === "high") {
+  //     roll = Math.floor(Math.random() * (Math.floor(highArray.length-1) - Math.ceil(0)) + Math.ceil(0));
+  //     newitem.name = highArray[roll][0];
+  //     newitem.type = highArray[roll][1];
+  //   } else {
+  //     roll = Math.floor(Math.random() * (Math.floor(highArray.length-1) - Math.ceil(0)) + Math.ceil(0));
+  //     newitem.name = lowArray[roll][0];
+  //     newitem.type = lowArray[roll][1];
+  //   }
+  //
+  //   this.objectsArray.push(newItem);
+  //   console.log("You Got a " + newitem.name + " drop")
+  //
+  // }
 
-    //TODO: i need item type
-
-    newItem.xCoord = xCoord;
-    newItem.yCoord = yCoord;
-    newItem.yDimension = 5;
-    newItem.xDimension = 5;
-
-    if(type === "high") {
-      roll = Math.floor(Math.random() * (Math.floor(highArray.length-1) - Math.ceil(0)) + Math.ceil(0));
-      newitem.name = highArray[roll][0];
-      newitem.type = highArray[roll][1];
-    } else {
-      roll = Math.floor(Math.random() * (Math.floor(highArray.length-1) - Math.ceil(0)) + Math.ceil(0));
-      newitem.name = lowArray[roll][0];
-      newitem.type = lowArray[roll][1];
-    }
-
-    this.objectsArray.push(newItem);
-    console.log("You Got a " + newitem.name + " drop")
-=======
   generateMountain() {
     // This functions will create a mountain object and push it to the objectsArray
     let newMountain = new GameObject('mountain');
     newMountain.shape = 'triangle';
     this.objectsArray.push(newMountain);
->>>>>>> 48c33465466f6d43403681dfdc72bc181d582fdb
   }
 
   //////////ATTACK//////////////
   attack() {
-    console.log("Attack at direction " + this.player.direction)
     this.player.getXAttack();
     this.player.getYAttack();
     for(var i = 0; i < this.objectsArray.length; i++) {
-
       //COLLISION DETETION
       if( this.objectsArray[i].xCoord < (this.canvas.width / 2 - 5) + this.player.xAttack + this.player.xDimension && this.objectsArray[i].xCoord + this.objectsArray[i].xDimension > (this.canvas.width / 2 - 5) + this.player.xAttack && this.objectsArray[i].yCoord < (this.canvas.height / 2 - 5) + this.player.yAttack + this.player.yDimension && this.objectsArray[i].yDimension + this.objectsArray[i].yCoord > (this.canvas.height / 2 - 5) + this.player.yAttack) {
         //COLLISION FOUND
@@ -247,22 +245,16 @@ export class AppComponent implements OnInit {
                 this.objectsArray[i].health -= this.damageDone;
                 console.log(this.objectsArray[i].health + ' enemy health');
               }
-            }
-<<<<<<< HEAD
-            //DEATH OF ENEMY
-            if(this.objectsArray[i].health < 0) {
-              var xCoord: number = this.objectsArray[i].xCoord;
-              var yCoord: number = this.objectsArray[i].yCoord;
-=======
-            else{
+            } else {
               this.hitBool = false;
             }
+            //DEATH OF ENEMY
             if(this.objectsArray[i].health <= 0) {
+              var xCoord = this.objectsArray[i].xCoord;
+              var yCoord = this.objectsArray[i].yCoord;
               //EXPERIENCE DROP
               var expDrop = Math.floor(Math.random() * (Math.floor(10) - Math.ceil(5)) + Math.ceil(5));
-              console.log(expDrop + ' experience drop');
               this.player.experience += expDrop;
-              console.log(this.player.experience + ' player experience before level');
               //LEVEL UP
               //EVERY LEVEL, EXPERIENCE NEEDED TO LEVEL UP IS DOUBLED
               if(this.player.experience >= (this.player.level * 30))
@@ -271,31 +263,24 @@ export class AppComponent implements OnInit {
                 this.player.level += 1;
                 //SKILL POINT GAIN
                 this.player.skillPoints += 2;
-                console.log(this.player.level + ' player level');
                 //RESET EXPERIENCE
                 this.player.experience = 0;
-                console.log(this.player.experience + ' player experience after level');
-                console.log(this.player.skillPoints + ' player skill points');
               }
->>>>>>> 48c33465466f6d43403681dfdc72bc181d582fdb
               this.objectsArray.splice(i, 1);
               // DROPROLL CHANCE
               var dropRoll = Math.floor(Math.random() * (Math.floor(100) - Math.ceil(0)) + Math.ceil(0));
               if (dropRoll < 60) {
                 if (dropRoll < 36) {
-                  this.generateItem(xCoord, yCoord, 'high');
+                  // this.generateItem(xCoord, yCoord, 'high');
                 } else {
-                  this.generateItem(xCoord, yCoord, 'low')
+                  // this.generateItem(xCoord, yCoord, 'low')
                 }
               } else {
                 console.log("nope")
               }
             }
-<<<<<<< HEAD
-          } else if (this.objectsArray[i].type !== "item") {
-=======
           } else if (this.objectsArray[i].type === "tree"){
->>>>>>> 48c33465466f6d43403681dfdc72bc181d582fdb
+
             //TREE IS BEING ATTACKED
             this.objectsArray.splice(i, 1);
           }
@@ -391,23 +376,9 @@ export class AppComponent implements OnInit {
   placeObject(gameObject: GameObject) {
 
     if(gameObject.type === "tree") {
-<<<<<<< HEAD
-      this.ctx.beginPath();
-      this.ctx.rect(Math.floor(gameObject.xCoord), Math.floor(gameObject.yCoord), Math.floor(gameObject.xDimension), Math.floor(gameObject.yDimension));
-      this.ctx.fillStyle = "green";
-      this.ctx.fill();
-      this.ctx.closePath();
-    } else if (gameObject.type === "item") {
-      this.ctx.beginPath();
-      this.ctx.rect(Math.floor(gameObject.xCoord), Math.floor(gameObject.yCoord), Math.floor(gameObject.xDimension), Math.floor(gameObject.yDimension));
-      this.ctx.fillStyle = "yellow";
-      this.ctx.fill();
-      this.ctx.closePath();
-=======
       this.drawTree(gameObject);
     } else if (gameObject.type === 'mountain') {
       this.drawMountain(gameObject);
->>>>>>> 48c33465466f6d43403681dfdc72bc181d582fdb
     } else {
       this.ctx.beginPath();
       this.ctx.rect(Math.floor(gameObject.xCoord), Math.floor(gameObject.yCoord), Math.floor(gameObject.xDimension), Math.floor(gameObject.yDimension));
