@@ -29,10 +29,10 @@ export class AppComponent implements OnInit {
   checkCollisions() {
     let current = this;
     let holdVector: number[] = [current.velocityVector[0], current.velocityVector[1]];
-    for (let item of this.objectsArray) {
-      if (item.collidable) {
+    for (let index = 0; index < current.objectsArray.length; index++) {
+      if (current.objectsArray[index].collidable) {
         let checkItem = new GameObject('object');
-        checkItem.setProperties(item.xCoord, item.yCoord, item.xDimension, item.yDimension, item.color);
+        checkItem.setProperties(current.objectsArray[index].xCoord, current.objectsArray[index].yCoord, current.objectsArray[index].xDimension, current.objectsArray[index].yDimension, current.objectsArray[index].color);
         checkItem.move([holdVector[0], 0]);
         if (current.checkCollide(checkItem)) {
           current.velocityVector[0] = 0;
@@ -40,6 +40,11 @@ export class AppComponent implements OnInit {
         checkItem.move([-holdVector[0], holdVector[1]]);
         if (current.checkCollide(checkItem)) {
           current.velocityVector[1] = 0;
+        }
+      } else if (current.objectsArray[index].type === "item") {
+        if (current.checkCollide(current.objectsArray[index])) {
+          current.player.inventory.push(current.objectsArray[index].userItem);
+          current.objectsArray.splice(index);
         }
       }
     }
@@ -116,7 +121,15 @@ export class AppComponent implements OnInit {
   //EQUIPING AND USING ITEMS
   useItem(item: UserItem) {
     if(item.type === "consumable") {
-
+      if(item.name === "Health Potion") {
+        this.equipGear(item);
+      } else if(item.name === "Strength Potion") {
+        this.equipGear(item);
+      } else if(item.name === "Attack Potion") {
+        this.equipGear(item);
+      } else if(item.name === "Defense Potion") {
+        this.equipGear(item);
+      }
     } else if(item.type === "headSlot") {
       //UNEQUIP GEAR, SET STATS CORRECTLY, THEN EQUIP NEW GEAR
       this.unequipGear(this.player.headSlot);
@@ -241,8 +254,8 @@ export class AppComponent implements OnInit {
   //////////ITEM WHEN ENIME DIES////////////
   generateItem(xCoord, yCoord, thing) {
     var roll;
-    var highArray = [["Health Potion", "consumable"],["Strength Potion", "consumable"],["Attack Potion", "consumable"],["Health Potion", "consumable"]];
-    var lowArray = [["Iron Helm", "headSlot"],["Iron Chestplate", "chestSlot"],["Iron Greves", "legSlot"],["Sword", "mainHand"],["Shield", "offHand"],["Claymore", "twoHander"]];
+    var highArray: UserItem[] = [new UserItem("Health Potion", "consumable", [30], ["health"]), new UserItem("Strength Potion", "consumable", [30], ["strength"]), new UserItem("Attack Potion", "consumable", [30], ["attack"]), new UserItem("Defense Potion", "consumable", [30], ["defense"])];
+    var lowArray: UserItem[] = [new UserItem("Iron Helm", "headSlot", [15], ["defense"]), new UserItem("Iron Chestplate", "chestSlot", [30], ["defense"]), new UserItem("Iron Greves", "legSlot", [20], ["defense"]), new UserItem("Sword", "mainHand", [20, 20], ["strength", "attack"]), new UserItem("Shield", "offHand", [40], ["defense"]), new UserItem("Claymore", "twoHander", [75], ["strength"])];
 
     var newItem = new Item("item");
 
@@ -250,20 +263,17 @@ export class AppComponent implements OnInit {
     newItem.yCoord = yCoord;
     newItem.yDimension = 5;
     newItem.xDimension = 5;
-    newItem.type = "item";
 
     if(thing === "high") {
       roll = Math.floor(Math.random() * (Math.floor(highArray.length-1) - Math.ceil(0)) + Math.ceil(0));
-      newItem.name = highArray[roll][0];
-      newItem.category = highArray[roll][1];
+      newItem.userItem = highArray[roll];
     } else {
       roll = Math.floor(Math.random() * (Math.floor(highArray.length-1) - Math.ceil(0)) + Math.ceil(0));
-      newItem.name = lowArray[roll][0];
-      newItem.category = lowArray[roll][1];
+      newItem.userItem = lowArray[roll];
     }
 
     this.objectsArray.push(newItem);
-    console.log("You Got a " + newItem.name + " drop")
+    console.log("You Got a " + newItem.userItem.name + " drop")
   }
 
   //////////ATTACK//////////////

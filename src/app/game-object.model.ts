@@ -1,3 +1,5 @@
+import { UserItem } from './player.model';
+
 export class GameObject {
   public xDimension: number = Math.floor(Math.random() * (Math.floor(10) - Math.ceil(5)) + Math.ceil(10));
   public yDimension: number = this.xDimension;
@@ -51,7 +53,11 @@ export class Building extends GameObject {
 export class Item extends GameObject {
   public name: string;
   public category: string;
+  public userItem: UserItem;
+
   constructor(public type: string) {
-    super(type);
+
+  super(type)
+  this.collidable = false;
   }
 }
