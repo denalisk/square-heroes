@@ -147,6 +147,9 @@ export class AppComponent implements OnInit {
 
     } else if(item.type === "headSlot") {
       //UNEQUIP GEAR, SET STATS CORRECTLY, THEN EQUIP NEW GEAR
+      // if(item.name === "Mithril Helm") {
+      //
+      // }
       this.unequipGear(this.player.headSlot);
       this.equipGear(item);
       this.player.headSlot = item;
@@ -539,7 +542,7 @@ export class AppComponent implements OnInit {
       this.ctx.closePath();
     }
   }
-  
+
   gameLoop() {
     var current = this;
     var attacking: boolean = false;
