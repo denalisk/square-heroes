@@ -2,16 +2,20 @@
   <h1>
     {{title}}
   </h1>
-  <h1>atk: {{player.attackLvl}}, str: {{player.strengthLvl}}, def: {{player.defenseLvl}}</h1>
-
   <div class="game">
     <!-- PLAYER -->
     <div class="player-info">
       <h4>Level {{player.level}}</h4>
       <p>Experience {{player.experience}}</p>
-      <div class="health">
-        <h4>Health: {{player.health}} </h4> <button class="healthBtn" (click)="useHealthPot()">Use Health Potion</button>
-      </div>
+      <p>Attack: {{player.attackLvl}}, Strength: {{player.strengthLvl}}, Defense: {{player.defenseLvl}}</p>
+    </div>
+    <div class="health">
+      <h4>Health: {{player.health}} </h4> <button class="healthBtn" (click)="useHealthPot()">Use Health Potion</button>
+    </div>
+    <div class="potions">
+      <button (click)="useStrengthPot()">STR POT</button>
+      <button (click)="useAttackPot()">ATK POT</button>
+      <button (click)="useDefensePot()">DEF POT</button>
     </div>
     <div class="stats" *ngIf="player.skillPoints > 0">
       <h3>Level up!</h3>
@@ -41,10 +45,17 @@
     <!-- INVENTORY -->
     <div class="inventory">
       <h4>Inventory</h4>
-      <p>Health Potions: {{player.healthPotions}}</p>
-      <div *ngFor="let item of player.inventory">
-        <div class="healthPotions" *ngIf="item.name !=='Health Potion'">
-          <p>{{item.name}} <button (click)="useItem(item)">Use</button></p>
+      <div class="inventory-list">
+        <ul>
+          <li>Health Potions: {{player.healthPotions}}</li>
+          <li>Strength Potions: {{player.strengthPotions}}</li>
+          <li>Attack Potions: {{player.attackPotions}}</li>
+          <li>Defense Potions: {{player.defensePotions}}</li>
+        </ul>
+        <div *ngFor="let item of player.inventory">
+          <div class="healthPotions" *ngIf="item.name !=='Health Potion'">
+            <p>{{item.name}} <button (click)="useItem(item)">Use</button></p>
+          </div>
         </div>
       </div>
     </div>

@@ -78,7 +78,28 @@ export class AppComponent implements OnInit {
         }
       } else if (current.objectsArray[index].type === "item") {
         if (current.checkCollide(current.objectsArray[index])) {
-          current.player.inventory.push(current.objectsArray[index].userItem);
+          //CHECK IF ITEM IS A POTION, IF SO, ADD IT TO THE POTION LIST
+          if(current.objectsArray[index].userItem.name === "Health Potion") {
+            current.player.healthPotions += 1;
+          } else if(current.objectsArray[index].userItem.name === "Strength Potion") {
+            current.player.strengthPotions += 1;
+          } else if(current.objectsArray[index].userItem.name === "Attack Potion") {
+            current.player.attackPotions += 1;
+          } else if(current.objectsArray[index].userItem.name === "Defense Potion") {
+            current.player.defensePotions += 1;
+          } else {
+            var haveItem = false;
+            for(var i = 0; i < current.player.inventory.length; i++)
+            {
+              if(current.player.inventory[i].name === current.objectsArray[index].userItem.name) {
+                haveItem = true;
+              }
+            }
+            if(haveItem === false) {
+              current.player.inventory.push(current.objectsArray[index].userItem);
+            }
+          }
+
           current.objectsArray.splice(index);
         }
       }
@@ -153,20 +174,17 @@ export class AppComponent implements OnInit {
       }
     }
   }
+
   //EQUIPING AND USING ITEMS
   useItem(item: UserItem) {
     if(item.type === "consumable") {
-      if(item.name === "Health Potion") {
-        this.equipGear(item);
-      } else if(item.name === "Strength Potion") {
-        this.equipGear(item);
-      } else if(item.name === "Attack Potion") {
-        this.equipGear(item);
-      } else if(item.name === "Defense Potion") {
-        this.equipGear(item);
-      }
+
+
     } else if(item.type === "headSlot") {
       //UNEQUIP GEAR, SET STATS CORRECTLY, THEN EQUIP NEW GEAR
+      // if(item.name === "Mithril Helm") {
+      //
+      // }
       this.unequipGear(this.player.headSlot);
       this.equipGear(item);
       this.player.headSlot = item;
@@ -216,11 +234,33 @@ export class AppComponent implements OnInit {
     }
   }
 
+  //USE POTIONS
   useHealthPot() {
     if(this.player.healthPotions > 0)
     {
       this.player.health += 50;
       this.player.healthPotions -= 1;
+    }
+  }
+  useStrengthPot() {
+    if(this.player.strengthPotions > 0)
+    {
+      this.player.strengthLvl += 50;
+      this.player.strengthPotions -= 1;
+    }
+  }
+  useAttackPot() {
+    if(this.player.attackPotions > 0)
+    {
+      this.player.attackLvl += 50;
+      this.player.attackPotions -= 1;
+    }
+  }
+  useDefensePot() {
+    if(this.player.defensePotions > 0)
+    {
+      this.player.defenseLvl += 50;
+      this.player.defensePotions -= 1;
     }
   }
 
@@ -249,6 +289,19 @@ export class AppComponent implements OnInit {
     var newVillage = new Village("village");
     newVillage.setProperties(-800, 170, 500, 500, "gray")
     this.objectsArray.push(newVillage);
+    //Add BOSS to village
+    var bossEnemy = new Enemy('enemy');
+    bossEnemy.setProperties((newVillage.xCoord + (newVillage.xDimension/2)), (newVillage.yCoord + (newVillage.yDimension/2)), 50, 50, "#6b245f");
+    console.log("Boss spawned at: " + bossEnemy.xCoord + ", " + bossEnemy.yCoord);
+    this.objectsArray.push(bossEnemy);
+    //BOSS Minions
+    for(let i = 10; i < 100; i += 10) {
+      var bossMinion = new Enemy('enemy');
+      bossMinion.setProperties((newVillage.xCoord + (newVillage.xDimension/2) + i), (newVillage.yCoord + (newVillage.yDimension/2) + i), 10, 10, "#774f9b");
+      console.log("Boss enemy spawned at:" + bossMinion.xCoord + ", " + bossMinion.yCoord);
+      this.objectsArray.push(bossMinion);
+    }
+
     for(let i = 0; i < newVillage.buildings; i++) {
       var newBuilding = new Building("building", newVillage);
       this.objectsArray.push(newBuilding);
@@ -270,6 +323,7 @@ export class AppComponent implements OnInit {
       this.objectsArray.push(new Enemy("enemy"));
     }
 
+
     this.gameLoop();
   }
 
@@ -290,7 +344,10 @@ export class AppComponent implements OnInit {
   generateItem(xCoord, yCoord, thing) {
     var roll;
     var highArray: UserItem[] = [new UserItem("Health Potion", "consumable", [30], ["health"]), new UserItem("Strength Potion", "consumable", [30], ["strength"]), new UserItem("Attack Potion", "consumable", [30], ["attack"]), new UserItem("Defense Potion", "consumable", [30], ["defense"])];
-    var lowArray: UserItem[] = [new UserItem("Iron Helm", "headSlot", [15], ["defense"]), new UserItem("Iron Chestplate", "chestSlot", [30], ["defense"]), new UserItem("Iron Greves", "legSlot", [20], ["defense"]), new UserItem("Sword", "mainHand", [20, 20], ["strength", "attack"]), new UserItem("Shield", "offHand", [40], ["defense"]), new UserItem("Claymore", "twoHander", [75], ["strength"])];
+    var lowGear: UserItem[] = [new UserItem("Iron Helm", "headSlot", [15], ["defense"]), new UserItem("Iron Chestplate", "chestSlot", [30], ["defense"]), new UserItem("Iron Greves", "legSlot", [20], ["defense"]), new UserItem("Sword", "mainHand", [20, 20], ["strength", "attack"]), new UserItem("Shield", "offHand", [40], ["defense"]), new UserItem("Claymore", "twoHander", [75], ["strength"])];
+    var medGear: UserItem[] = [new UserItem("Mithril Helm", "headSlot", [40], ["defense"]), new UserItem("Mithril Chestplate", "chestSlot", [55], ["defense"]), new UserItem("Mithril Greves", "legSlot", [45], ["defense"]), new UserItem("Katana", "twoHander", [60, 180], ["attack", "strength"]), new UserItem("Nunchucks", "duoSet", [180, 60], ["attack", "strength"]), new UserItem("MH Scimitar", "mainHand", [110, 110], ["attack", "strength"]), new UserItem("OH Scimitar", "offHand", [110, 110], ["attack", "strength"])];
+    var rareGear: UserItem[] = [new UserItem("Robinhood Hat", "headSlot", [250], ["attack"]), new UserItem("Gladiator Chestplate", "chestSlot", [250], ["strength"]), new UserItem("MH Kitten Bomb", "mainHand", [200, 200], ["attack", "strength"]), new UserItem("OH Kitten Bomb", "offHand", [200, 200], ["attack", "strength"])];
+    var epicGear: UserItem[] = [new UserItem("Chad Legs(ULTIMA)", "legSlot", [300], ["attack"]),  new UserItem("Blue Light Saber", "mainHand", [300, 300], ["attack", "strength"]), new UserItem("Green Light Saber", "offHand", [300, 300], ["attack", "strength"]), new UserItem("Illidan's Warglaive", "twoHander", [500, 100], ["attack", "strength"])];
 
     var newItem = new Item("item");
 
@@ -303,8 +360,20 @@ export class AppComponent implements OnInit {
       roll = Math.floor(Math.random() * (Math.floor(highArray.length-1) - Math.ceil(0)) + Math.ceil(0));
       newItem.userItem = highArray[roll];
     } else {
-      roll = Math.floor(Math.random() * (Math.floor(highArray.length-1) - Math.ceil(0)) + Math.ceil(0));
-      newItem.userItem = lowArray[roll];
+      var selectDropTable = Math.floor(Math.random() * (Math.floor(100) - Math.ceil(0)) + Math.ceil(0));
+      if(selectDropTable >= 0 && 60 > selectDropTable) {
+        roll = Math.floor(Math.random() * (Math.floor(lowGear.length-1) - Math.ceil(0)) + Math.ceil(0));
+        newItem.userItem = lowGear[roll];
+      } else if(selectDropTable >= 60 && 85 > selectDropTable) {
+        roll = Math.floor(Math.random() * (Math.floor(medGear.length-1) - Math.ceil(0)) + Math.ceil(0));
+        newItem.userItem = medGear[roll];
+      } else if(selectDropTable >= 85 && 95 > selectDropTable) {
+        roll = Math.floor(Math.random() * (Math.floor(rareGear.length-1) - Math.ceil(0)) + Math.ceil(0));
+        newItem.userItem = rareGear[roll];
+      } else if(selectDropTable >= 95) {
+        roll = Math.floor(Math.random() * (Math.floor(epicGear.length-1) - Math.ceil(0)) + Math.ceil(0));
+        newItem.userItem = epicGear[roll];
+      }
     }
 
     this.objectsArray.push(newItem);
@@ -364,8 +433,8 @@ export class AppComponent implements OnInit {
               this.objectsArray.splice(i, 1);
               // DROPROLL CHANCE
               var dropRoll = Math.floor(Math.random() * (Math.floor(100) - Math.ceil(0)) + Math.ceil(0));
-              if (dropRoll < 60) {
-                if (dropRoll < 36) {
+              if (dropRoll < 40) {
+                if (dropRoll < 30) {
                   this.generateItem(xCoord, yCoord, 'high');
                 } else {
                   this.generateItem(xCoord, yCoord, 'low');
@@ -512,7 +581,7 @@ export class AppComponent implements OnInit {
     } else {
       this.ctx.beginPath();
       this.ctx.rect(Math.floor(gameObject.xCoord), Math.floor(gameObject.yCoord), Math.floor(gameObject.xDimension), Math.floor(gameObject.yDimension));
-      this.ctx.fillStyle = "red";
+      this.ctx.fillStyle = gameObject.color;
       this.ctx.fill();
       this.ctx.closePath();
     }
@@ -573,34 +642,37 @@ export class AppComponent implements OnInit {
 
     //Player attack animations(NEEDS REFACTOR)
 
+    //REFERENCE
+    //current.ctx.rect(xCoord, yCoord, xDimension, yDimension)   ;
+
     if(attacking && current.player.direction === "south") {
         current.ctx.beginPath();
-        current.ctx.rect(((current.canvas.width / 2) - 5), ((current.canvas.height / 2) + 5), 3, 8);
-        current.ctx.fillStyle = "blue";
+        current.ctx.rect(((current.canvas.width / 2) - 5), ((current.canvas.height / 2) + 5), 3, 5);
+        current.ctx.fillStyle = "teal";
         current.ctx.fill();
         current.ctx.closePath();
     }
 
     if(attacking && current.player.direction === "north") {
         current.ctx.beginPath();
-        current.ctx.rect(((current.canvas.width / 2) + 2), ((current.canvas.height / 2) - 10), 3, 8);
-        current.ctx.fillStyle = "blue";
+        current.ctx.rect(((current.canvas.width / 2) + 2), ((current.canvas.height / 2) - 10), 3, 5);
+        current.ctx.fillStyle = "teal";
         current.ctx.fill();
         current.ctx.closePath();
     }
 
     if(attacking && current.player.direction === "west") {
         current.ctx.beginPath();
-        current.ctx.rect(((current.canvas.width / 2) - 10), ((current.canvas.height / 2) + 2), 8, 3);
-        current.ctx.fillStyle = "blue";
+        current.ctx.rect(((current.canvas.width / 2) - 10), ((current.canvas.height / 2) - 5), 5, 3);
+        current.ctx.fillStyle = "teal";
         current.ctx.fill();
         current.ctx.closePath();
     }
 
     if(attacking && current.player.direction === "east") {
         current.ctx.beginPath();
-        current.ctx.rect(((current.canvas.width / 2) + 5), ((current.canvas.height / 2) + 2), 8, 3);
-        current.ctx.fillStyle = "blue";
+        current.ctx.rect(((current.canvas.width / 2) + 5), ((current.canvas.height / 2) + 2), 5, 3);
+        current.ctx.fillStyle = "teal";
         current.ctx.fill();
         current.ctx.closePath();
     }

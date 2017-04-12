@@ -1,12 +1,21 @@
+@import url('https://fonts.googleapis.com/css?family=Press+Start+2P');
+
 .body {
   margin-top: 50px;
+}
+
+h1 {
+  font-family: 'Press Start 2P', cursive;
+  color: #85e86f;
+  margin-left: 50px;
+  margin-bottom: 20px;
 }
 
 .game {
   margin-left: 50px;
 }
 
-.player-info, .combat-info, .inventory, .equipment, .health, .stats {
+.player-info, .combat-info, .inventory, .equipment, .health, .stats, .potions {
   position: absolute;
 }
 
@@ -16,14 +25,12 @@
 }
 
 .player-info {
-  margin: 10px;
+  margin: 0 10px 10px 10px;
 }
 
 .health {
   text-align: center;
-  top: 400px;
-  left: 450px;
-  width: 100px;
+  margin: 420px 0 0 435px;
 }
 
 .health button {
@@ -38,11 +45,23 @@
   margin-top: 200px;
   margin-left: 800px;
   width: 200px;
+  height: 300px;
+}
+
+.inventory-list {
+  height: 250px;
+  overflow-y: scroll;
 }
 
 .stats {
   margin-left: 450px;
 }
+
 .stats button {
   opacity: 0.8;
+}
+
+.potions {
+  margin-top: 460px;
+  margin-left: 20px;
 }

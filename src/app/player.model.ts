@@ -22,7 +22,11 @@ export class Player {
   public legSlot: UserItem = new UserItem("Nothing", "Nothing", [0], ["Nothing"]);
 
   public inventory: UserItem[] = [new UserItem("Bear Knuckles", "duoSet", [5], ["attack"]), new UserItem("Cap", "headSlot", [1], ["defense"]), new UserItem("Tabard", "chestSlot", [1], ["defense"]), new UserItem("Torn skirt", "legSlot", [1], ["defense"]), new UserItem("Health Potion", "UserItem", [30], ["health"]), new UserItem("God Sword", "twoHander", [5000], ["strength"]), new UserItem("Off Hand Scimitar", "offHand", [500, 300], ["attack", "strength"]), new UserItem("Main Hand Scimitar", "mainHand", [500, 300], ["attack", "strength"])];
+  //CONSUMABLES
   public healthPotions = 1;
+  public strengthPotions = 0;
+  public attackPotions = 0;
+  public defensePotions = 0;
 
   godMode(strength: number, attack: number, defense: number, health: number) {
     this.strengthLvl = strength;
