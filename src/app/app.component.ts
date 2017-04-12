@@ -28,19 +28,36 @@ export class AppComponent implements OnInit {
   currentEnemy = null;
   hitBool: boolean;
 
+
+
   //////////CONSTRUCTOR/////////////////
   constructor(private http: Http) {}
 
   // API CALLS
-  makeCall() {
+  searchquery = '';
+  tweetsdata;
+
+  makecall() {
     let headers = new Headers();
 
     // Below looks like something is wrong
     headers.append('Content-Type', 'application/X-www-form-urlencoded');
 
     // Below looks to be the main post call. Do we need a /authorize route?
-    this.http.post('http://localhost:4200/authorize', {headers: headers}).subscribe((results) => {console.log(results);
+    this.http.post('http://localhost:3000/authorize', {headers: headers}).subscribe((results) => {console.log(results);
     })
+  }
+
+  searchcall(){
+    var headers = new Headers();
+    var searchterm = 'query=' + this.searchquery;
+
+    headers.append('Content-Type', 'application/X-www-form-urlencoded');
+    // headers.append('Access-Control-Allow-Methods', 'POST,GET,OPTIONS,PUT,DELETE');
+
+    this.http.post('http://localhost:3000/search', searchterm, {headers: headers}).subscribe((res) => {
+      this.tweetsdata = res.json().data.statuses;
+    });
   }
 
   // COLLISION DETECTION
