@@ -586,9 +586,9 @@ export class AppComponent implements OnInit {
             //ENEMY IS BEING ATTACKED
             //ATTACK AND DAMAGE ROLLS FOR COMBAT
             //ATTACK ROLL
-            this.atkRoll = Math.floor(Math.random() * (Math.floor(100) - Math.ceil(1)) + Math.ceil(1));
+            this.atkRoll = Math.floor(Math.random() * (Math.floor(200) - Math.ceil(1)) + Math.ceil(1));
             console.log(this.atkRoll + ' atk roll');
-            if(this.atkRoll > (50 - this.player.attackLvl))
+            if(this.atkRoll > (100 - (this.player.attackLvl / 2)))
             {
               this.hitBool = true;
               //DAMAGE ROLL
