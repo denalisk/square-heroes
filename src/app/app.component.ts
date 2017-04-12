@@ -43,7 +43,18 @@ export class AppComponent implements OnInit {
         }
       } else if (current.objectsArray[index].type === "item") {
         if (current.checkCollide(current.objectsArray[index])) {
-          current.player.inventory.push(current.objectsArray[index].userItem);
+          if(current.objectsArray[index].userItem.name === "Health Potion") {
+            current.player.healthPotions += 1;
+          } else if(current.objectsArray[index].userItem.name === "Strength Potion") {
+            current.player.strengthPotions += 1;
+          } else if(current.objectsArray[index].userItem.name === "Attack Potion") {
+            current.player.attackPotions += 1;
+          } else if(current.objectsArray[index].userItem.name === "Defense Potion") {
+            current.player.defensePotions += 1;
+          } else {
+            current.player.inventory.push(current.objectsArray[index].userItem);
+          }
+
           current.objectsArray.splice(index);
         }
       }
@@ -130,6 +141,7 @@ export class AppComponent implements OnInit {
       } else if(item.name === "Defense Potion") {
         this.equipGear(item);
       }
+
     } else if(item.type === "headSlot") {
       //UNEQUIP GEAR, SET STATS CORRECTLY, THEN EQUIP NEW GEAR
       this.unequipGear(this.player.headSlot);
