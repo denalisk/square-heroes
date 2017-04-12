@@ -291,7 +291,10 @@ export class AppComponent implements OnInit {
   generateItem(xCoord, yCoord, thing) {
     var roll;
     var highArray: UserItem[] = [new UserItem("Health Potion", "consumable", [30], ["health"]), new UserItem("Strength Potion", "consumable", [30], ["strength"]), new UserItem("Attack Potion", "consumable", [30], ["attack"]), new UserItem("Defense Potion", "consumable", [30], ["defense"])];
-    var lowArray: UserItem[] = [new UserItem("Iron Helm", "headSlot", [15], ["defense"]), new UserItem("Iron Chestplate", "chestSlot", [30], ["defense"]), new UserItem("Iron Greves", "legSlot", [20], ["defense"]), new UserItem("Sword", "mainHand", [20, 20], ["strength", "attack"]), new UserItem("Shield", "offHand", [40], ["defense"]), new UserItem("Claymore", "twoHander", [75], ["strength"])];
+    var lowGear: UserItem[] = [new UserItem("Iron Helm", "headSlot", [15], ["defense"]), new UserItem("Iron Chestplate", "chestSlot", [30], ["defense"]), new UserItem("Iron Greves", "legSlot", [20], ["defense"]), new UserItem("Sword", "mainHand", [20, 20], ["strength", "attack"]), new UserItem("Shield", "offHand", [40], ["defense"]), new UserItem("Claymore", "twoHander", [75], ["strength"])];
+    var medGear: UserItem[] = [new UserItem("Mithril Helm", "headSlot", [40], ["defense"]), new UserItem("Mithril Chestplate", "chestSlot", [55], ["defense"]), new UserItem("Mithril Greves", "legSlot", [45], ["defense"]), new UserItem("Katana", "twoHander", [60, 180], ["attack", "strength"]), new UserItem("Nunchucks", "duoSet", [180, 60], ["attack", "strength"]), new UserItem("MH Scimitar", "mainHand", [110, 110], ["attack", "strength"]), new UserItem("OH Scimitar", "offHand", [110, 110], ["attack", "strength"])];
+    var rareGear: UserItem[] = [new UserItem("Robinhood Hat", "headSlot", [250], ["attack"]), new UserItem("Gladiator Chestplate", "chestSlot", [250], ["strength"]), new UserItem("MH Kitten Bomb", "mainHand", [200, 200], ["attack", "strength"]), new UserItem("OH Kitten Bomb", "offHand", [200, 200], ["attack", "strength"])];
+    var epicGear: UserItem[] = [new UserItem("Chad Legs(ULTIMA)", "legSlot", [300], ["attack"]),  new UserItem("Blue Light Saber", "mainHand", [300, 300], ["attack", "strength"]), new UserItem("Green Light Saber", "offHand", [300, 300], ["attack", "strength"]), new UserItem("Illidan's Warglaive", "twoHander", [500, 100], ["attack", "strength"])];
 
     var newItem = new Item("item");
 
@@ -304,8 +307,20 @@ export class AppComponent implements OnInit {
       roll = Math.floor(Math.random() * (Math.floor(highArray.length-1) - Math.ceil(0)) + Math.ceil(0));
       newItem.userItem = highArray[roll];
     } else {
-      roll = Math.floor(Math.random() * (Math.floor(highArray.length-1) - Math.ceil(0)) + Math.ceil(0));
-      newItem.userItem = lowArray[roll];
+      var selectDropTable = Math.floor(Math.random() * (Math.floor(100) - Math.ceil(0)) + Math.ceil(0));
+      if(selectDropTable >= 0 && 60 > selectDropTable) {
+        roll = Math.floor(Math.random() * (Math.floor(lowGear.length-1) - Math.ceil(0)) + Math.ceil(0));
+        newItem.userItem = lowGear[roll];
+      } else if(selectDropTable >= 60 && 85 > selectDropTable) {
+        roll = Math.floor(Math.random() * (Math.floor(medGear.length-1) - Math.ceil(0)) + Math.ceil(0));
+        newItem.userItem = medGear[roll];
+      } else if(selectDropTable >= 85 && 95 > selectDropTable) {
+        roll = Math.floor(Math.random() * (Math.floor(rareGear.length-1) - Math.ceil(0)) + Math.ceil(0));
+        newItem.userItem = rareGear[roll];
+      } else if(selectDropTable >= 95) {
+        roll = Math.floor(Math.random() * (Math.floor(epicGear.length-1) - Math.ceil(0)) + Math.ceil(0));
+        newItem.userItem = epicGear[roll];
+      }
     }
 
     this.objectsArray.push(newItem);
@@ -365,8 +380,8 @@ export class AppComponent implements OnInit {
               this.objectsArray.splice(i, 1);
               // DROPROLL CHANCE
               var dropRoll = Math.floor(Math.random() * (Math.floor(100) - Math.ceil(0)) + Math.ceil(0));
-              if (dropRoll < 60) {
-                if (dropRoll < 36) {
+              if (dropRoll < 40) {
+                if (dropRoll < 30) {
                   this.generateItem(xCoord, yCoord, 'high');
                 } else {
                   this.generateItem(xCoord, yCoord, 'low');
