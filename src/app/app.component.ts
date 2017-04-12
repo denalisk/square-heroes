@@ -201,7 +201,7 @@ export class AppComponent implements OnInit {
           alert("Defense level needs to be atleast 20 to wear this, scrub");
         }
       } else if(item.name === "Robinhood Hat") {
-        if(this.player.defenseLvl >= 40) {
+        if(this.player.defenseLvl >= 100) {
           this.unequipGear(this.player.headSlot);
           this.equipGear(item);
           this.player.headSlot = item;
@@ -232,7 +232,7 @@ export class AppComponent implements OnInit {
           alert("Defense level needs to be atleast 20 to wear this, scrub");
         }
       } else if(item.name === "Gladiator Chestplate") {
-        if(this.player.defenseLvl >= 40) {
+        if(this.player.defenseLvl >= 100) {
           this.unequipGear(this.player.chestSlot);
           this.equipGear(item);
           this.player.chestSlot = item;
@@ -263,7 +263,7 @@ export class AppComponent implements OnInit {
           alert("Defense level needs to be atleast 20 to wear this, scrub");
         }
       } else if(item.name === "Chad Legs(ULTIMA)") {
-        if(this.player.defenseLvl >= 40) {
+        if(this.player.defenseLvl >= 100) {
           this.unequipGear(this.player.legSlot);
           this.equipGear(item);
           this.player.legSlot = item;
@@ -292,7 +292,7 @@ export class AppComponent implements OnInit {
           alert("You need atleast 20 attack to equip this weapon, scrub");
         }
       } else if(item.name === "MH Kiteen Bomb") {
-        if(this.player.attackLvl >= 40) {
+        if(this.player.attackLvl >= 60) {
           this.unequipGear(this.player.mainHand);
           this.equipGear(item);
           this.player.mainHand = item;
@@ -300,7 +300,7 @@ export class AppComponent implements OnInit {
           alert("You need atleast 40 attack throw the kitties");
         }
       } else if(item.name === "Blue Light Saber") {
-        if(this.player.attackLvl >= 40) {
+        if(this.player.attackLvl >= 100) {
           this.unequipGear(this.player.mainHand);
           this.equipGear(item);
           this.player.mainHand = item;
@@ -330,7 +330,7 @@ export class AppComponent implements OnInit {
           alert("You need atleast 20 attack to equip this weapon, scrub");
         }
       } else if(item.name === "OH Kiteen Bomb") {
-        if(this.player.attackLvl >= 40) {
+        if(this.player.attackLvl >= 60) {
           this.unequipGear(this.player.mainHand);
           this.equipGear(item);
           this.player.mainHand = item;
@@ -338,7 +338,7 @@ export class AppComponent implements OnInit {
           alert("You need atleast 40 attack throw the kitties");
         }
       } else if(item.name === "Green Light Saber") {
-        if(this.player.attackLvl >= 40) {
+        if(this.player.attackLvl >= 100) {
           this.unequipGear(this.player.mainHand);
           this.equipGear(item);
           this.player.mainHand = item;
@@ -351,7 +351,7 @@ export class AppComponent implements OnInit {
       this.player.offHand = item;
     } else if(item.type === "twoHander") {
       if(item.name === "Claymore") {
-        if(this.player.attackLvl >= 10 && this.player.strengthLvl >= 10) {
+        if(this.player.attackLvl >= 15 && this.player.strengthLvl >= 15) {
           this.unequipGear(this.player.mainHand);
           this.unequipGear(this.player.offHand);
           this.equipGear(item);
@@ -361,7 +361,7 @@ export class AppComponent implements OnInit {
           alert("You attack expertise must be 10 or greater to wield these, kneenja");
         }
       } else if(item.name === "Katana") {
-          if(this.player.attackLvl >= 20) {
+          if(this.player.attackLvl >= 60) {
             this.unequipGear(this.player.mainHand);
             this.unequipGear(this.player.offHand);
             this.equipGear(item);
@@ -371,7 +371,7 @@ export class AppComponent implements OnInit {
             alert("You think you can wield the Katana, young one, try again when your attack level is 20");
           }
         } else if(item.name === "Illidan's Warglaive") {
-          if(this.player.attackLvl >= 40) {
+          if(this.player.attackLvl >= 100) {
             this.unequipGear(this.player.mainHand);
             this.unequipGear(this.player.offHand);
             this.equipGear(item);
@@ -389,7 +389,7 @@ export class AppComponent implements OnInit {
         }
     } else if(item.type === "duoSet") {
       if(item.name === "Nunchucks") {
-        if(this.player.attackLvl >= 15) {
+        if(this.player.attackLvl >= 20) {
           this.unequipGear(this.player.mainHand);
           this.unequipGear(this.player.offHand);
           this.player.mainHand = item;
