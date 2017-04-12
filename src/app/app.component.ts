@@ -635,11 +635,13 @@ export class AppComponent implements OnInit {
     this.ctx.closePath();
   }
 
+  drawCustomRectangle( ) {}
+
   attackAnimation(attacking: boolean) {
     let current = this;
     var attackRectangle = {
       // each array will be: [starting xCoord, starting yCoord, xDimension, yDimension]
-      south: [((current.canvas.width / 2) + 2), ((current.canvas.height / 2) - 10), 3, 5],
+      south: [((current.canvas.width / 2) - 5), ((current.canvas.height / 2) + 5), 3, 5],
       north: [((current.canvas.width / 2) + 2), ((current.canvas.height / 2) - 10), 3, 5],
       west: [((current.canvas.width / 2) - 10), ((current.canvas.height / 2) - 5), 5, 3],
       east: [((current.canvas.width / 2) + 5), ((current.canvas.height / 2) + 2), 5, 3]
@@ -647,37 +649,6 @@ export class AppComponent implements OnInit {
     if (attacking) {
       current.drawRectangle(attackRectangle[current.player.direction][0], attackRectangle[current.player.direction][1], attackRectangle[current.player.direction][2], attackRectangle[current.player.direction][3], 'black')
     }
-    // if(attacking && current.player.direction === "south") {
-    //     current.ctx.beginPath();
-    //     current.swingSouthAnimation();
-    //     current.ctx.fillStyle = "teal";
-    //     current.ctx.fill();
-    //     current.ctx.closePath();
-    // }
-    //
-    // if(attacking && current.player.direction === "north") {
-    //     current.ctx.beginPath();
-    //     current.ctx.rect(((current.canvas.width / 2) + 2), ((current.canvas.height / 2) - 10), 3, 5);
-    //     current.ctx.fillStyle = "teal";
-    //     current.ctx.fill();
-    //     current.ctx.closePath();
-    // }
-    //
-    // if(attacking && current.player.direction === "west") {
-    //     current.ctx.beginPath();
-    //     current.ctx.rect(((current.canvas.width / 2) - 10), ((current.canvas.height / 2) - 5), 5, 3);
-    //     current.ctx.fillStyle = "teal";
-    //     current.ctx.fill();
-    //     current.ctx.closePath();
-    // }
-    //
-    // if(attacking && current.player.direction === "east") {
-    //     current.ctx.beginPath();
-    //     current.ctx.rect(((current.canvas.width / 2) + 5), ((current.canvas.height / 2) + 2), 5, 3);
-    //     current.ctx.fillStyle = "teal";
-    //     current.ctx.fill();
-    //     current.ctx.closePath();
-    // }
   }
 
   gameLoop() {
