@@ -24,6 +24,7 @@ export class AppComponent implements OnInit {
   damageDone = 0;
   currentEnemy = null;
   hitBool: boolean;
+  southSwingCounter: number = 0;
 
   // COLLISION DETECTION
   checkCollisions() {
@@ -552,6 +553,15 @@ export class AppComponent implements OnInit {
     }
   }
 
+  swingSouthAnimation(current) {
+    var southSwingArray = [[((current.canvas.width / 2) - 5), ((current.canvas.height / 2) + 5), 3, 5], [((current.canvas.width / 2) - 5), ((current.canvas.height / 2) + 7), 3, 5]];
+    current.ctx.rect(southSwingArray[this.southSwingCounter][0], southSwingArray[this.southSwingCounter][1], southSwingArray[this.southSwingCounter][2], southSwingArray[this.southSwingCounter][3]);
+    this.southSwingCounter += 1
+    if (this.southSwingCounter === 2) {
+      this.southSwingCounter = 0;
+    }
+  }
+
   gameLoop() {
     var current = this;
     var attacking: boolean = false;
@@ -612,7 +622,7 @@ export class AppComponent implements OnInit {
 
     if(attacking && current.player.direction === "south") {
         current.ctx.beginPath();
-        current.ctx.rect(((current.canvas.width / 2) - 5), ((current.canvas.height / 2) + 5), 3, 5);
+        current.swingSouthAnimation(current);
         current.ctx.fillStyle = "teal";
         current.ctx.fill();
         current.ctx.closePath();
