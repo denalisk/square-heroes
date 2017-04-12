@@ -305,9 +305,9 @@ export class AppComponent implements OnInit {
               var dropRoll = Math.floor(Math.random() * (Math.floor(100) - Math.ceil(0)) + Math.ceil(0));
               if (dropRoll < 60) {
                 if (dropRoll < 36) {
-                  // this.generateItem(xCoord, yCoord, 'high');
+                  this.generateItem(xCoord, yCoord, 'high');
                 } else {
-                  // this.generateItem(xCoord, yCoord, 'low')
+                  this.generateItem(xCoord, yCoord, 'low');
                 }
               } else {
                 console.log("nope")
