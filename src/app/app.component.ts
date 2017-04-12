@@ -474,16 +474,17 @@ export class AppComponent implements OnInit {
     this.generateBoss()
 
     //Trees
-    var numberOfTrees = Math.floor(Math.random() * (Math.floor(40) - Math.ceil(20)) + Math.ceil(20));
+    var numberOfTrees = Math.floor(Math.random() * (Math.floor(100) - Math.ceil(60)) + Math.ceil(100));
     for(var i = 0; i < numberOfTrees; i++) {
       this.objectsArray.push(new GameObject("tree"));
     }
     //Mountains
-    for (let index = 0; index < 10; index++) {
+    var numberofMountains = Math.floor(Math.random() * (Math.floor(60) - Math.ceil(40)) + Math.ceil(60));
+    for(var i = 0; i < numberofMountains; i++) {
       this.generateMountain();
     }
     //Enemies
-    var numberOfEnemies = Math.floor(Math.random() * (Math.floor(40) - Math.ceil(20)) + Math.ceil(20))
+    var numberOfEnemies = Math.floor(Math.random() * (Math.floor(100) - Math.ceil(50)) + Math.ceil(100))
 
     for(var i = 0; i < numberOfEnemies; i++) {
       this.objectsArray.push(new Enemy("enemy"));
@@ -783,20 +784,57 @@ export class AppComponent implements OnInit {
     } else if (gameObject.type === "building"){
       this.drawBuilding(gameObject);
     } else {
+      //BODY
       this.ctx.beginPath();
       this.ctx.rect(Math.floor(gameObject.xCoord), Math.floor(gameObject.yCoord), Math.floor(gameObject.xDimension), Math.floor(gameObject.yDimension));
       this.ctx.fillStyle = gameObject.color;
       this.ctx.fill();
       this.ctx.closePath();
+      /////EYES
+      //left
+      this.ctx.beginPath();
+      this.ctx.arc(gameObject.xCoord + (gameObject.xDimension / 4), gameObject.yCoord + (gameObject.xDimension / 4), gameObject.xDimension / 10, 0, 2 * Math.PI);
+      this.ctx.fillStyle = "yellow";
+      this.ctx.fill();
+      //right
+      this.ctx.beginPath();
+      this.ctx.arc(gameObject.xCoord + (gameObject.xDimension / 1.5), gameObject.yCoord + (gameObject.xDimension / 4), gameObject.xDimension / 10, 0, 2 * Math.PI);
+      this.ctx.fillStyle = "yellow";
+      this.ctx.fill();
     }
   }
 
-  swingSouthAnimation(current) {
+  swingSouthAnimation() {
+    let current = this;
     var southSwingArray = [[((current.canvas.width / 2) - 5), ((current.canvas.height / 2) + 5), 3, 5], [((current.canvas.width / 2) - 5), ((current.canvas.height / 2) + 7), 3, 5]];
     current.ctx.rect(southSwingArray[this.southSwingCounter][0], southSwingArray[this.southSwingCounter][1], southSwingArray[this.southSwingCounter][2], southSwingArray[this.southSwingCounter][3]);
     this.southSwingCounter += 1
     if (this.southSwingCounter === 2) {
       this.southSwingCounter = 0;
+    }
+  }
+
+  drawRectangle(xCoord: number, yCoord: number, xDimension: number, yDimension: number, color: string) {
+    this.ctx.beginPath();
+    this.ctx.rect(xCoord, yCoord, xDimension, yDimension);
+    this.ctx.fillStyle = color;
+    this.ctx.fill();
+    this.ctx.closePath();
+  }
+
+  drawCustomRectangle( ) {}
+
+  attackAnimation(attacking: boolean) {
+    let current = this;
+    var attackRectangle = {
+      // each array will be: [starting xCoord, starting yCoord, xDimension, yDimension]
+      south: [((current.canvas.width / 2) - 5), ((current.canvas.height / 2) + 5), 3, 5],
+      north: [((current.canvas.width / 2) + 2), ((current.canvas.height / 2) - 10), 3, 5],
+      west: [((current.canvas.width / 2) - 10), ((current.canvas.height / 2) - 5), 5, 3],
+      east: [((current.canvas.width / 2) + 5), ((current.canvas.height / 2) + 2), 5, 3]
+    }
+    if (attacking) {
+      current.drawRectangle(attackRectangle[current.player.direction][0], attackRectangle[current.player.direction][1], attackRectangle[current.player.direction][2], attackRectangle[current.player.direction][3], 'black')
     }
   }
 
@@ -860,37 +898,7 @@ export class AppComponent implements OnInit {
     //REFERENCE
     //current.ctx.rect(xCoord, yCoord, xDimension, yDimension)   ;
 
-    if(attacking && current.player.direction === "south") {
-        current.ctx.beginPath();
-        current.swingSouthAnimation(current);
-        current.ctx.fillStyle = "teal";
-        current.ctx.fill();
-        current.ctx.closePath();
-    }
-
-    if(attacking && current.player.direction === "north") {
-        current.ctx.beginPath();
-        current.ctx.rect(((current.canvas.width / 2) + 2), ((current.canvas.height / 2) - 10), 3, 5);
-        current.ctx.fillStyle = "teal";
-        current.ctx.fill();
-        current.ctx.closePath();
-    }
-
-    if(attacking && current.player.direction === "west") {
-        current.ctx.beginPath();
-        current.ctx.rect(((current.canvas.width / 2) - 10), ((current.canvas.height / 2) - 5), 5, 3);
-        current.ctx.fillStyle = "teal";
-        current.ctx.fill();
-        current.ctx.closePath();
-    }
-
-    if(attacking && current.player.direction === "east") {
-        current.ctx.beginPath();
-        current.ctx.rect(((current.canvas.width / 2) + 5), ((current.canvas.height / 2) + 2), 5, 3);
-        current.ctx.fillStyle = "teal";
-        current.ctx.fill();
-        current.ctx.closePath();
-    }
+    current.attackAnimation(attacking);
 
     // Player rebuild
     current.ctx.beginPath();
