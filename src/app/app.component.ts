@@ -155,6 +155,7 @@ export class AppComponent implements OnInit {
         this.player.strengthLvl += item.bonus[i];
       } else if(item.stat[i] === "defense")
       {
+        this.player.health += item.bonus[i];
         this.player.defenseLvl += item.bonus[i];
       }
     }
@@ -172,6 +173,7 @@ export class AppComponent implements OnInit {
         this.player.strengthLvl -= item.bonus[i];
       } else if(item.stat[i] === "defense")
       {
+        this.player.health -= item.bonus[i];
         this.player.defenseLvl -= item.bonus[i];
       }
     }
@@ -421,21 +423,21 @@ export class AppComponent implements OnInit {
   useStrengthPot() {
     if(this.player.strengthPotions > 0)
     {
-      this.player.strengthLvl += 50;
+      this.player.strengthLvl += 5;
       this.player.strengthPotions -= 1;
     }
   }
   useAttackPot() {
     if(this.player.attackPotions > 0)
     {
-      this.player.attackLvl += 50;
+      this.player.attackLvl += 5;
       this.player.attackPotions -= 1;
     }
   }
   useDefensePot() {
     if(this.player.defensePotions > 0)
     {
-      this.player.defenseLvl += 50;
+      this.player.defenseLvl += 5;
       this.player.defensePotions -= 1;
     }
   }
@@ -453,7 +455,7 @@ export class AppComponent implements OnInit {
     },true);
 
     this.player = new Player();
-    this.player.godMode(1000, 1000, 10, 10000);
+    // this.player.godMode(1000, 1000, 10, 10000);
     this.playerXCoord = ((this.canvas.width / 2) - 5);
     this.playerYCoord = ((this.canvas.height / 2) - 5);
     this.generateWorld();
@@ -625,7 +627,7 @@ export class AppComponent implements OnInit {
                 //LEVEL GAIN
                 this.player.level += 1;
                 //SKILL POINT GAIN
-                this.player.skillPoints += 2;
+                this.player.skillPoints += 5;
                 //RESET EXPERIENCE
                 this.player.experience = 0;
               }

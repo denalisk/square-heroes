@@ -15,7 +15,7 @@ export class Player {
   public strengthLvl = 10;
   public attackLvl = 40;
   public defenseLvl = 1;
-  public health = 50;
+  public health = 150;
   public damageModifier = (this.strengthLvl * 2);
   //GEAR
   public mainHand: UserItem = new UserItem("Nothing", "Nothing", [0], ["Nothing"]);
