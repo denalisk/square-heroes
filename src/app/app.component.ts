@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { Http, Headers } from '@angular/http';
+
 import { GameObject, Enemy, Item, Village } from './game-object.model';
 import { Player } from './player.model';
 import { UserItem } from './player.model';
@@ -24,6 +26,21 @@ export class AppComponent implements OnInit {
   damageDone = 0;
   currentEnemy = null;
   hitBool: boolean;
+
+  //////////CONSTRUCTOR/////////////////
+  constructor(private http: Http) {}
+
+  // API CALLS
+  makeCall() {
+    let headers = new Headers();
+
+    // Below looks like something is wrong
+    headers.append('Content-Type', 'application/X-www-form-urlencoded');
+
+    // Below looks to be the main post call. Do we need a /authorize route?
+    this.http.post('http://localhost:4200/authorize', {headers: headers}).subscribe((results) => {console.log(results);
+    })
+  }
 
   // COLLISION DETECTION
   checkCollisions() {
