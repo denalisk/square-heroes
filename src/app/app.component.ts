@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+
 import { Http, Headers } from '@angular/http';
 
-import { GameObject, Enemy, Item, Village } from './game-object.model';
+import { GameObject, Enemy, Item, Village, Building } from './game-object.model';
 import { Player } from './player.model';
 import { UserItem } from './player.model';
 
@@ -61,6 +62,7 @@ export class AppComponent implements OnInit {
       } else if (current.objectsArray[index].type === "item") {
         if (current.checkCollide(current.objectsArray[index])) {
           current.player.inventory.push(current.objectsArray[index].userItem);
+          current.objectsArray.splice(index);
         }
       }
     }
@@ -137,7 +139,15 @@ export class AppComponent implements OnInit {
   //EQUIPING AND USING ITEMS
   useItem(item: UserItem) {
     if(item.type === "consumable") {
-
+      if(item.name === "Health Potion") {
+        this.equipGear(item);
+      } else if(item.name === "Strength Potion") {
+        this.equipGear(item);
+      } else if(item.name === "Attack Potion") {
+        this.equipGear(item);
+      } else if(item.name === "Defense Potion") {
+        this.equipGear(item);
+      }
     } else if(item.type === "headSlot") {
       //UNEQUIP GEAR, SET STATS CORRECTLY, THEN EQUIP NEW GEAR
       this.unequipGear(this.player.headSlot);
@@ -220,8 +230,13 @@ export class AppComponent implements OnInit {
   generateWorld() {
     //Village
     var newVillage = new Village("village");
-    newVillage.setProperties(0, 0, 120, 120, "gray")
+    newVillage.setProperties(-800, 170, 500, 500, "gray")
     this.objectsArray.push(newVillage);
+    for(let i = 0; i < newVillage.buildings; i++) {
+      var newBuilding = new Building("building", newVillage);
+      this.objectsArray.push(newBuilding);
+    }
+
     //Trees
     var numberOfTrees = Math.floor(Math.random() * (Math.floor(40) - Math.ceil(20)) + Math.ceil(20));
     for(var i = 0; i < numberOfTrees; i++) {
@@ -436,9 +451,32 @@ export class AppComponent implements OnInit {
     this.ctx.closePath();
   }
 
+  drawVillage(gameObject: Village) {
+    this.ctx.beginPath();
+    this.ctx.rect(Math.floor(gameObject.xCoord), Math.floor(gameObject.yCoord), Math.floor(gameObject.xDimension), Math.floor(gameObject.yDimension));
+    this.ctx.fillStyle = gameObject.color;
+    this.ctx.fill();
+    this.ctx.closePath();
+  }
+
+  drawBuilding(gameObject: Building) {
+    this.ctx.beginPath();
+    this.ctx.moveTo(gameObject.xCoord, gameObject.yCoord + 2);
+    this.ctx.lineTo(gameObject.xCoord + 10, gameObject.yCoord + 2);
+    this.ctx.lineTo(gameObject.xCoord + 5, gameObject.yCoord - 7);
+    this.ctx.lineTo(gameObject.xCoord, gameObject.yCoord + 2);
+    this.ctx.fillStyle = gameObject.color
+    this.ctx.fill();
+    this.ctx.beginPath();
+    this.ctx.rect(Math.floor(gameObject.xCoord), Math.floor(gameObject.yCoord), Math.floor(gameObject.xDimension), Math.floor(gameObject.yDimension));
+    this.ctx.fillStyle = gameObject.color;
+    this.ctx.fill();
+    this.ctx.closePath();
+  }
+
 
   //PLACE OBJECTS FROM ARRAY
-  placeObject(gameObject: GameObject) {
+  placeObject(gameObject) {
 
     if(gameObject.type === "tree") {
       this.drawTree(gameObject);
@@ -451,11 +489,9 @@ export class AppComponent implements OnInit {
       this.ctx.fill();
       this.ctx.closePath();
     } else if (gameObject.type === "village") {
-      this.ctx.beginPath();
-      this.ctx.rect(Math.floor(gameObject.xCoord), Math.floor(gameObject.yCoord), Math.floor(gameObject.xDimension), Math.floor(gameObject.yDimension));
-      this.ctx.fillStyle = gameObject.color;
-      this.ctx.fill();
-      this.ctx.closePath();
+      this.drawVillage(gameObject);
+    } else if (gameObject.type === "building"){
+      this.drawBuilding(gameObject);
     } else {
       this.ctx.beginPath();
       this.ctx.rect(Math.floor(gameObject.xCoord), Math.floor(gameObject.yCoord), Math.floor(gameObject.xDimension), Math.floor(gameObject.yDimension));
