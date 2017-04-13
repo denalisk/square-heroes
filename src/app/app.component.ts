@@ -12,9 +12,12 @@ import { UserItem } from './player.model';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent implements OnInit {
+  invisibleX: number = 0;
+  invisibleY: number = 0;
   keyState = {};
   title = 'Square Heroes';
   objectsArray = [];
+  animationsArray = [];
   canvas = null;
   ctx = null;
   player = null;
@@ -30,6 +33,7 @@ export class AppComponent implements OnInit {
   southSwingCounter: number = 0;
   graveyard;
   theNorth;
+  desert;
 
 
 
@@ -458,6 +462,8 @@ export class AppComponent implements OnInit {
     // this.player.godMode(1000, 1000, 10, 10000);
     this.playerXCoord = ((this.canvas.width / 2) - 5);
     this.playerYCoord = ((this.canvas.height / 2) - 5);
+    this.invisibleX = this.playerXCoord;
+    this.invisibleY = this.playerYCoord;
     this.generateWorld();
   }
 
@@ -490,7 +496,7 @@ export class AppComponent implements OnInit {
       var newEnemy = new Enemy('enemy');
       var dimensions: number = Math.floor(Math.random() * (Math.floor(50) - Math.ceil(40)) + Math.ceil(50));
       newEnemy.setProperties(
-      Math.floor(Math.random() * (Math.floor(this.theNorth.xDimension) - Math.ceil(this.theNorth.xCoord)) + Math.ceil(this.theNorth.xCoord)),
+      Math.floor(Math.random() * (Math.floor(this.theNorth.xCoord + this.theNorth.xDimension) - Math.ceil(this.theNorth.xCoord)) + Math.ceil(this.theNorth.xCoord)),
       Math.floor(Math.random() * (Math.floor(this.theNorth.yCoord + this.theNorth.yDimension) - Math.ceil(this.theNorth.yCoord)) + Math.ceil(this.theNorth.yCoord)), dimensions,
       dimensions, "#0d9664");
       this.objectsArray.push(newEnemy);
@@ -498,7 +504,27 @@ export class AppComponent implements OnInit {
 
     this.generateNorthBoss();
 
+    //Desert (South)
 
+    this.desert = new Village("village");
+    this.desert.setProperties(-1000, 1000, 2000, 1000, "#779148");
+    this.desert.buildings = 70;
+    this.objectsArray.push(this.desert);
+
+    for(let i = 0; i < this.desert.buildings; i++) {
+      var newBuilding = new Building("building", this.desert);
+      this.objectsArray.push(newBuilding);
+    }
+
+    for(let i = 0; i < 90; i++) {
+      var newEnemy = new Enemy('enemy');
+      var dimensions: number = Math.floor(Math.random() * (Math.floor(30) - Math.ceil(20)) + Math.ceil(30));
+      newEnemy.setProperties(
+      Math.floor(Math.random() * (Math.floor(this.desert.xCoord + this.desert.xDimension) - Math.ceil(this.desert.xCoord)) + Math.ceil(this.desert.xCoord)),
+      Math.floor(Math.random() * (Math.floor(this.desert.yCoord + this.desert.yDimension) - Math.ceil(this.desert.yCoord)) + Math.ceil(this.desert.yCoord)), dimensions,
+      dimensions, "#994227");
+      this.objectsArray.push(newEnemy);
+    }
 
     //Trees
     var numberOfTrees = Math.floor(Math.random() * (Math.floor(100) - Math.ceil(60)) + Math.ceil(100));
@@ -629,10 +655,16 @@ export class AppComponent implements OnInit {
 
 
   //RESPAWN
-  respawn() {
+  respawn(enemy) {
     var current = this;
     setTimeout(function() {
-      current.objectsArray.push(new Enemy("enemy"));
+      var oldX = enemy.xCoord;
+      var oldY = enemy.yCoord;
+      console.log("Enemy died at: " + oldX + ", " + oldY)
+      var newEnemy = enemy;
+      enemy.setProperties(enemy.xCoord + current.invisibleX, enemy.yCoord + current.invisibleY, enemy.xDimension, enemy.yDimension, enemy.color);
+      current.objectsArray.push(enemy);
+      console.log("Enemy spawned at: " + enemy.xCoord + ", " + enemy.yCoord);
     }, 10000);
   }
 
@@ -642,10 +674,23 @@ export class AppComponent implements OnInit {
       var newEnemy = new Enemy('enemy');
       var dimensions: number = Math.floor(Math.random() * (Math.floor(50) - Math.ceil(40)) + Math.ceil(50));
       newEnemy.setProperties(
-      Math.floor(Math.random() * (Math.floor(current.theNorth.xDimension) - Math.ceil(current.theNorth.xCoord)) + Math.ceil(current.theNorth.xCoord)),
+      Math.floor(Math.random() * (Math.floor(current.theNorth.xCoord + current.theNorth.xDimension) - Math.ceil(current.theNorth.xCoord)) + Math.ceil(current.theNorth.xCoord)),
       Math.floor(Math.random() * (Math.floor(current.theNorth.yCoord + current.theNorth.yDimension) - Math.ceil(current.theNorth.yCoord)) + Math.ceil(current.theNorth.yCoord)), dimensions,
       dimensions, "#0d9664");
       current.objectsArray.push(newEnemy);
+    }, 10000);
+  }
+
+  respawnSouth() {
+    var current = this;
+    setTimeout(function() {
+      var newEnemy = new Enemy('enemy');
+      var dimensions: number = Math.floor(Math.random() * (Math.floor(30) - Math.ceil(20)) + Math.ceil(30));
+      newEnemy.setProperties(
+      Math.floor(Math.random() * (Math.floor(this.desert.xCoord + this.desert.xDimension) - Math.ceil(this.desert.xCoord)) + Math.ceil(this.desert.xCoord)),
+      Math.floor(Math.random() * (Math.floor(this.desert.yCoord + this.desert.yDimension) - Math.ceil(this.desert.yCoord)) + Math.ceil(this.desert.yCoord)), dimensions,
+      dimensions, "#994227");
+      this.objectsArray.push(newEnemy);
     }, 10000);
   }
 
@@ -695,10 +740,10 @@ export class AppComponent implements OnInit {
                 setTimeout(function() {
                   current.generateNorthBoss();
                 }, 60000)
-              } else if (this.objectsArray[i].color === "#0d9664") {
-                this.respawnNorth();
+              } else if (this.objectsArray[i].color === "#59182e"){
+                this.respawnSouth()
               } else {
-                this.respawn();
+                this.respawn(this.objectsArray[i]);
               }
               var xCoord: number = this.objectsArray[i].xCoord;
               var yCoord: number = this.objectsArray[i].yCoord;
@@ -940,19 +985,58 @@ export class AppComponent implements OnInit {
     this.ctx.closePath();
   }
 
-  drawCustomRectangle( ) {}
+  drawCustomRectangle(frame) {
+    let point1 = [frame.xCoord, frame.yCoord];
+    let point2 = [(frame.xCoord + Math.cos(frame.attackAngle)*frame.yDimension), (frame.yCoord + Math.sin(frame.attackAngle)*frame.yDimension)];
+    let point3 = [(frame.xCoord + Math.cos(.5-frame.attackAngle)*frame.xDimension), (frame.yCoord - Math.sin(.5-frame.attackAngle)*frame.xDimension)];
+    let point4 = [point2[0] + (point1[0] - point3[0]), point2[1] + (point1[1] - point3[1])];
+    this.ctx.beginPath();
+    this.ctx.moveTo(frame.xCoord, frame.yCoord);
+    this.ctx.lineTo(point3[0], point3[1]);
+    this.ctx.lineTo(point2[0], point2[1]);
+    this.ctx.lineTo(point4[0], point4[1]);
+    this.ctx.fillStyle = frame.color;
+    this.ctx.fill();
+    this.ctx.closePath();
+  }
 
-  attackAnimation(attacking: boolean) {
+  generateAttackAnimation(attacking: boolean) {
     let current = this;
     var attackRectangle = {
       // each array will be: [starting xCoord, starting yCoord, xDimension, yDimension]
-      south: [((current.canvas.width / 2) - 5), ((current.canvas.height / 2) + 5), 3, 5],
-      north: [((current.canvas.width / 2) + 2), ((current.canvas.height / 2) - 10), 3, 5],
-      west: [((current.canvas.width / 2) - 10), ((current.canvas.height / 2) - 5), 5, 3],
-      east: [((current.canvas.width / 2) + 5), ((current.canvas.height / 2) + 2), 5, 3]
+      south: [((current.canvas.width / 2) - 5), ((current.canvas.height / 2)), 5, 15, .7],
+      north: [((current.canvas.width / 2) + 4), ((current.canvas.height / 2)), 5, 15, -2.3],
+      west: [((current.canvas.width / 2)), ((current.canvas.height / 2) - 4), 5, 15, 2.3],
+      east: [((current.canvas.width / 2)), ((current.canvas.height / 2) + 4), 5, 15, -.7]
     }
     if (attacking) {
-      current.drawRectangle(attackRectangle[current.player.direction][0], attackRectangle[current.player.direction][1], attackRectangle[current.player.direction][2], attackRectangle[current.player.direction][3], 'black')
+      let xCoord = attackRectangle[current.player.direction][0];
+      let yCoord = attackRectangle[current.player.direction][1];
+      let point1 = [xCoord, yCoord];
+      let newFrameSet = [];
+      let handFrame = [];
+      let angleAduster = 0;
+      for (let index = 1; index <= 9; index++) {
+        // Frames for sword attack
+        let newAnimation = new GameObject('animation');
+        newAnimation.setProperties(attackRectangle[current.player.direction][0], attackRectangle[current.player.direction][1], attackRectangle[current.player.direction][2], attackRectangle[current.player.direction][3], 'black');
+        newAnimation.attackAngle = attackRectangle[current.player.direction][4] + angleAduster;
+        newAnimation.collidable = false;
+        newFrameSet.push(newAnimation);
+        angleAduster += .15;
+      }
+      current.animationsArray.push(newFrameSet);
+    }
+  }
+
+  playAnimation(frameSet) {
+    for (let index = 0; index < frameSet.length; index++) {
+      let newFrame = frameSet[index][0];
+      frameSet[index].shift();
+      if (frameSet[index].length === 0) {
+        frameSet.splice(index, 1);
+      }
+      this.drawCustomRectangle(newFrame);
     }
   }
 
@@ -989,6 +1073,7 @@ export class AppComponent implements OnInit {
         if(attacking === false) {
           current.attack();
           attacking = true;
+          current.generateAttackAnimation(attacking);
           setTimeout(function(){
             attacking = false;
           }, 500);
@@ -1012,11 +1097,10 @@ export class AppComponent implements OnInit {
     }
 
     //Player attack animations(NEEDS REFACTOR)
+    current.playAnimation(current.animationsArray);
 
     //REFERENCE
     //current.ctx.rect(xCoord, yCoord, xDimension, yDimension)   ;
-
-    current.attackAnimation(attacking);
 
     // Player rebuild
     current.ctx.beginPath();
@@ -1039,6 +1123,8 @@ export class AppComponent implements OnInit {
       current.ctx.font = "10px Arial";
       current.ctx.fillText("GAME OVER, REFRESH TO RESTART",10,50);
     }
+    current.invisibleX -= current.velocityVector[0];
+    current.invisibleY -= current.velocityVector[1];
   }, 20);
   }
 }
