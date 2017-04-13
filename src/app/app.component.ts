@@ -321,7 +321,7 @@ export class AppComponent implements OnInit {
       var newEnemy = new Enemy('enemy');
       var dimensions: number = Math.floor(Math.random() * (Math.floor(50) - Math.ceil(40)) + Math.ceil(50));
       newEnemy.setProperties(
-      Math.floor(Math.random() * (Math.floor(this.theNorth.xDimension) - Math.ceil(this.theNorth.xCoord)) + Math.ceil(this.theNorth.xCoord)),
+      Math.floor(Math.random() * (Math.floor(this.theNorth.xCoord + this.theNorth.xDimension) - Math.ceil(this.theNorth.xCoord)) + Math.ceil(this.theNorth.xCoord)),
       Math.floor(Math.random() * (Math.floor(this.theNorth.yCoord + this.theNorth.yDimension) - Math.ceil(this.theNorth.yCoord)) + Math.ceil(this.theNorth.yCoord)), dimensions,
       dimensions, "#0d9664");
       this.objectsArray.push(newEnemy);
@@ -345,7 +345,7 @@ export class AppComponent implements OnInit {
       var newEnemy = new Enemy('enemy');
       var dimensions: number = Math.floor(Math.random() * (Math.floor(30) - Math.ceil(20)) + Math.ceil(30));
       newEnemy.setProperties(
-      Math.floor(Math.random() * (Math.floor(this.desert.xDimension) - Math.ceil(this.desert.xCoord)) + Math.ceil(this.desert.xCoord)),
+      Math.floor(Math.random() * (Math.floor(this.desert.xCoord + this.desert.xDimension) - Math.ceil(this.desert.xCoord)) + Math.ceil(this.desert.xCoord)),
       Math.floor(Math.random() * (Math.floor(this.desert.yCoord + this.desert.yDimension) - Math.ceil(this.desert.yCoord)) + Math.ceil(this.desert.yCoord)), dimensions,
       dimensions, "#994227");
       this.objectsArray.push(newEnemy);
@@ -476,7 +476,7 @@ export class AppComponent implements OnInit {
       var newEnemy = new Enemy('enemy');
       var dimensions: number = Math.floor(Math.random() * (Math.floor(50) - Math.ceil(40)) + Math.ceil(50));
       newEnemy.setProperties(
-      Math.floor(Math.random() * (Math.floor(current.theNorth.xDimension) - Math.ceil(current.theNorth.xCoord)) + Math.ceil(current.theNorth.xCoord)),
+      Math.floor(Math.random() * (Math.floor(current.theNorth.xCoord + current.theNorth.xDimension) - Math.ceil(current.theNorth.xCoord)) + Math.ceil(current.theNorth.xCoord)),
       Math.floor(Math.random() * (Math.floor(current.theNorth.yCoord + current.theNorth.yDimension) - Math.ceil(current.theNorth.yCoord)) + Math.ceil(current.theNorth.yCoord)), dimensions,
       dimensions, "#0d9664");
       current.objectsArray.push(newEnemy);
@@ -489,7 +489,7 @@ export class AppComponent implements OnInit {
       var newEnemy = new Enemy('enemy');
       var dimensions: number = Math.floor(Math.random() * (Math.floor(30) - Math.ceil(20)) + Math.ceil(30));
       newEnemy.setProperties(
-      Math.floor(Math.random() * (Math.floor(this.desert.xDimension) - Math.ceil(this.desert.xCoord)) + Math.ceil(this.desert.xCoord)),
+      Math.floor(Math.random() * (Math.floor(this.desert.xCoord + this.desert.xDimension) - Math.ceil(this.desert.xCoord)) + Math.ceil(this.desert.xCoord)),
       Math.floor(Math.random() * (Math.floor(this.desert.yCoord + this.desert.yDimension) - Math.ceil(this.desert.yCoord)) + Math.ceil(this.desert.yCoord)), dimensions,
       dimensions, "#994227");
       this.objectsArray.push(newEnemy);
