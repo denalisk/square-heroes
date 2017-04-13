@@ -826,11 +826,16 @@ export class AppComponent implements OnInit {
         } else {
           vector[1] = .5;
         }
-
         if(enemy.xCoord < (this.canvas.width / 2 - 10) + this.player.xDimension + 10 && enemy.xCoord + enemy.xDimension > (this.canvas.width / 2 - 10) && enemy.yCoord < (this.canvas.height / 2 - 10) + this.player.yDimension + 10 && enemy.yDimension + enemy.yCoord > (this.canvas.height / 2 - 10)) {
-          //ENEMY IS IN ATTACK RANGE
-          this.enemyAttack(enemy);
           vector = [0, 0];
+          //KITEABILITY
+          var current = this;
+          setTimeout(function(){
+            if(enemy.xCoord < (current.canvas.width / 2 - 10) + current.player.xDimension + 10 && enemy.xCoord + enemy.xDimension > (current.canvas.width / 2 - 10) && enemy.yCoord < (current.canvas.height / 2 - 10) + current.player.yDimension + 10 && enemy.yDimension + enemy.yCoord > (current.canvas.height / 2 - 10)) {
+              //ENEMY IS IN ATTACK RANGE
+              current.enemyAttack(enemy);
+            }
+          }, 300);
         }
           enemy.move(vector);
         }
@@ -1084,10 +1089,10 @@ export class AppComponent implements OnInit {
       // check for collisions
       current.checkCollisions();
       for(let gameObject of current.objectsArray) {
-        gameObject.move(current.velocityVector);
         if(gameObject.type === "enemy") {
           current.enemyAggro(gameObject);
         }
+        gameObject.move(current.velocityVector);
       }
       // CLEAR THE CANVAS
     current.ctx.clearRect(0, 0, current.canvas.width, current.canvas.height);
