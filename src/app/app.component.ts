@@ -28,7 +28,8 @@ export class AppComponent implements OnInit {
   currentEnemy = null;
   hitBool: boolean;
   southSwingCounter: number = 0;
-  newVillage;
+  graveyard;
+  theNorth;
 
 
 
@@ -463,17 +464,42 @@ export class AppComponent implements OnInit {
 
   /////////WORLD GENERATION/////////
   generateWorld() {
-    //Village
-    this.newVillage = new Village("village");
-    this.newVillage.setProperties(-800, 170, 500, 500, "gray")
-    this.objectsArray.push(this.newVillage);
+    //Graveyard
+    this.graveyard = new Village("village");
+    this.graveyard.setProperties(-800, 170, 500, 500, "gray")
+    this.objectsArray.push(this.graveyard);
 
-    for(let i = 0; i < this.newVillage.buildings; i++) {
-      var newBuilding = new Building("building", this.newVillage);
+    for(let i = 0; i < this.graveyard.buildings; i++) {
+      var newBuilding = new Building("building", this.graveyard);
       this.objectsArray.push(newBuilding);
     }
 
     this.generateBoss()
+
+    //The North
+    this.theNorth = new Village("village");
+    this.theNorth.setProperties(-1000, -2000, 2000, 1000, "#e8e8e8");
+    this.theNorth.buildings = 70;
+    this.objectsArray.push(this.theNorth);
+
+    for(let i = 0; i < this.theNorth.buildings; i++) {
+      var newBuilding = new Building("building", this.theNorth);
+      this.objectsArray.push(newBuilding);
+    }
+
+    for(let i = 0; i < 90; i++) {
+      var newEnemy = new Enemy('enemy');
+      var dimensions: number = Math.floor(Math.random() * (Math.floor(50) - Math.ceil(40)) + Math.ceil(50));
+      newEnemy.setProperties(
+      Math.floor(Math.random() * (Math.floor(this.theNorth.xDimension) - Math.ceil(this.theNorth.xCoord)) + Math.ceil(this.theNorth.xCoord)),
+      Math.floor(Math.random() * (Math.floor(this.theNorth.yCoord + this.theNorth.yDimension) - Math.ceil(this.theNorth.yCoord)) + Math.ceil(this.theNorth.yCoord)), dimensions,
+      dimensions, "#0d9664");
+      this.objectsArray.push(newEnemy);
+    }
+
+    this.generateNorthBoss();
+
+
 
     //Trees
     var numberOfTrees = Math.floor(Math.random() * (Math.floor(100) - Math.ceil(60)) + Math.ceil(100));
@@ -498,13 +524,28 @@ export class AppComponent implements OnInit {
   generateBoss() {
     //Add BOSS to village
     var bossEnemy = new Enemy('enemy');
-    bossEnemy.setProperties((this.newVillage.xCoord + (this.newVillage.xDimension/2)), (this.newVillage.yCoord + (this.newVillage.yDimension/2)), 50, 50, "#6b245f");
+    bossEnemy.setProperties((this.graveyard.xCoord + (this.graveyard.xDimension/2)), (this.graveyard.yCoord + (this.graveyard.yDimension/2)), 50, 50, "#6b245f");
     console.log("Boss spawned at: " + bossEnemy.xCoord + ", " + bossEnemy.yCoord);
     this.objectsArray.push(bossEnemy);
     //BOSS Minions
     for(let i = 10; i < 100; i += 10) {
       var bossMinion = new Enemy('enemy');
-      bossMinion.setProperties((this.newVillage.xCoord + (this.newVillage.xDimension/2) + i), (this.newVillage.yCoord + (this.newVillage.yDimension/2) + i), 10, 10, "#774f9b");
+      bossMinion.setProperties((this.graveyard.xCoord + (this.graveyard.xDimension/2) + i), (this.graveyard.yCoord + (this.graveyard.yDimension/2) + i), 10, 10, "#774f9b");
+      console.log("Boss enemy spawned at:" + bossMinion.xCoord + ", " + bossMinion.yCoord);
+      this.objectsArray.push(bossMinion);
+    }
+  }
+
+  generateNorthBoss() {
+    //Add BOSS to village
+    var bossEnemy = new Enemy('enemy');
+    bossEnemy.setProperties((this.theNorth.xCoord + (this.theNorth.xDimension/2)), (this.theNorth.yCoord + (this.theNorth.yDimension/2)), 100, 100, "#59182e");
+    console.log("Boss spawned at: " + bossEnemy.xCoord + ", " + bossEnemy.yCoord);
+    this.objectsArray.push(bossEnemy);
+    //BOSS Minions
+    for(let i = 20; i < 200; i += 20) {
+      var bossMinion = new Enemy('enemy');
+      bossMinion.setProperties((this.theNorth.xCoord + (this.theNorth.xDimension/2) + i), (this.theNorth.yCoord + (this.theNorth.yDimension/2) + i), 20, 20, "#0e4430");
       console.log("Boss enemy spawned at:" + bossMinion.xCoord + ", " + bossMinion.yCoord);
       this.objectsArray.push(bossMinion);
     }
@@ -573,6 +614,19 @@ export class AppComponent implements OnInit {
     }, 10000);
   }
 
+  respawnNorth() {
+    var current = this;
+    setTimeout(function() {
+      var newEnemy = new Enemy('enemy');
+      var dimensions: number = Math.floor(Math.random() * (Math.floor(50) - Math.ceil(40)) + Math.ceil(50));
+      newEnemy.setProperties(
+      Math.floor(Math.random() * (Math.floor(current.theNorth.xDimension) - Math.ceil(current.theNorth.xCoord)) + Math.ceil(current.theNorth.xCoord)),
+      Math.floor(Math.random() * (Math.floor(current.theNorth.yCoord + current.theNorth.yDimension) - Math.ceil(current.theNorth.yCoord)) + Math.ceil(current.theNorth.yCoord)), dimensions,
+      dimensions, "#0d9664");
+      current.objectsArray.push(newEnemy);
+    }, 10000);
+  }
+
   //////////ATTACK//////////////
   attack() {
     this.player.getXAttack();
@@ -612,6 +666,13 @@ export class AppComponent implements OnInit {
                 setTimeout(function() {
                   current.generateBoss();
                 }, 60000)
+              } else if(this.objectsArray[i].color === "#59182e") {
+                var current = this;
+                setTimeout(function() {
+                  current.generateNorthBoss();
+                }, 60000)
+              } else if (this.objectsArray[i].color === "#0d9664") {
+                this.respawnNorth();
               } else {
                 this.respawn();
               }
