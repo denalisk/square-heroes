@@ -12,6 +12,8 @@ import { UserItem } from './player.model';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent implements OnInit {
+  invisibleX: number = 0;
+  invisibleY: number = 0;
   keyState = {};
   title = 'Square Heroes';
   objectsArray = [];
@@ -30,6 +32,7 @@ export class AppComponent implements OnInit {
   southSwingCounter: number = 0;
   graveyard;
   theNorth;
+  desert;
 
 
 
@@ -283,6 +286,8 @@ export class AppComponent implements OnInit {
     this.player.godMode(1000, 1000, 10, 10000);
     this.playerXCoord = ((this.canvas.width / 2) - 5);
     this.playerYCoord = ((this.canvas.height / 2) - 5);
+    this.invisibleX = this.playerXCoord;
+    this.invisibleY = this.playerYCoord;
     this.generateWorld();
   }
 
@@ -323,7 +328,27 @@ export class AppComponent implements OnInit {
 
     this.generateNorthBoss();
 
+    //Desert (South)
 
+    this.desert = new Village("village");
+    this.desert.setProperties(-1000, 1000, 2000, 1000, "#779148");
+    this.desert.buildings = 70;
+    this.objectsArray.push(this.desert);
+
+    for(let i = 0; i < this.desert.buildings; i++) {
+      var newBuilding = new Building("building", this.desert);
+      this.objectsArray.push(newBuilding);
+    }
+
+    for(let i = 0; i < 90; i++) {
+      var newEnemy = new Enemy('enemy');
+      var dimensions: number = Math.floor(Math.random() * (Math.floor(30) - Math.ceil(20)) + Math.ceil(30));
+      newEnemy.setProperties(
+      Math.floor(Math.random() * (Math.floor(this.desert.xDimension) - Math.ceil(this.desert.xCoord)) + Math.ceil(this.desert.xCoord)),
+      Math.floor(Math.random() * (Math.floor(this.desert.yCoord + this.desert.yDimension) - Math.ceil(this.desert.yCoord)) + Math.ceil(this.desert.yCoord)), dimensions,
+      dimensions, "#994227");
+      this.objectsArray.push(newEnemy);
+    }
 
     //Trees
     var numberOfTrees = Math.floor(Math.random() * (Math.floor(100) - Math.ceil(60)) + Math.ceil(100));
@@ -431,10 +456,16 @@ export class AppComponent implements OnInit {
 
 
   //RESPAWN
-  respawn() {
+  respawn(enemy) {
     var current = this;
     setTimeout(function() {
-      current.objectsArray.push(new Enemy("enemy"));
+      var oldX = enemy.xCoord;
+      var oldY = enemy.yCoord;
+      console.log("Enemy died at: " + oldX + ", " + oldY)
+      var newEnemy = enemy;
+      enemy.setProperties(enemy.xCoord + current.invisibleX, enemy.yCoord + current.invisibleY, enemy.xDimension, enemy.yDimension, enemy.color);
+      current.objectsArray.push(enemy);
+      console.log("Enemy spawned at: " + enemy.xCoord + ", " + enemy.yCoord);
     }, 10000);
   }
 
@@ -448,6 +479,19 @@ export class AppComponent implements OnInit {
       Math.floor(Math.random() * (Math.floor(current.theNorth.yCoord + current.theNorth.yDimension) - Math.ceil(current.theNorth.yCoord)) + Math.ceil(current.theNorth.yCoord)), dimensions,
       dimensions, "#0d9664");
       current.objectsArray.push(newEnemy);
+    }, 10000);
+  }
+
+  respawnSouth() {
+    var current = this;
+    setTimeout(function() {
+      var newEnemy = new Enemy('enemy');
+      var dimensions: number = Math.floor(Math.random() * (Math.floor(30) - Math.ceil(20)) + Math.ceil(30));
+      newEnemy.setProperties(
+      Math.floor(Math.random() * (Math.floor(this.desert.xDimension) - Math.ceil(this.desert.xCoord)) + Math.ceil(this.desert.xCoord)),
+      Math.floor(Math.random() * (Math.floor(this.desert.yCoord + this.desert.yDimension) - Math.ceil(this.desert.yCoord)) + Math.ceil(this.desert.yCoord)), dimensions,
+      dimensions, "#994227");
+      this.objectsArray.push(newEnemy);
     }, 10000);
   }
 
@@ -495,10 +539,10 @@ export class AppComponent implements OnInit {
                 setTimeout(function() {
                   current.generateNorthBoss();
                 }, 60000)
-              } else if (this.objectsArray[i].color === "#0d9664") {
-                this.respawnNorth();
+              } else if (this.objectsArray[i].color === "#59182e"){
+                this.respawnSouth()
               } else {
-                this.respawn();
+                this.respawn(this.objectsArray[i]);
               }
               var xCoord: number = this.objectsArray[i].xCoord;
               var yCoord: number = this.objectsArray[i].yCoord;
@@ -831,6 +875,8 @@ export class AppComponent implements OnInit {
       current.ctx.font = "10px Arial";
       current.ctx.fillText("GAME OVER, REFRESH TO RESTART",10,50);
     }
+    current.invisibleX -= current.velocityVector[0];
+    current.invisibleY -= current.velocityVector[1];
   }, 20);
   }
 }
