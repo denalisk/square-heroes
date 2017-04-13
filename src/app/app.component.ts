@@ -35,6 +35,10 @@ export class AppComponent implements OnInit {
   theNorth;
   desert;
 
+  // notification message
+  message: string = "";
+  alertTimer: boolean = false;
+
 
 
   //////////CONSTRUCTOR/////////////////
@@ -51,8 +55,7 @@ export class AppComponent implements OnInit {
     headers.append('Content-Type', 'application/X-www-form-urlencoded');
 
     // Below looks to be the main post call. Do we need a /authorize route?
-    this.http.post('http://localhost:3000/authorize', {headers: headers}).subscribe((results) => {console.log(results);
-    })
+    this.http.post('http://localhost:3000/authorize', {headers: headers}).subscribe()
   }
 
   searchcall(){
@@ -103,7 +106,12 @@ export class AppComponent implements OnInit {
               }
             }
             if(haveItem === false) {
-              current.player.inventory.push(current.objectsArray[index].userItem);
+              current.player.inventory.splice(0, 0, current.objectsArray[index].userItem);
+              current.message = "You picked up a " + current.objectsArray[index].userItem.name;
+              current.alertTimer = true;
+              setTimeout(function(){
+                current.alertTimer = false;
+              }, 1000)
             }
           }
 
@@ -553,13 +561,11 @@ export class AppComponent implements OnInit {
     //Add BOSS to village
     var bossEnemy = new Enemy('enemy');
     bossEnemy.setProperties((this.graveyard.xCoord + (this.graveyard.xDimension/2)), (this.graveyard.yCoord + (this.graveyard.yDimension/2)), 50, 50, "#6b245f");
-    console.log("Boss spawned at: " + bossEnemy.xCoord + ", " + bossEnemy.yCoord);
     this.objectsArray.push(bossEnemy);
     //BOSS Minions
     for(let i = 10; i < 100; i += 10) {
       var bossMinion = new Enemy('enemy');
       bossMinion.setProperties((this.graveyard.xCoord + (this.graveyard.xDimension/2) + i), (this.graveyard.yCoord + (this.graveyard.yDimension/2) + i), 10, 10, "#774f9b");
-      console.log("Boss enemy spawned at:" + bossMinion.xCoord + ", " + bossMinion.yCoord);
       this.objectsArray.push(bossMinion);
     }
   }
@@ -749,7 +755,6 @@ export class AppComponent implements OnInit {
             //ATTACK AND DAMAGE ROLLS FOR COMBAT
             //ATTACK ROLL
             this.atkRoll = Math.floor(Math.random() * (Math.floor(200) - Math.ceil(1)) + Math.ceil(1));
-            console.log(this.atkRoll + ' atk roll');
 
             if(this.atkRoll > (60 - (this.player.attackLvl / 2)))
             {
@@ -757,13 +762,10 @@ export class AppComponent implements OnInit {
               //DAMAGE ROLL
               var maxHit = 10 + (this.player.strengthLvl * 2);
               this.dmgRoll = Math.floor(Math.random() * (Math.floor(maxHit) - Math.ceil(0)) + Math.ceil(0));
-              console.log(this.dmgRoll + ' dmg roll');
               if(this.dmgRoll != 0)
               {
                 this.damageDone = this.dmgRoll; // + (this.player.strengthLvl / 2);
-                console.log(this.damageDone + ' damage done');
                 this.objectsArray[i].health -= this.damageDone;
-                console.log(this.objectsArray[i].health + ' enemy health');
               }
             } else {
               this.hitBool = false;
@@ -1025,6 +1027,7 @@ export class AppComponent implements OnInit {
     }
   }
 
+// ANIMATIONS //////////////////////////////////////////////////////////////////
   swingSouthAnimation() {
     let current = this;
     var southSwingArray = [[((current.canvas.width / 2) - 5), ((current.canvas.height / 2) + 5), 3, 5], [((current.canvas.width / 2) - 5), ((current.canvas.height / 2) + 7), 3, 5]];
@@ -1102,6 +1105,7 @@ export class AppComponent implements OnInit {
   gameLoop() {
     var current = this;
     var attacking: boolean = false;
+    var healthTick = 0;
     var gameTick = setInterval(function(){
       current.velocityVector = [0,0];
       ///////////CONTROLS////////////
@@ -1175,6 +1179,28 @@ export class AppComponent implements OnInit {
     current.ctx.fillStyle = "white"
     current.ctx.fill();
     current.ctx.closePath();
+    if(current.player.chestSlot.name != "Nothing") {
+      current.ctx.beginPath();
+      current.ctx.rect(((current.canvas.width / 2) - 5), ((current.canvas.height / 2) -2), 10, 3);
+      current.ctx.fillStyle = current.player.chestSlot.color;
+      current.ctx.fill();
+      current.ctx.closePath();
+    }
+    if(current.player.legSlot.name != "Nothing") {
+      current.ctx.beginPath();
+      current.ctx.rect(((current.canvas.width / 2) - 5), ((current.canvas.height / 2) + 1), 10, 4);
+      current.ctx.fillStyle = current.player.legSlot.color;
+      current.ctx.fill();
+      current.ctx.closePath();
+    }
+    if(current.player.headSlot.name != "Nothing") {
+      current.ctx.beginPath();
+      current.ctx.rect(((current.canvas.width / 2) - 5), ((current.canvas.height / 2) - 5), 10, 2);
+      current.ctx.fillStyle = current.player.headSlot.color;
+      current.ctx.fill();
+      current.ctx.closePath();
+    }
+
 
     //Check character death PLACEHOLDER GAME OVER EVENT
     if(current.player.health <= 0) {
@@ -1184,6 +1210,13 @@ export class AppComponent implements OnInit {
     }
     current.invisibleX -= current.velocityVector[0];
     current.invisibleY -= current.velocityVector[1];
+
+    healthTick++;
+    if(healthTick > 200)
+    {
+      current.player.health++;
+      healthTick = 0;
+    }
   }, 20);
   }
 }
