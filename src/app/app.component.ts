@@ -687,8 +687,8 @@ export class AppComponent implements OnInit {
       }
     }
 
-    this.objectsArray.push(newItem);
     console.log("You Got a " + newItem.userItem.name + " drop")
+    this.objectsArray.push(newItem);
   }
 
 
@@ -698,11 +698,9 @@ export class AppComponent implements OnInit {
     setTimeout(function() {
       var oldX = enemy.xCoord;
       var oldY = enemy.yCoord;
-      console.log("Enemy died at: " + oldX + ", " + oldY)
       var newEnemy = enemy;
       enemy.setProperties(enemy.xCoord + current.invisibleX, enemy.yCoord + current.invisibleY, enemy.xDimension, enemy.yDimension, enemy.color);
       current.objectsArray.push(enemy);
-      console.log("Enemy spawned at: " + enemy.xCoord + ", " + enemy.yCoord);
     }, 10000);
   }
 
