@@ -71,10 +71,14 @@ export class Player {
   }
 
   equipGear(item: DemoItem) {
-    for (let position of item.equipPosition) {
-      this[position] = item.name;
+    if (this[item.modifier.trait] < item.modifier.trait) {
+      alert(item.alert);
+    } else {
+      for (let position of item.equipPosition) {
+        this[position] = item.name;
+      }
+      this.calculateStats();
     }
-    this.calculateStats();
   }
 
   calculateStats(){
@@ -84,6 +88,17 @@ export class Player {
     for (let slot of this.slotsList) {
       for (let trait of this[slot].modifier) {
         this[trait[0]] += trait[1];
+      }
+    }
+  }
+
+  useItem(item: DemoItem) {
+    if (item.type === 'consumable') {
+      if (item.modifier[0][0] === 'health') {
+        this.health += item.modifier[0][1];
+      } else {
+        let trait = item.modifier[0][0] + 'Base';
+        this[trait] += item.modifier[0][1];
       }
     }
   }

@@ -5,6 +5,7 @@ import { Http, Headers } from '@angular/http';
 import { GameObject, Enemy, Item, Village, Building } from './game-object.model';
 import { Player } from './player.model';
 import { UserItem } from './player.model';
+import { DemoItem } from './item.model';
 
 @Component({
   selector: 'app-root',
