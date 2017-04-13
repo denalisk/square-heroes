@@ -28,13 +28,13 @@ export class Player {
   public health = 300;
   public damageModifier = 10 + (this.strengthLvl * 2);
   //GEAR
-  public mainHand: UserItem = new UserItem("Nothing", "Nothing", [0], ["Nothing"], "#d575ef");
-  public offHand: UserItem = new UserItem("Nothing", "Nothing", [0], ["Nothing"], "#d575ef");
-  public headSlot: UserItem = new UserItem("Nothing", "Nothing", [0], ["Nothing"], "#d575ef");
-  public chestSlot: UserItem = new UserItem("Nothing", "Nothing", [0], ["Nothing"], "#d575ef");
-  public legSlot: UserItem = new UserItem("Nothing", "Nothing", [0], ["Nothing"], "#d575ef");
+  public mainHand: UserItem = new UserItem("Nothing", "Nothing", [0], ["Nothing"], "blue");
+  public offHand: UserItem = new UserItem("Nothing", "Nothing", [0], ["Nothing"], "blue");
+  public headSlot: UserItem = new UserItem("Nothing", "Nothing", [0], ["Nothing"], "blue");
+  public chestSlot: UserItem = new UserItem("Nothing", "Nothing", [0], ["Nothing"], "blue");
+  public legSlot: UserItem = new UserItem("Nothing", "Nothing", [0], ["Nothing"], "blue");
 
-  public inventory: UserItem[] = [new UserItem("Bear Knuckles", "duoSet", [5], ["attack"], "#d575ef"), new UserItem("Cap", "headSlot", [1], ["defense"], "#d575ef"), new UserItem("Tabard", "chestSlot", [1], ["defense"], "#d575ef"), new UserItem("Torn Kilt", "legSlot", [1], ["defense"], "#d575ef"), new UserItem("Health Potion", "consumbale", [30], ["health"], "#d575ef")];
+  public inventory: UserItem[] = [new UserItem("Bear Knuckles", "duoSet", [5], ["attack"], "#724e40"), new UserItem("Cap", "headSlot", [1], ["defense"], "#724e40"), new UserItem("Tabard", "chestSlot", [1], ["defense"], "#724e40"), new UserItem("Torn Kilt", "legSlot", [1], ["defense"], "#724e40"), new UserItem("Health Potion", "consumbale", [30], ["health"], "#724e40")];
   public slotsList: string[] = ['mainHand', 'offHand', 'headSlot', 'legSlot', 'chestSlot'];
   //CONSUMABLES
   public healthPotions = 5;
