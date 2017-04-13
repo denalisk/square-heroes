@@ -37,6 +37,10 @@ h1 {
   opacity: 0.8;
 }
 
+.message-box {
+  height: 20px;
+}
+
 .combat-info {
   margin: 200px 10px 10px 10px;
 }

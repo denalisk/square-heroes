@@ -27,6 +27,9 @@
     </div>
     <!-- COMBAT -->
     <div class="combat-info">
+      <div *ngIf="alertTimer" class="message-box">
+        <h4>{{message}}</h4>
+      </div>
       <h4>Combat Info</h4>
         <p>Attack Roll: {{atkRoll}} <span *ngIf="hitBool === true">HIT!</span> <span *ngIf="hitBool === false">MISSED!</span></p>
         <!-- If user hits and enemy is still alive.... -->
@@ -71,23 +74,19 @@
     <canvas id="game"></canvas>
   </div>
   <div class="api-test container">
-    <!--  HERE TEST THE API STUFF -->
 <hr>
 <div class="row">
-  <form class="col s4">
+  <form class="col-md-4">
     <button class="waves-effect waves-light btn" (click)="searchcall()">Check for new tweets about #squareheroes!</button>
     <div *ngFor="let item of tweetsdata" class="col s12 m7">
-      <div class="card">
+      <div class="well">
         <div class="card-image">
           <img style={width:10px,height:10px;} src={{item.user.profile_image_url}}>
         </div>
         <div class="right-content">
-          <span class="card-title">{{item.user.name}}</span>
+          <span class="card-title">{{item.user.name}} says:</span>
           <div class="card-content">
             <p>{{item.text}}</p>
-          </div>
-          <div class="card-action">
-            <a href="#">This is a link</a>
           </div>
         </div>
       </div>
