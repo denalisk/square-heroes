@@ -330,40 +330,46 @@ export class AppComponent implements OnInit {
     } else if(item.type === "offHand") {
       if(this.player.mainHand.type === "duoSet") {
         this.unequipGear(this.player.mainHand);
+        this.unequipGear(this.player.offHand);
         this.player.mainHand = new UserItem("Nothing", "offHand", [0], ["Nothing"], "#d575ef");
       }
       else if(this.player.mainHand.type === "twoHander") {
         this.unequipGear(this.player.mainHand);
+        this.unequipGear(this.player.offHand);
         this.player.mainHand = new UserItem("Nothing", "mainHand", [0], ["Nothing"], "#d575ef");
       }
       if(item.name === "OH Scimitar") {
         if(this.player.attackLvl >= 20) {
           this.unequipGear(this.player.mainHand);
+          this.unequipGear(this.player.offHand);
           this.equipGear(item);
-          this.player.mainHand = item;
+          this.player.offHand = item;
         } else {
           alert("You need atleast 20 attack to equip this weapon, scrub");
         }
       } else if(item.name === "OH Kiteen Bomb") {
         if(this.player.attackLvl >= 60) {
           this.unequipGear(this.player.mainHand);
+          this.unequipGear(this.player.offHand);
           this.equipGear(item);
-          this.player.mainHand = item;
+          this.player.offHand = item;
         } else {
           alert("You need atleast 60 attack throw the kitties");
         }
       } else if(item.name === "Green Light Saber") {
         if(this.player.attackLvl >= 100) {
           this.unequipGear(this.player.mainHand);
+          this.unequipGear(this.player.offHand);
           this.equipGear(item);
-          this.player.mainHand = item;
+          this.player.offHand = item;
         } else {
           alert("You aren't strong enough with the force yet, 100 attack level to wield this weapon, you must have, Skywalker");
         }
+      } else {
+        this.unequipGear(this.player.offHand);
+        this.equipGear(item);
+        this.player.offHand = item;
       }
-      this.unequipGear(this.player.offHand);
-      this.equipGear(item);
-      this.player.offHand = item;
     } else if(item.type === "twoHander") {
       if(item.name === "Claymore") {
         if(this.player.attackLvl >= 20 && this.player.strengthLvl >= 20) {
