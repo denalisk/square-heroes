@@ -3,11 +3,16 @@ export class UserItem extends GameObject {
   public category: string;
 
   public static EQUIPMENT = [
+    // Starter Gear
+    new UserItem('weapon', 'Bear Knuckles', [['attack', 5]], ['mainHand', 'offHand'], null, '#d575ef', 'starter', 'Basic Stuff');
+    new UserItem('armor', 'Torn Kilt', [['defense', 1]], ['legSlot'], null, '#d575ef', 'starter', 'Basic Stuff');
+    new UserItem('armor', 'Tabard', [['defense', 1]], ['chestSlot'], null, '#d575ef', 'starter', 'Basic Stuff');
+    new UserItem('armor', 'Cap', [['defense', 1]], ['headSlot'], null, '#d575ef', 'starter', 'Basic Stuff');
     // Potions
-    new UserItem('consumable', 'Health Potion', [['health', 30]], [], null, '#ff3f3f', 'highArray', 'A health potion');
-    new UserItem('consumable', 'Attack Potion', [['attack', 5]], [], null, '#ff3f3f', 'highArray', 'An attack potion');
-    new UserItem('consumable', 'Strength Potion', [['strength', 5]], [], null, '#ff3f3f', 'highArray', 'A strength potion');
-    new UserItem('consumable', 'Defense Potion', [['defense', 5]], [], null, '#ff3f3f', 'highArray', 'A defense potion');
+    new UserItem('consumable', 'Health Potion', [['health', 30]], ['potions'], null, '#ff3f3f', 'highArray', 'A health potion');
+    new UserItem('consumable', 'Attack Potion', [['attack', 5]], ['potions'], null, '#ff3f3f', 'highArray', 'An attack potion');
+    new UserItem('consumable', 'Strength Potion', [['strength', 5]], ['potions'], null, '#ff3f3f', 'highArray', 'A strength potion');
+    new UserItem('consumable', 'Defense Potion', [['defense', 5]], ['potions'], null, '#ff3f3f', 'highArray', 'A defense potion');
     // Low Drops
     new UserItem('armor', 'Iron Helm', [['defense', 20]], ['headSlot'], {trait: 'defense', level: 20}, '#cecece', 'lowGear', 'Defense level needs to be atleast 10 to wear this, noob');
     new UserItem('armor', 'Iron Chestplate', [['defense', 20]], ['chestSlot'], {trait: 'defense', level: 20}, '#cecece', 'lowGear', 'Defense level needs to be atleast 10 to wear this, noob');

@@ -1,3 +1,5 @@
+import { UserItem } from './item.model';
+
 export class Player {
   public yDimension: number = 10;
   public xDimension: number = 10;
@@ -58,6 +60,8 @@ export class Player {
       this.yAttack = 0;
     }
   }
+
+  equipGear(item: UserItem)
 }
 
 export class UserItem {
