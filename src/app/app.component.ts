@@ -40,7 +40,7 @@ export class AppComponent implements OnInit {
   //////////CONSTRUCTOR/////////////////
   constructor(private http: Http) {}
 
-  // API CALLS
+  // API CALLS ////////////////////////////////////////
   searchquery = '';
   tweetsdata;
 
@@ -67,7 +67,7 @@ export class AppComponent implements OnInit {
     });
   }
 
-  // COLLISION DETECTION
+  // COLLISION DETECTION ////////////////////////////////////////
   checkCollisions() {
     let current = this;
     let holdVector: number[] = [current.velocityVector[0], current.velocityVector[1]];
