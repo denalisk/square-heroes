@@ -57,7 +57,7 @@ export class AppComponent implements OnInit {
 
   searchcall(){
     var headers = new Headers();
-    var searchterm = 'query=' + this.searchquery;
+    var searchterm = 'query=squareheroes';
 
     headers.append('Content-Type', 'application/X-www-form-urlencoded');
     // headers.append('Access-Control-Allow-Methods', 'POST,GET,OPTIONS,PUT,DELETE');
@@ -450,6 +450,9 @@ export class AppComponent implements OnInit {
   ngOnInit() {
     this.canvas = document.getElementById("game");
     this.ctx = this.canvas.getContext("2d");
+
+    //API Initialization with Tweets
+    this.makecall();
 
     window.addEventListener('keydown',(e) => {
         this.keyState[e.keyCode || e.which] = true;
