@@ -25,6 +25,15 @@ Square Hero is a basic hack and slash adventure game made in a few days by the a
 * There is an item, we don't know which, that crashes the game. We aren't even sure it does it anymore, but we didn't actively find it, so it's potentially still there.
 * Enemy respawns are sometimes way out of range. (At least bosses should be consistent)
 
+### Icebox
+* Add additional attributes to character (str, dex, spells, feats, etc) to track
+* Create level-up check on experience modification
+* Multiplayer
+
+### Technology
+* Typescript
+* Angular
+
 ### Legal
 MIT License
 
