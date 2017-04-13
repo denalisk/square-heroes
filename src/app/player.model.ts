@@ -16,15 +16,15 @@ export class Player {
   public skillPoints = 0;
   //STATS
   public strengthLvl = 10;
-  public defenseLvl = 10;
+  public defenseLvl = 1;
   public attackLvl = 10;
 
-  public strength = 10;
+  public strength = 0;
   public strengthBase = 10;
-  public defense = 1;
+  public defense = 0;
   public defenseBase = 10;
   public attackBase = 10;
-  public attack = 10;
+  public attack = 0;
   public health = 300;
   public damageModifier = 10 + (this.strengthLvl * 2);
   //GEAR
@@ -70,20 +70,37 @@ export class Player {
     }
   }
 
-  // equipGear(item: UserItem) {
-  //   this.defense = defenseBase;
-  //   this.attack = attackBase;
-  //   this.strength = strengthBase;
-  //   for (let slot of this.slotList) {
-  //     for (let trait of this[slot].modifier) {
-  //       this[trait] +=
-  //
-  //     }
-  //   }
-  // }
+  equipGear(item: DemoItem) {
+    if (this[item.modifier.trait] < item.modifier.trait) {
+      alert(item.alert);
+    } else {
+      for (let position of item.equipPosition) {
+        this[position] = item.name;
+      }
+      this.calculateStats();
+    }
+  }
 
   calculateStats(){
+    this.defense = this.defenseBase;
+    this.attack = this.attackBase;
+    this.strength = this.strengthBase;
+    for (let slot of this.slotsList) {
+      for (let trait of this[slot].modifier) {
+        this[trait[0]] += trait[1];
+      }
+    }
+  }
 
+  useItem(item: DemoItem) {
+    if (item.type === 'consumable') {
+      if (item.modifier[0][0] === 'health') {
+        this.health += item.modifier[0][1];
+      } else {
+        let trait = item.modifier[0][0] + 'Base';
+        this[trait] += item.modifier[0][1];
+      }
+    }
   }
 }
 
