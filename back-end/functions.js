@@ -3,7 +3,6 @@ var config = require('./config');
 
 functions = {
     authorize: function(req, res) {
-      console.log("inside of authorize");
         var header = config.consumerkey + ':' +config.consumersecret;
         var encheader = new Buffer(header).toString('base64');
         var finalheader = 'Basic ' + encheader;
@@ -19,10 +18,9 @@ functions = {
             }
 
         })
-    }
+    },
 
     search: function(req, res) {
-      console.log('inside of search');
         var searchquery = req.body.query;
         var encsearchquery = encodeURIComponent(searchquery);
         var bearerheader = 'Bearer ' + config.bearertoken;
@@ -31,10 +29,12 @@ functions = {
              if(error)
              console.log(error);
              else {
+
                  res.json({success: true, data:JSON.parse(body.body)});
              }
          })
     }
+
 }
 
 module.exports = functions;
