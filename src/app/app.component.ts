@@ -35,6 +35,10 @@ export class AppComponent implements OnInit {
   theNorth;
   desert;
 
+  // notification message
+  message: string = "";
+  alertTimer: boolean = false;
+
 
 
   //////////CONSTRUCTOR/////////////////
@@ -51,8 +55,7 @@ export class AppComponent implements OnInit {
     headers.append('Content-Type', 'application/X-www-form-urlencoded');
 
     // Below looks to be the main post call. Do we need a /authorize route?
-    this.http.post('http://localhost:3000/authorize', {headers: headers}).subscribe((results) => {console.log(results);
-    })
+    this.http.post('http://localhost:3000/authorize', {headers: headers}).subscribe()
   }
 
   searchcall(){
@@ -103,7 +106,12 @@ export class AppComponent implements OnInit {
               }
             }
             if(haveItem === false) {
-              current.player.inventory.push(current.objectsArray[index].userItem);
+              current.player.inventory.splice(0, 0, current.objectsArray[index].userItem);
+              current.message = "You picked up a " + current.objectsArray[index].userItem.name;
+              current.alertTimer = true;
+              setTimeout(function(){
+                current.alertTimer = false;
+              }, 1000)
             }
           }
 
@@ -969,6 +977,7 @@ export class AppComponent implements OnInit {
     }
   }
 
+// ANIMATIONS //////////////////////////////////////////////////////////////////
   swingSouthAnimation() {
     let current = this;
     var southSwingArray = [[((current.canvas.width / 2) - 5), ((current.canvas.height / 2) + 5), 3, 5], [((current.canvas.width / 2) - 5), ((current.canvas.height / 2) + 7), 3, 5]];
