@@ -13,10 +13,10 @@ export class Player {
   public skillPoints = 0;
   //STATS
   public strengthLvl = 10;
-  public attackLvl = 40;
+  public attackLvl = 10;
   public defenseLvl = 1;
-  public health = 200;
-  public damageModifier = (this.strengthLvl * 2);
+  public health = 300;
+  public damageModifier = 10 + (this.strengthLvl * 2);
   //GEAR
   public mainHand: UserItem = new UserItem("Nothing", "Nothing", [0], ["Nothing"]);
   public offHand: UserItem = new UserItem("Nothing", "Nothing", [0], ["Nothing"]);
@@ -24,7 +24,7 @@ export class Player {
   public chestSlot: UserItem = new UserItem("Nothing", "Nothing", [0], ["Nothing"]);
   public legSlot: UserItem = new UserItem("Nothing", "Nothing", [0], ["Nothing"]);
 
-  public inventory: UserItem[] = [new UserItem("Bear Knuckles", "duoSet", [5], ["attack"]), new UserItem("Cap", "headSlot", [1], ["defense"]), new UserItem("Tabard", "chestSlot", [1], ["defense"]), new UserItem("Torn skirt", "legSlot", [1], ["defense"]), new UserItem("Health Potion", "UserItem", [30], ["health"])];
+  public inventory: UserItem[] = [new UserItem("Bear Knuckles", "duoSet", [5], ["attack"]), new UserItem("Cap", "headSlot", [1], ["defense"]), new UserItem("Tabard", "chestSlot", [1], ["defense"]), new UserItem("Torn Kilt", "legSlot", [1], ["defense"]), new UserItem("Health Potion", "consumbale", [30], ["health"])];
   //CONSUMABLES
   public healthPotions = 5;
   public strengthPotions = 0;
