@@ -623,67 +623,67 @@ export class AppComponent implements OnInit {
       //DROP TRABLE CHANCE
       var selectDropTable = Math.floor(Math.random() * (Math.floor(100) - Math.ceil(0)) + Math.ceil(0));
       if(selectDropTable >= 0 && 50 > selectDropTable) {
-        roll = Math.floor(Math.random() * (Math.floor(medGear.length-1) - Math.ceil(0)) + Math.ceil(0));
+        roll = Math.floor(Math.random() * (Math.floor(medGear.length) - Math.ceil(0)) + Math.ceil(0));
         newItem.userItem = medGear[roll];
       } else if(selectDropTable >= 50 && 85 > selectDropTable) {
-        roll = Math.floor(Math.random() * (Math.floor(swampGear.length-1) - Math.ceil(0)) + Math.ceil(0));
+        roll = Math.floor(Math.random() * (Math.floor(swampGear.length) - Math.ceil(0)) + Math.ceil(0));
         newItem.userItem = swampGear[roll];
       } else if(selectDropTable >= 85 && 95 > selectDropTable) {
-        roll = Math.floor(Math.random() * (Math.floor(rareGear.length-1) - Math.ceil(0)) + Math.ceil(0));
+        roll = Math.floor(Math.random() * (Math.floor(rareGear.length) - Math.ceil(0)) + Math.ceil(0));
         newItem.userItem = rareGear[roll];
       } else if(selectDropTable >= 95 &&  100 > selectDropTable) {
-        roll = Math.floor(Math.random() * (Math.floor(epicGear.length-1) - Math.ceil(0)) + Math.ceil(0));
+        roll = Math.floor(Math.random() * (Math.floor(epicGear.length) - Math.ceil(0)) + Math.ceil(0));
         newItem.userItem = epicGear[roll];
       }
     } else if(thing === "northBoss") {
       //DROP TRABLE CHANCE
       var selectDropTable = Math.floor(Math.random() * (Math.floor(100) - Math.ceil(0)) + Math.ceil(0));
       if(selectDropTable >= 0 && 50 > selectDropTable) {
-        roll = Math.floor(Math.random() * (Math.floor(medGear.length-1) - Math.ceil(0)) + Math.ceil(0));
+        roll = Math.floor(Math.random() * (Math.floor(medGear.length) - Math.ceil(0)) + Math.ceil(0));
         newItem.userItem = medGear[roll];
       } else if(selectDropTable >= 50 && 85 > selectDropTable) {
-        roll = Math.floor(Math.random() * (Math.floor(northGear.length-1) - Math.ceil(0)) + Math.ceil(0));
+        roll = Math.floor(Math.random() * (Math.floor(northGear.length) - Math.ceil(0)) + Math.ceil(0));
         newItem.userItem = northGear[roll];
       } else if(selectDropTable >= 85 && 95 > selectDropTable) {
-        roll = Math.floor(Math.random() * (Math.floor(rareGear.length-1) - Math.ceil(0)) + Math.ceil(0));
+        roll = Math.floor(Math.random() * (Math.floor(rareGear.length) - Math.ceil(0)) + Math.ceil(0));
         newItem.userItem = rareGear[roll];
       } else if(selectDropTable >= 95 &&  100 > selectDropTable) {
-        roll = Math.floor(Math.random() * (Math.floor(epicGear.length-1) - Math.ceil(0)) + Math.ceil(0));
+        roll = Math.floor(Math.random() * (Math.floor(epicGear.length) - Math.ceil(0)) + Math.ceil(0));
         newItem.userItem = epicGear[roll];
       }
     } else if(thing === "graveBoss") {
       //DROP TRABLE CHANCE
       var selectDropTable = Math.floor(Math.random() * (Math.floor(100) - Math.ceil(0)) + Math.ceil(0));
       if(selectDropTable >= 0 && 50 > selectDropTable) {
-        roll = Math.floor(Math.random() * (Math.floor(medGear.length-1) - Math.ceil(0)) + Math.ceil(0));
+        roll = Math.floor(Math.random() * (Math.floor(medGear.length) - Math.ceil(0)) + Math.ceil(0));
         newItem.userItem = medGear[roll];
       } else if(selectDropTable >= 50 && 85 > selectDropTable) {
-        roll = Math.floor(Math.random() * (Math.floor(graveGear.length-1) - Math.ceil(0)) + Math.ceil(0));
+        roll = Math.floor(Math.random() * (Math.floor(graveGear.length) - Math.ceil(0)) + Math.ceil(0));
         newItem.userItem = graveGear[roll];
       } else if(selectDropTable >= 85 && 95 > selectDropTable) {
-        roll = Math.floor(Math.random() * (Math.floor(rareGear.length-1) - Math.ceil(0)) + Math.ceil(0));
+        roll = Math.floor(Math.random() * (Math.floor(rareGear.length) - Math.ceil(0)) + Math.ceil(0));
         newItem.userItem = rareGear[roll];
       } else if(selectDropTable >= 95 &&  100 > selectDropTable) {
-        roll = Math.floor(Math.random() * (Math.floor(epicGear.length-1) - Math.ceil(0)) + Math.ceil(0));
+        roll = Math.floor(Math.random() * (Math.floor(epicGear.length) - Math.ceil(0)) + Math.ceil(0));
         newItem.userItem = epicGear[roll];
       }
     } else if(thing === "high") {
-      roll = Math.floor(Math.random() * (Math.floor(highArray.length-1) - Math.ceil(0)) + Math.ceil(0));
+      roll = Math.floor(Math.random() * (Math.floor(highArray.length) - Math.ceil(0)) + Math.ceil(0));
       newItem.userItem = highArray[roll];
     } else {
       //DROP TABLE CHANCE
       var selectDropTable = Math.floor(Math.random() * (Math.floor(100) - Math.ceil(0)) + Math.ceil(0));
       if(selectDropTable >= 0 && 60 > selectDropTable) {
-        roll = Math.floor(Math.random() * (Math.floor(lowGear.length-1) - Math.ceil(0)) + Math.ceil(0));
+        roll = Math.floor(Math.random() * (Math.floor(lowGear.length) - Math.ceil(0)) + Math.ceil(0));
         newItem.userItem = lowGear[roll];
       } else if(selectDropTable >= 60 && 90 > selectDropTable) {
-        roll = Math.floor(Math.random() * (Math.floor(medGear.length-1) - Math.ceil(0)) + Math.ceil(0));
+        roll = Math.floor(Math.random() * (Math.floor(medGear.length) - Math.ceil(0)) + Math.ceil(0));
         newItem.userItem = medGear[roll];
       } else if(selectDropTable >= 90 && 93 > selectDropTable) {
-        roll = Math.floor(Math.random() * (Math.floor(rareGear.length-1) - Math.ceil(0)) + Math.ceil(0));
+        roll = Math.floor(Math.random() * (Math.floor(rareGear.length) - Math.ceil(0)) + Math.ceil(0));
         newItem.userItem = rareGear[roll];
       } else if(selectDropTable === 99) {
-        roll = Math.floor(Math.random() * (Math.floor(epicGear.length-1) - Math.ceil(0)) + Math.ceil(0));
+        roll = Math.floor(Math.random() * (Math.floor(epicGear.length) - Math.ceil(0)) + Math.ceil(0));
         newItem.userItem = epicGear[roll];
       }
     }
@@ -712,7 +712,8 @@ export class AppComponent implements OnInit {
       var dimensions: number = Math.floor(Math.random() * (Math.floor(50) - Math.ceil(40)) + Math.ceil(50));
       newEnemy.setProperties(
       Math.floor(Math.random() * (Math.floor(current.theNorth.xCoord + current.theNorth.xDimension) - Math.ceil(current.theNorth.xCoord)) + Math.ceil(current.theNorth.xCoord)),
-      Math.floor(Math.random() * (Math.floor(current.theNorth.yCoord + current.theNorth.yDimension) - Math.ceil(current.theNorth.yCoord)) + Math.ceil(current.theNorth.yCoord)), dimensions,
+      Math.floor(Math.random() * (Math.floor(current.theNorth.yCoord + current.theNorth.yDimension) - Math.ceil(current.theNorth.yCoord)) + Math.ceil(current.theNorth.yCoord)),
+      dimensions,
       dimensions, "#0d9664");
       current.objectsArray.push(newEnemy);
     }, 10000);
@@ -724,10 +725,10 @@ export class AppComponent implements OnInit {
       var newEnemy = new Enemy('enemy');
       var dimensions: number = Math.floor(Math.random() * (Math.floor(30) - Math.ceil(20)) + Math.ceil(30));
       newEnemy.setProperties(
-      Math.floor(Math.random() * (Math.floor(this.desert.xCoord + this.desert.xDimension) - Math.ceil(this.desert.xCoord)) + Math.ceil(this.desert.xCoord)),
-      Math.floor(Math.random() * (Math.floor(this.desert.yCoord + this.desert.yDimension) - Math.ceil(this.desert.yCoord)) + Math.ceil(this.desert.yCoord)), dimensions,
+      Math.floor(Math.random() * (Math.floor(current.desert.xCoord + current.desert.xDimension) - Math.ceil(current.desert.xCoord)) + Math.ceil(current.desert.xCoord)),
+      Math.floor(Math.random() * (Math.floor(current.desert.yCoord + current.desert.yDimension) - Math.ceil(current.desert.yCoord)) + Math.ceil(current.desert.yCoord)), dimensions,
       dimensions, "#994227");
-      this.objectsArray.push(newEnemy);
+      current.objectsArray.push(newEnemy);
     }, 10000);
   }
 
@@ -797,14 +798,14 @@ export class AppComponent implements OnInit {
 
               this.objectsArray.splice(i, 1);
               // DROPROLL CHANCE
-              #0e4430
+
               if(this.currentEnemy.xDimension === 100)
              {
                var dropRoll = Math.floor(Math.random() * (Math.floor(100) - Math.ceil(0)) + Math.ceil(0));
                if(dropRoll > 30) {
                  this.generateItem(xCoord, yCoord, 'northBoss');
                }
-             } else if(this.currentEnemy.xDimension === 50 && the.currentEnemy.color === "#0e4430")
+             } else if(this.currentEnemy.xDimension === 50 && this.currentEnemy.color === "#0e4430")
              {
                var dropRoll = Math.floor(Math.random() * (Math.floor(100) - Math.ceil(0)) + Math.ceil(0));
                if(dropRoll > 30) {
@@ -816,7 +817,7 @@ export class AppComponent implements OnInit {
                 if(dropRoll > 30) {
                   this.generateItem(xCoord, yCoord, 'swampBoss');
                 }
-              } else if(this.currentEnemy.xDimension === 50 && the.currentEnemy.color === "#6b245f")
+              } else if(this.currentEnemy.xDimension === 50 && this.currentEnemy.color === "#6b245f")
               {
                 var dropRoll = Math.floor(Math.random() * (Math.floor(100) - Math.ceil(0)) + Math.ceil(0));
                 if(dropRoll > 30) {
