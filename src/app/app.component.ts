@@ -1002,6 +1002,7 @@ export class AppComponent implements OnInit {
     this.ctx.lineTo(point4[0], point4[1]);
     this.ctx.fillStyle = frame.color;
     this.ctx.fill();
+    this.ctx.stroke();
     this.ctx.closePath();
   }
 
@@ -1024,7 +1025,7 @@ export class AppComponent implements OnInit {
       for (let index = 1; index <= 9; index++) {
         // Frames for sword attack
         let newAnimation = new GameObject('animation');
-        newAnimation.setProperties(attackRectangle[current.player.direction][0], attackRectangle[current.player.direction][1], attackRectangle[current.player.direction][2], attackRectangle[current.player.direction][3], 'black');
+        newAnimation.setProperties(attackRectangle[current.player.direction][0], attackRectangle[current.player.direction][1], attackRectangle[current.player.direction][2], attackRectangle[current.player.direction][3], current.player.mainHand.color);
         newAnimation.attackAngle = attackRectangle[current.player.direction][4] + angleAduster;
         newAnimation.collidable = false;
         newFrameSet.push(newAnimation);
