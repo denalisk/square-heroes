@@ -72,16 +72,10 @@
   </div>
   <div class="api-test container">
     <!--  HERE TEST THE API STUFF -->
-<button class="waves-effect waves-light btn" (click)="makecall()">Authorize</button>
+<hr>
 <div class="row">
   <form class="col s4">
-    <div class="row">
-      <div class="input-field col s12">
-        <input id="hashtags" type="text" [(ngModel)]="searchquery" [ngModelOptions]="{standalone: true}">
-        <label for="hashtags">Search by hashtags</label>
-      </div>
-    </div>
-    <button class="waves-effect waves-light btn" (click)="searchcall()">Search</button>
+    <button class="waves-effect waves-light btn" (click)="searchcall()">Check for new tweets about #squareheroes!</button>
     <div *ngFor="let item of tweetsdata" class="col s12 m7">
       <div class="card">
         <div class="card-image">
