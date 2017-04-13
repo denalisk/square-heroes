@@ -137,7 +137,7 @@ export class AppComponent implements OnInit {
       }else if(stat === "defense")
       {
         this.player.defenseLvl += 1;
-        this.player.health += 20;
+        this.player.health += 30;
         this.player.skillPoints -= 1;
       }
     }
@@ -155,7 +155,7 @@ export class AppComponent implements OnInit {
         this.player.strengthLvl += item.bonus[i];
       } else if(item.stat[i] === "defense")
       {
-        this.player.health += item.bonus[i];
+        this.player.health += (item.bonus[i] * 3);
         this.player.defenseLvl += item.bonus[i];
       }
     }
@@ -173,7 +173,7 @@ export class AppComponent implements OnInit {
         this.player.strengthLvl -= item.bonus[i];
       } else if(item.stat[i] === "defense")
       {
-        this.player.health -= item.bonus[i];
+        this.player.health -= (item.bonus[i] * 3);
         this.player.defenseLvl -= item.bonus[i];
       }
     }
@@ -187,7 +187,7 @@ export class AppComponent implements OnInit {
     } else if(item.type === "headSlot") {
       //UNEQUIP GEAR, SET STATS CORRECTLY, THEN EQUIP NEW GEAR
       if(item.name === "Iron Helm") {
-        if(this.player.defenseLvl >= 5) {
+        if(this.player.defenseLvl >= 20) {
           this.unequipGear(this.player.headSlot);
           this.equipGear(item);
           this.player.headSlot = item;
@@ -195,7 +195,7 @@ export class AppComponent implements OnInit {
           alert("Defense level needs to be atleast 5 to wear this, noob");
         }
       } else if(item.name === "Mithril Helm") {
-        if(this.player.defenseLvl >= 20) {
+        if(this.player.defenseLvl >= 50) {
           this.unequipGear(this.player.headSlot);
           this.equipGear(item);
           this.player.headSlot = item;
@@ -203,7 +203,7 @@ export class AppComponent implements OnInit {
           alert("Defense level needs to be atleast 20 to wear this, scrub");
         }
       } else if(item.name === "Robinhood Hat") {
-        if(this.player.defenseLvl >= 100) {
+        if(this.player.defenseLvl >= 150) {
           this.unequipGear(this.player.headSlot);
           this.equipGear(item);
           this.player.headSlot = item;
@@ -218,7 +218,7 @@ export class AppComponent implements OnInit {
     } else if(item.type === "chestSlot") {
       //UNEQUIP GEAR, SET STATS CORRECTLY, THEN EQUIP NEW GEAR
       if(item.name === "Iron Chestplate") {
-        if(this.player.defenseLvl >= 5) {
+        if(this.player.defenseLvl >= 20) {
           this.unequipGear(this.player.chestSlot);
           this.equipGear(item);
           this.player.chestSlot = item;
@@ -226,7 +226,7 @@ export class AppComponent implements OnInit {
           alert("Defense level needs to be atleast 5 to wear this, noob");
         }
       } else if(item.name === "Mithril Chestplate") {
-        if(this.player.defenseLvl >= 20) {
+        if(this.player.defenseLvl >= 50) {
           this.unequipGear(this.player.chestSlot);
           this.equipGear(item);
           this.player.chestSlot = item;
@@ -234,7 +234,7 @@ export class AppComponent implements OnInit {
           alert("Defense level needs to be atleast 20 to wear this, scrub");
         }
       } else if(item.name === "Gladiator Chestplate") {
-        if(this.player.defenseLvl >= 100) {
+        if(this.player.defenseLvl >= 150) {
           this.unequipGear(this.player.chestSlot);
           this.equipGear(item);
           this.player.chestSlot = item;
@@ -249,7 +249,7 @@ export class AppComponent implements OnInit {
     } else if(item.type === "legSlot") {
       //UNEQUIP GEAR, SET STATS CORRECTLY, THEN EQUIP NEW GEAR
       if(item.name === "Iron Greves") {
-        if(this.player.defenseLvl >= 5) {
+        if(this.player.defenseLvl >= 20) {
           this.unequipGear(this.player.legSlot);
           this.equipGear(item);
           this.player.legSlot = item;
@@ -257,7 +257,7 @@ export class AppComponent implements OnInit {
           alert("Defense level needs to be atleast 5 to wear this, noob");
         }
         } else if(item.name === "Mithril Greves") {
-        if(this.player.defenseLvl >= 20) {
+        if(this.player.defenseLvl >= 50) {
           this.unequipGear(this.player.legSlot);
           this.equipGear(item);
           this.player.legSlot = item;
@@ -265,7 +265,7 @@ export class AppComponent implements OnInit {
           alert("Defense level needs to be atleast 20 to wear this, scrub");
         }
       } else if(item.name === "Chad Legs(ULTIMA)") {
-        if(this.player.defenseLvl >= 100) {
+        if(this.player.defenseLvl >= 150) {
           this.unequipGear(this.player.legSlot);
           this.equipGear(item);
           this.player.legSlot = item;
@@ -286,7 +286,7 @@ export class AppComponent implements OnInit {
         this.player.offHand = new UserItem("Nothing", "offHand", [0], ["Nothing"]);
       }
       if(item.name === "MH Scimitar") {
-        if(this.player.attackLvl >= 20) {
+        if(this.player.attackLvl >= 50) {
           this.unequipGear(this.player.mainHand);
           this.equipGear(item);
           this.player.mainHand = item;
@@ -294,7 +294,7 @@ export class AppComponent implements OnInit {
           alert("You need atleast 20 attack to equip this weapon, scrub");
         }
       } else if(item.name === "MH Kiteen Bomb") {
-        if(this.player.attackLvl >= 60) {
+        if(this.player.attackLvl >= 100) {
           this.unequipGear(this.player.mainHand);
           this.equipGear(item);
           this.player.mainHand = item;
@@ -302,7 +302,7 @@ export class AppComponent implements OnInit {
           alert("You need atleast 40 attack throw the kitties");
         }
       } else if(item.name === "Blue Light Saber") {
-        if(this.player.attackLvl >= 100) {
+        if(this.player.attackLvl >= 150) {
           this.unequipGear(this.player.mainHand);
           this.equipGear(item);
           this.player.mainHand = item;
@@ -324,7 +324,7 @@ export class AppComponent implements OnInit {
         this.player.mainHand = new UserItem("Nothing", "mainHand", [0], ["Nothing"]);
       }
       if(item.name === "OH Scimitar") {
-        if(this.player.attackLvl >= 20) {
+        if(this.player.attackLvl >= 50) {
           this.unequipGear(this.player.mainHand);
           this.equipGear(item);
           this.player.mainHand = item;
@@ -332,7 +332,7 @@ export class AppComponent implements OnInit {
           alert("You need atleast 20 attack to equip this weapon, scrub");
         }
       } else if(item.name === "OH Kiteen Bomb") {
-        if(this.player.attackLvl >= 60) {
+        if(this.player.attackLvl >= 100) {
           this.unequipGear(this.player.mainHand);
           this.equipGear(item);
           this.player.mainHand = item;
@@ -340,7 +340,7 @@ export class AppComponent implements OnInit {
           alert("You need atleast 40 attack throw the kitties");
         }
       } else if(item.name === "Green Light Saber") {
-        if(this.player.attackLvl >= 100) {
+        if(this.player.attackLvl >= 150) {
           this.unequipGear(this.player.mainHand);
           this.equipGear(item);
           this.player.mainHand = item;
@@ -353,7 +353,7 @@ export class AppComponent implements OnInit {
       this.player.offHand = item;
     } else if(item.type === "twoHander") {
       if(item.name === "Claymore") {
-        if(this.player.attackLvl >= 15 && this.player.strengthLvl >= 15) {
+        if(this.player.attackLvl >= 60 && this.player.strengthLvl >= 50) {
           this.unequipGear(this.player.mainHand);
           this.unequipGear(this.player.offHand);
           this.equipGear(item);
@@ -363,7 +363,7 @@ export class AppComponent implements OnInit {
           alert("You attack expertise must be 10 or greater to wield these, kneenja");
         }
       } else if(item.name === "Katana") {
-          if(this.player.attackLvl >= 60) {
+          if(this.player.attackLvl >= 100) {
             this.unequipGear(this.player.mainHand);
             this.unequipGear(this.player.offHand);
             this.equipGear(item);
@@ -373,7 +373,7 @@ export class AppComponent implements OnInit {
             alert("You think you can wield the Katana, young one, try again when your attack level is 20");
           }
         } else if(item.name === "Illidan's Warglaive") {
-          if(this.player.attackLvl >= 100) {
+          if(this.player.attackLvl >= 150) {
             this.unequipGear(this.player.mainHand);
             this.unequipGear(this.player.offHand);
             this.equipGear(item);
@@ -391,7 +391,7 @@ export class AppComponent implements OnInit {
         }
     } else if(item.type === "duoSet") {
       if(item.name === "Nunchucks") {
-        if(this.player.attackLvl >= 20) {
+        if(this.player.attackLvl >= 50) {
           this.unequipGear(this.player.mainHand);
           this.unequipGear(this.player.offHand);
           this.player.mainHand = item;
@@ -528,10 +528,10 @@ export class AppComponent implements OnInit {
   generateItem(xCoord, yCoord, thing) {
     var roll;
     var highArray: UserItem[] = [new UserItem("Health Potion", "consumable", [30], ["health"]), new UserItem("Strength Potion", "consumable", [30], ["strength"]), new UserItem("Attack Potion", "consumable", [30], ["attack"]), new UserItem("Defense Potion", "consumable", [30], ["defense"])];
-    var lowGear: UserItem[] = [new UserItem("Iron Helm", "headSlot", [15], ["defense"]), new UserItem("Iron Chestplate", "chestSlot", [30], ["defense"]), new UserItem("Iron Greves", "legSlot", [20], ["defense"]), new UserItem("Sword", "mainHand", [20, 20], ["strength", "attack"]), new UserItem("Shield", "offHand", [40], ["defense"]), new UserItem("Claymore", "twoHander", [75], ["strength"])];
-    var medGear: UserItem[] = [new UserItem("Mithril Helm", "headSlot", [40], ["defense"]), new UserItem("Mithril Chestplate", "chestSlot", [55], ["defense"]), new UserItem("Mithril Greves", "legSlot", [45], ["defense"]), new UserItem("Katana", "twoHander", [60, 180], ["attack", "strength"]), new UserItem("Nunchucks", "duoSet", [180, 60], ["attack", "strength"]), new UserItem("MH Scimitar", "mainHand", [110, 110], ["attack", "strength"]), new UserItem("OH Scimitar", "offHand", [110, 110], ["attack", "strength"])];
+    var lowGear: UserItem[] = [new UserItem("Iron Helm", "headSlot", [30], ["defense"]), new UserItem("Iron Chestplate", "chestSlot", [30], ["defense"]), new UserItem("Iron Greves", "legSlot", [30], ["defense"]), new UserItem("Sword", "mainHand", [30, 30], ["strength", "attack"]), new UserItem("Shield", "offHand", [40], ["defense"]), new UserItem("Claymore", "twoHander", [75], ["strength"])];
+    var medGear: UserItem[] = [new UserItem("Mithril Helm", "headSlot", [60], ["defense"]), new UserItem("Mithril Chestplate", "chestSlot", [60], ["defense"]), new UserItem("Mithril Greves", "legSlot", [60], ["defense"]), new UserItem("Katana", "twoHander", [60, 180], ["attack", "strength"]), new UserItem("Nunchucks", "duoSet", [180, 60], ["attack", "strength"]), new UserItem("MH Scimitar", "mainHand", [110, 110], ["attack", "strength"]), new UserItem("OH Scimitar", "offHand", [110, 110], ["attack", "strength"])];
     var rareGear: UserItem[] = [new UserItem("Robinhood Hat", "headSlot", [250], ["attack"]), new UserItem("Gladiator Chestplate", "chestSlot", [250], ["strength"]), new UserItem("MH Kitten Bomb", "mainHand", [200, 200], ["attack", "strength"]), new UserItem("OH Kitten Bomb", "offHand", [200, 200], ["attack", "strength"])];
-    var epicGear: UserItem[] = [new UserItem("Chad Legs(ULTIMA)", "legSlot", [300], ["attack"]),  new UserItem("Blue Light Saber", "mainHand", [300, 300], ["attack", "strength"]), new UserItem("Green Light Saber", "offHand", [300, 300], ["attack", "strength"]), new UserItem("Illidan's Warglaive", "twoHander", [500, 100], ["attack", "strength"])];
+    var epicGear: UserItem[] = [new UserItem("Chad Legs(ULTIMA)", "legSlot", [400], ["attack"]),  new UserItem("Blue Light Saber", "mainHand", [300, 300], ["attack", "strength"]), new UserItem("Green Light Saber", "offHand", [300, 300], ["attack", "strength"]), new UserItem("Illidan's Warglaive", "twoHander", [500, 100], ["attack", "strength"])];
 
     var newItem = new Item("item");
 
@@ -586,17 +586,18 @@ export class AppComponent implements OnInit {
             //ENEMY IS BEING ATTACKED
             //ATTACK AND DAMAGE ROLLS FOR COMBAT
             //ATTACK ROLL
-            this.atkRoll = Math.floor(Math.random() * (Math.floor(100) - Math.ceil(1)) + Math.ceil(1));
+            this.atkRoll = Math.floor(Math.random() * (Math.floor(200) - Math.ceil(1)) + Math.ceil(1));
             console.log(this.atkRoll + ' atk roll');
-            if(this.atkRoll > (50 - this.player.attackLvl))
+            if(this.atkRoll > (100 - this.player.attackLvl))
             {
               this.hitBool = true;
               //DAMAGE ROLL
-              this.dmgRoll = Math.floor(Math.random() * (Math.floor(10) - Math.ceil(0)) + Math.ceil(0));
+              var maxHit = 10 + (this.player.strengthLvl * 2);
+              this.dmgRoll = Math.floor(Math.random() * (Math.floor(maxHit) - Math.ceil(0)) + Math.ceil(0));
               console.log(this.dmgRoll + ' dmg roll');
               if(this.dmgRoll != 0)
               {
-                this.damageDone = this.dmgRoll + (this.player.strengthLvl * 2);
+                this.damageDone = this.dmgRoll; // + (this.player.strengthLvl / 2);
                 console.log(this.damageDone + ' damage done');
                 this.objectsArray[i].health -= this.damageDone;
                 console.log(this.objectsArray[i].health + ' enemy health');
@@ -618,7 +619,7 @@ export class AppComponent implements OnInit {
               var xCoord: number = this.objectsArray[i].xCoord;
               var yCoord: number = this.objectsArray[i].yCoord;
               //EXPERIENCE DROP
-              var expDrop = Math.floor(Math.random() * (Math.floor(10) - Math.ceil(5)) + Math.ceil(5));
+              var expDrop = Math.floor(Math.random() * (Math.floor(15) - Math.ceil(5)) + Math.ceil(5));
               this.player.experience += expDrop;
               //LEVEL UP
               //EVERY LEVEL, EXPERIENCE NEEDED TO LEVEL UP IS DOUBLED
@@ -659,9 +660,9 @@ export class AppComponent implements OnInit {
     if(!enemy.enemyAttacking) {
       enemy.enemyAttacking = true;
       //Calculate damage of enemy damage minus defense
-      var enemyDamage = enemy.rollForDamage() - this.player.defenseLvl;
+      var enemyDamage = enemy.rollForDamage() - Math.trunc(this.player.defenseLvl  / 3);
       if(enemyDamage > 0) {
-        this.player.health -= enemy.rollForDamage() - this.player.defenseLvl;
+        this.player.health -= enemy.rollForDamage() - Math.trunc(this.player.defenseLvl  / 3);
       } else {
         this.player.health--;
       }

@@ -26,7 +26,7 @@ export class Player {
 
   public inventory: UserItem[] = [new UserItem("Bear Knuckles", "duoSet", [5], ["attack"]), new UserItem("Cap", "headSlot", [1], ["defense"]), new UserItem("Tabard", "chestSlot", [1], ["defense"]), new UserItem("Torn skirt", "legSlot", [1], ["defense"]), new UserItem("Health Potion", "UserItem", [30], ["health"])];
   //CONSUMABLES
-  public healthPotions = 1;
+  public healthPotions = 5;
   public strengthPotions = 0;
   public attackPotions = 0;
   public defensePotions = 0;
