@@ -20,7 +20,7 @@ export class AppComponent implements OnInit {
   animationsArray = [];
   canvas = null;
   ctx = null;
-  player = null;
+  player: Player = null;
   velocityVector: number[] = [0,0];
   playerXCoord = null;
   playerYCoord = null;
@@ -607,7 +607,7 @@ export class AppComponent implements OnInit {
     var medGear: UserItem[] = [new UserItem("Mithril Helm", "headSlot", [40], ["defense"], "#7ca0f9"), new UserItem("Mithril Chestplate", "chestSlot", [40], ["defense"], "#7ca0f9"), new UserItem("Mithril Greeves", "legSlot", [40], ["defense"], "#7ca0f9"), new UserItem("Katana", "twoHander", [10, 120], ["attack", "strength"], "#7ca0f9"), new UserItem("Nunchucks", "duoSet", [50, 50], ["attack", "strength"], "#7ca0f9"), new UserItem("MH Scimitar", "mainHand", [65], ["strength"], "#7ca0f9"), new UserItem("OH Scimitar", "offHand", [60], ["attack"], "#7ca0f9")];
     var rareGear: UserItem[] = [new UserItem("Robinhood Hat", "headSlot", [150], ["attack"], "#d575ef"), new UserItem("Gladiator Chestplate", "chestSlot", [150], ["strength"], "#d575ef"), new UserItem("MH Kitten Bomb", "mainHand", [80, 120], ["attack", "strength"], "#d575ef"), new UserItem("OH Kitten Bomb", "offHand", [120, 80], ["attack", "strength"], "#d575ef")];
     var epicGear: UserItem[] = [new UserItem("Chad's Legs(ULTIMA)", "legSlot", [300], ["attack"], "#ed8055"),  new UserItem("Blue Light Saber", "mainHand", [200, 200], ["attack", "strength"], "#ed8055"), new UserItem("Green Light Saber", "offHand", [200, 200], ["attack", "strength"], "#ed8055"), new UserItem("Illidan's Warglaive", "twoHander", [100, 400], ["attack", "strength"], "#ed8055"), new UserItem("Armour Forged From Sam's Crocks", "chestSlot", [450], ["defense", "strength"], "#4d843e"), new UserItem("Minhish Cap(ULTIMA)", "headSlot", [300], ["attack"], "#ed8055"), new UserItem("Derek's Spinner", "mainHand", [300], ["strength"], "#ed8055"), new UserItem("Shield of Law-rence", "offHand", [300], ["defense"], "#ed8055")];
-    
+
     var graveGear: UserItem[] = [new UserItem("Tombstone", "twoHander", [150, -30], ["strength", "attack"], "#d575ef"), new UserItem("Pumpkin Head", "headSlot", [60, -10], ["defense", "attack"], "#d575ef"), new UserItem("Rickity Rib Cage", "chestSlot", [55], ["defense"], "#d575ef"), new UserItem("MH Bone Dagger", "mainHand", [65], ["strength"], "#d575ef"), new UserItem("OH Bone Dagger", "mainHand", [65], ["attack"], "#d575ef")];
     var northGear: UserItem[] = [new UserItem("Ushanka-hat", "headSlot", [120, 50], ["defense", "attack"], "white"), new UserItem("Grizzley Fur Coat", "chestSlot", [150, 30], ["strength", "defense"], "white"), new UserItem("Ice Picks", "duoSet", [60, 60], ["attack", "strength"], "white"), new UserItem("Longclaw", "mainHand", [120], ["strength"], "white")];
     var swampGear: UserItem[] = [new UserItem("Tribal Shield", "offHand" , [100], ["defense"], "#4d843e"), new UserItem("Double Hatchets", "duoSet", [75, -10], ["strength", "attack"], "#4d843e"), new UserItem("Voodoo Machete", "mainHand", [100], ["strength"], "#4d843e"), new UserItem("Hex Greeves", "legSlot", [70], ["defense"], "#4d843e"), new UserItem("Shrunken Head", "headSlot", [80], ["defense"], "#4d843e")];

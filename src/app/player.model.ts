@@ -19,12 +19,12 @@ export class Player {
   public defenseLvl = 10;
   public attackLvl = 10;
 
-  public strength = 10;
+  public strength = 0;
   public strengthBase = 10;
-  public defense = 1;
+  public defense = 0;
   public defenseBase = 10;
   public attackBase = 10;
-  public attack = 10;
+  public attack = 0;
   public health = 300;
   public damageModifier = 10 + (this.strengthLvl * 2);
   //GEAR
@@ -70,20 +70,22 @@ export class Player {
     }
   }
 
-  // equipGear(item: UserItem) {
-  //   this.defense = defenseBase;
-  //   this.attack = attackBase;
-  //   this.strength = strengthBase;
-  //   for (let slot of this.slotList) {
-  //     for (let trait of this[slot].modifier) {
-  //       this[trait] +=
-  //
-  //     }
-  //   }
-  // }
+  equipGear(item: DemoItem) {
+    for (let position of item.equipPosition) {
+      this[position] = item.name;
+    }
+    this.calculateStats();
+  }
 
   calculateStats(){
-
+    this.defense = this.defenseBase;
+    this.attack = this.attackBase;
+    this.strength = this.strengthBase;
+    for (let slot of this.slotsList) {
+      for (let trait of this[slot].modifier) {
+        this[trait[0]] += trait[1];
+      }
+    }
   }
 }
 
