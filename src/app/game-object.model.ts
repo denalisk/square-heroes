@@ -61,7 +61,6 @@ export class Item extends GameObject {
   public userItem: UserItem;
 
   constructor(public type: string) {
-
   super(type)
   this.collidable = false;
   }
