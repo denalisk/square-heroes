@@ -16,7 +16,7 @@ export class Player {
   public skillPoints = 0;
   //STATS
   public strengthLvl = 10;
-  public defenseLvl = 10;
+  public defenseLvl = 1;
   public attackLvl = 10;
 
   public strength = 0;
