@@ -553,13 +553,11 @@ export class AppComponent implements OnInit {
     //Add BOSS to village
     var bossEnemy = new Enemy('enemy');
     bossEnemy.setProperties((this.graveyard.xCoord + (this.graveyard.xDimension/2)), (this.graveyard.yCoord + (this.graveyard.yDimension/2)), 50, 50, "#6b245f");
-    console.log("Boss spawned at: " + bossEnemy.xCoord + ", " + bossEnemy.yCoord);
     this.objectsArray.push(bossEnemy);
     //BOSS Minions
     for(let i = 10; i < 100; i += 10) {
       var bossMinion = new Enemy('enemy');
       bossMinion.setProperties((this.graveyard.xCoord + (this.graveyard.xDimension/2) + i), (this.graveyard.yCoord + (this.graveyard.yDimension/2) + i), 10, 10, "#774f9b");
-      console.log("Boss enemy spawned at:" + bossMinion.xCoord + ", " + bossMinion.yCoord);
       this.objectsArray.push(bossMinion);
     }
   }
@@ -711,7 +709,6 @@ export class AppComponent implements OnInit {
             //ATTACK AND DAMAGE ROLLS FOR COMBAT
             //ATTACK ROLL
             this.atkRoll = Math.floor(Math.random() * (Math.floor(200) - Math.ceil(1)) + Math.ceil(1));
-            console.log(this.atkRoll + ' atk roll');
 
             if(this.atkRoll > (60 - (this.player.attackLvl / 2)))
             {
@@ -719,13 +716,10 @@ export class AppComponent implements OnInit {
               //DAMAGE ROLL
               var maxHit = 10 + (this.player.strengthLvl * 2);
               this.dmgRoll = Math.floor(Math.random() * (Math.floor(maxHit) - Math.ceil(0)) + Math.ceil(0));
-              console.log(this.dmgRoll + ' dmg roll');
               if(this.dmgRoll != 0)
               {
                 this.damageDone = this.dmgRoll; // + (this.player.strengthLvl / 2);
-                console.log(this.damageDone + ' damage done');
                 this.objectsArray[i].health -= this.damageDone;
-                console.log(this.objectsArray[i].health + ' enemy health');
               }
             } else {
               this.hitBool = false;
