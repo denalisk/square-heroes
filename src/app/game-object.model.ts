@@ -8,6 +8,7 @@ export class GameObject {
   public color: string = 'red';
   public shape: string = 'square';
   public collidable: boolean = true;
+  public attackAngle: number = 0;
 
   constructor(public type: string) {};
 

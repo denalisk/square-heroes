@@ -17,6 +17,7 @@ export class AppComponent implements OnInit {
   keyState = {};
   title = 'Square Heroes';
   objectsArray = [];
+  animationsArray = [];
   canvas = null;
   ctx = null;
   player = null;
@@ -776,19 +777,58 @@ export class AppComponent implements OnInit {
     this.ctx.closePath();
   }
 
-  drawCustomRectangle( ) {}
+  drawCustomRectangle(frame) {
+    let point1 = [frame.xCoord, frame.yCoord];
+    let point2 = [(frame.xCoord + Math.cos(frame.attackAngle)*frame.yDimension), (frame.yCoord + Math.sin(frame.attackAngle)*frame.yDimension)];
+    let point3 = [(frame.xCoord + Math.cos(.5-frame.attackAngle)*frame.xDimension), (frame.yCoord - Math.sin(.5-frame.attackAngle)*frame.xDimension)];
+    let point4 = [point2[0] + (point1[0] - point3[0]), point2[1] + (point1[1] - point3[1])];
+    this.ctx.beginPath();
+    this.ctx.moveTo(frame.xCoord, frame.yCoord);
+    this.ctx.lineTo(point3[0], point3[1]);
+    this.ctx.lineTo(point2[0], point2[1]);
+    this.ctx.lineTo(point4[0], point4[1]);
+    this.ctx.fillStyle = frame.color;
+    this.ctx.fill();
+    this.ctx.closePath();
+  }
 
-  attackAnimation(attacking: boolean) {
+  generateAttackAnimation(attacking: boolean) {
     let current = this;
     var attackRectangle = {
       // each array will be: [starting xCoord, starting yCoord, xDimension, yDimension]
-      south: [((current.canvas.width / 2) - 5), ((current.canvas.height / 2) + 5), 3, 5],
-      north: [((current.canvas.width / 2) + 2), ((current.canvas.height / 2) - 10), 3, 5],
-      west: [((current.canvas.width / 2) - 10), ((current.canvas.height / 2) - 5), 5, 3],
-      east: [((current.canvas.width / 2) + 5), ((current.canvas.height / 2) + 2), 5, 3]
+      south: [((current.canvas.width / 2) - 5), ((current.canvas.height / 2)), 5, 15, .7],
+      north: [((current.canvas.width / 2) + 4), ((current.canvas.height / 2)), 5, 15, -2.3],
+      west: [((current.canvas.width / 2)), ((current.canvas.height / 2) - 4), 5, 15, 2.3],
+      east: [((current.canvas.width / 2)), ((current.canvas.height / 2) + 4), 5, 15, -.7]
     }
     if (attacking) {
-      current.drawRectangle(attackRectangle[current.player.direction][0], attackRectangle[current.player.direction][1], attackRectangle[current.player.direction][2], attackRectangle[current.player.direction][3], 'black')
+      let xCoord = attackRectangle[current.player.direction][0];
+      let yCoord = attackRectangle[current.player.direction][1];
+      let point1 = [xCoord, yCoord];
+      let newFrameSet = [];
+      let handFrame = [];
+      let angleAduster = 0;
+      for (let index = 1; index <= 9; index++) {
+        // Frames for sword attack
+        let newAnimation = new GameObject('animation');
+        newAnimation.setProperties(attackRectangle[current.player.direction][0], attackRectangle[current.player.direction][1], attackRectangle[current.player.direction][2], attackRectangle[current.player.direction][3], 'black');
+        newAnimation.attackAngle = attackRectangle[current.player.direction][4] + angleAduster;
+        newAnimation.collidable = false;
+        newFrameSet.push(newAnimation);
+        angleAduster += .15;
+      }
+      current.animationsArray.push(newFrameSet);
+    }
+  }
+
+  playAnimation(frameSet) {
+    for (let index = 0; index < frameSet.length; index++) {
+      let newFrame = frameSet[index][0];
+      frameSet[index].shift();
+      if (frameSet[index].length === 0) {
+        frameSet.splice(index, 1);
+      }
+      this.drawCustomRectangle(newFrame);
     }
   }
 
@@ -825,6 +865,7 @@ export class AppComponent implements OnInit {
         if(attacking === false) {
           current.attack();
           attacking = true;
+          current.generateAttackAnimation(attacking);
           setTimeout(function(){
             attacking = false;
           }, 500);
@@ -848,11 +889,10 @@ export class AppComponent implements OnInit {
     }
 
     //Player attack animations(NEEDS REFACTOR)
+    current.playAnimation(current.animationsArray);
 
     //REFERENCE
     //current.ctx.rect(xCoord, yCoord, xDimension, yDimension)   ;
-
-    current.attackAnimation(attacking);
 
     // Player rebuild
     current.ctx.beginPath();
