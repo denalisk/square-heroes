@@ -1,3 +1,5 @@
+import { UserItem } from './item.model';
+
 export class Player {
   public yDimension: number = 10;
   public xDimension: number = 10;
@@ -57,6 +59,14 @@ export class Player {
     } else {
       this.yAttack = 0;
     }
+  }
+
+  equipGear(item: UserItem) {
+
+  }
+
+  calculateStats(){
+
   }
 }
 
