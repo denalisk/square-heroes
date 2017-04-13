@@ -61,7 +61,13 @@ export class Player {
     }
   }
 
-  equipGear(item: UserItem)
+  equipGear(item: UserItem) {
+
+  }
+
+  calculateStats(){
+
+  }
 }
 
 export class UserItem {
