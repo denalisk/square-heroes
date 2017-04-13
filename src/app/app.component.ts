@@ -255,7 +255,7 @@ export class AppComponent implements OnInit {
       }
     } else if(item.type === "legSlot") {
       //UNEQUIP GEAR, SET STATS CORRECTLY, THEN EQUIP NEW GEAR
-      if(item.name === "Iron Greves") {
+      if(item.name === "Iron Greeves") {
         if(this.player.defenseLvl >= 10) {
           this.unequipGear(this.player.legSlot);
           this.equipGear(item);
@@ -263,7 +263,7 @@ export class AppComponent implements OnInit {
         } else {
           alert("Defense level needs to be atleast 10 to wear this, noob");
         }
-        } else if(item.name === "Mithril Greves") {
+      } else if(item.name === "Mithril Greeves") {
         if(this.player.defenseLvl >= 20) {
           this.unequipGear(this.player.legSlot);
           this.equipGear(item);
@@ -597,11 +597,13 @@ export class AppComponent implements OnInit {
   generateItem(xCoord, yCoord, thing) {
     var roll;
     var highArray: UserItem[] = [new UserItem("Health Potion", "consumable", [30], ["health"], "#ff3f3f"), new UserItem("Strength Potion", "consumable", [30], ["strength"], "#ff3f3f"), new UserItem("Attack Potion", "consumable", [30], ["attack"], "#ff3f3f"), new UserItem("Defense Potion", "consumable", [30], ["defense"], "#ff3f3f")];
-    var lowGear: UserItem[] = [new UserItem("Iron Helm", "headSlot", [20], ["defense"], "#cecece"), new UserItem("Iron Chestplate", "chestSlot", [20], ["defense"], "#cecece"), new UserItem("Iron Greves", "legSlot", [20], ["defense"], "#cecece"), new UserItem("Sword", "mainHand", [20, 20], ["strength", "attack"], "#cecece"), new UserItem("Shield", "offHand", [30], ["defense"], "#cecece"), new UserItem("Claymore", "twoHander", [40], ["strength"], "#cecece")];
-    var medGear: UserItem[] = [new UserItem("Mithril Helm", "headSlot", [40], ["defense"], "#7ca0f9"), new UserItem("Mithril Chestplate", "chestSlot", [40], ["defense"], "#7ca0f9"), new UserItem("Mithril Greves", "legSlot", [40], ["defense"], "#7ca0f9"), new UserItem("Katana", "twoHander", [10, 120], ["attack", "strength"], "#7ca0f9"), new UserItem("Nunchucks", "duoSet", [50, 50], ["attack", "strength"], "#7ca0f9"), new UserItem("MH Scimitar", "mainHand", [65], ["strength"], "#7ca0f9"), new UserItem("OH Scimitar", "offHand", [60], ["attack"], "#7ca0f9")];
+    var lowGear: UserItem[] = [new UserItem("Iron Helm", "headSlot", [20], ["defense"], "#cecece"), new UserItem("Iron Chestplate", "chestSlot", [20], ["defense"], "#cecece"), new UserItem("Iron Greeves", "legSlot", [20], ["defense"], "#cecece"), new UserItem("Sword", "mainHand", [20, 20], ["strength", "attack"], "#cecece"), new UserItem("Shield", "offHand", [30], ["defense"], "#cecece"), new UserItem("Claymore", "twoHander", [40], ["strength"], "#cecece")];
+    var medGear: UserItem[] = [new UserItem("Mithril Helm", "headSlot", [40], ["defense"], "#7ca0f9"), new UserItem("Mithril Chestplate", "chestSlot", [40], ["defense"], "#7ca0f9"), new UserItem("Mithril Greeves", "legSlot", [40], ["defense"], "#7ca0f9"), new UserItem("Katana", "twoHander", [10, 120], ["attack", "strength"], "#7ca0f9"), new UserItem("Nunchucks", "duoSet", [50, 50], ["attack", "strength"], "#7ca0f9"), new UserItem("MH Scimitar", "mainHand", [65], ["strength"], "#7ca0f9"), new UserItem("OH Scimitar", "offHand", [60], ["attack"], "#7ca0f9")];
     var rareGear: UserItem[] = [new UserItem("Robinhood Hat", "headSlot", [150], ["attack"], "#d575ef"), new UserItem("Gladiator Chestplate", "chestSlot", [150], ["strength"], "#d575ef"), new UserItem("MH Kitten Bomb", "mainHand", [80, 120], ["attack", "strength"], "#d575ef"), new UserItem("OH Kitten Bomb", "offHand", [120, 80], ["attack", "strength"], "#d575ef")];
-    var epicGear: UserItem[] = [new UserItem("Chad Legs(ULTIMA)", "legSlot", [300], ["attack"], "#ed8055"),  new UserItem("Blue Light Saber", "mainHand", [200, 200], ["attack", "strength"], "#ed8055"), new UserItem("Green Light Saber", "offHand", [200, 200], ["attack", "strength"], "#ed8055"), new UserItem("Illidan's Warglaive", "twoHander", [100, 400], ["attack", "strength"], "#ed8055")];
+    var epicGear: UserItem[] = [new UserItem("Chad's Legs(ULTIMA)", "legSlot", [300], ["attack"], "#ed8055"),  new UserItem("Blue Light Saber", "mainHand", [200, 200], ["attack", "strength"], "#ed8055"), new UserItem("Green Light Saber", "offHand", [200, 200], ["attack", "strength"], "#ed8055"), new UserItem("Illidan's Warglaive", "twoHander", [100, 400], ["attack", "strength"], "#ed8055"), new UserItem("Armour Forged From Sam's Crocks", "chestSlot", [450], ["defense", "strength"], "#4d843e"), new UserItem("Minhish Cap(ULTIMA)", "headSlot", [300], ["attack"], "#ed8055"), new UserItem("Derek's Spinner", "mainHand", [300], ["strength"], "#ed8055"), new UserItem("Shield of Law-rence", "offHand", [300], ["defense"], "#ed8055")];
     var graveGear: UserItem[] = [new UserItem("Tombstone", "twoHander", [150, -30], ["strength", "attack"], "#d575ef"), new UserItem("Pumpkin Head", "headSlot", [60, -10], ["defense", "attack"], "#d575ef"), new UserItem("Rickity Rib Cage", "chestSlot", [55], ["defense"], "#d575ef"), new UserItem("MH Bone Dagger", "mainHand", [65], ["strength"], "#d575ef"), new UserItem("OH Bone Dagger", "mainHand", [65], ["attack"], "#d575ef")];
+    var northGear: UserItem[] = [new UserItem("Ushanka-hat", "headSlot", [120, 50], ["defense", "attack"], "white"), new UserItem("Grizzley Fur Coat", "chestSlot", [150, 30], ["strength", "defense"], "white"), new UserItem("Ice Picks", "duoSet", [60, 60], ["attack", "strength"], "white"), new UserItem("Longclaw", "mainHand", [120], ["strength"], "white")];
+    var swampGear: UserItem[] = [new UserItem("Tribal Shield", "offHand" , [100], ["defense"], "#4d843e"), new UserItem("Double Hatchets", "duoSet", [75, -10], ["strength", "attack"], "#4d843e"), new UserItem("Voodoo Machete", "mainHand", [100], ["strength"], "#4d843e"), new UserItem("Hex Greeves", "legSlot", [70], ["defense"], "#4d843e"), new UserItem("Shrunken Head", "headSlot", [80], ["defense"], "#4d843e")];
 
     var newItem = new Item("item");
 
@@ -610,8 +612,44 @@ export class AppComponent implements OnInit {
     newItem.yDimension = 5;
     newItem.xDimension = 5;
 
-    if(thing ==- "northBoss") {
-
+    if(thing === "swampBoss") {
+      //DROP TRABLE CHANCE
+      var selectDropTable = Math.floor(Math.random() * (Math.floor(100) - Math.ceil(0)) + Math.ceil(0));
+      if(selectDropTable >= 0 && 55 > selectDropTable) {
+        roll = Math.floor(Math.random() * (Math.floor(lowGear.length-1) - Math.ceil(0)) + Math.ceil(0));
+        newItem.userItem = lowGear[roll];
+      } else if(selectDropTable >= 55 &&  77 > selectDropTable) {
+        roll = Math.floor(Math.random() * (Math.floor(medGear.length-1) - Math.ceil(0)) + Math.ceil(0));
+        newItem.userItem = medGear[roll];
+      } else if(selectDropTable >= 77 && 83 > selectDropTable) {
+        roll = Math.floor(Math.random() * (Math.floor(rareGear.length-1) - Math.ceil(0)) + Math.ceil(0));
+        newItem.userItem = rareGear[roll];
+      } else if(selectDropTable >= 83 && 84 > selectDropTable) {
+        roll = Math.floor(Math.random() * (Math.floor(epicGear.length-1) - Math.ceil(0)) + Math.ceil(0));
+        newItem.userItem = epicGear[roll];
+      } else if(selectDropTable >= 84 &&  100 > selectDropTable) {
+        roll = Math.floor(Math.random() * (Math.floor(swampGear.length-1) - Math.ceil(0)) + Math.ceil(0));
+        newItem.userItem = swampGear[roll];
+      }
+    } else if(thing === "northBoss") {
+      //DROP TRABLE CHANCE
+      var selectDropTable = Math.floor(Math.random() * (Math.floor(100) - Math.ceil(0)) + Math.ceil(0));
+      if(selectDropTable >= 0 && 55 > selectDropTable) {
+        roll = Math.floor(Math.random() * (Math.floor(lowGear.length-1) - Math.ceil(0)) + Math.ceil(0));
+        newItem.userItem = lowGear[roll];
+      } else if(selectDropTable >= 55 &&  77 > selectDropTable) {
+        roll = Math.floor(Math.random() * (Math.floor(medGear.length-1) - Math.ceil(0)) + Math.ceil(0));
+        newItem.userItem = medGear[roll];
+      } else if(selectDropTable >= 77 && 83 > selectDropTable) {
+        roll = Math.floor(Math.random() * (Math.floor(rareGear.length-1) - Math.ceil(0)) + Math.ceil(0));
+        newItem.userItem = rareGear[roll];
+      } else if(selectDropTable >= 83 && 84 > selectDropTable) {
+        roll = Math.floor(Math.random() * (Math.floor(epicGear.length-1) - Math.ceil(0)) + Math.ceil(0));
+        newItem.userItem = epicGear[roll];
+      } else if(selectDropTable >= 84 &&  100 > selectDropTable) {
+        roll = Math.floor(Math.random() * (Math.floor(northGear.length-1) - Math.ceil(0)) + Math.ceil(0));
+        newItem.userItem = northGear[roll];
+      }
     } else if(thing === "graveBoss") {
       //DROP TRABLE CHANCE
       var selectDropTable = Math.floor(Math.random() * (Math.floor(100) - Math.ceil(0)) + Math.ceil(0));
@@ -767,7 +805,19 @@ export class AppComponent implements OnInit {
 
               this.objectsArray.splice(i, 1);
               // DROPROLL CHANCE
-              if(this.currentEnemy.xDimension === 50)
+              if(this.currentEnemy.xDimension === 100)
+             {
+               var dropRoll = Math.floor(Math.random() * (Math.floor(100) - Math.ceil(0)) + Math.ceil(0));
+               if(dropRoll > 30) {
+                 this.generateItem(xCoord, yCoord, 'northBoss');
+               }
+             } else if(this.currentEnemy.xDimension > 20 && this.currentEnemy.xDimension <= 30)
+              {
+                var dropRoll = Math.floor(Math.random() * (Math.floor(100) - Math.ceil(0)) + Math.ceil(0));
+                if(dropRoll > 30) {
+                  this.generateItem(xCoord, yCoord, 'swampBoss');
+                }
+              }else if(this.currentEnemy.xDimension === 50)
               {
                 var dropRoll = Math.floor(Math.random() * (Math.floor(100) - Math.ceil(0)) + Math.ceil(0));
                 if(dropRoll > 30) {
@@ -775,8 +825,8 @@ export class AppComponent implements OnInit {
                 }
               } else {
                 var dropRoll = Math.floor(Math.random() * (Math.floor(100) - Math.ceil(0)) + Math.ceil(0));
-                if (dropRoll < 50) {
-                  if (dropRoll < 35) {
+                if (dropRoll < 70) {
+                  if (dropRoll < 20) {
                     this.generateItem(xCoord, yCoord, 'high');
                   } else {
                     this.generateItem(xCoord, yCoord, 'low');
