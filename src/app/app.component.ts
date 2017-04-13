@@ -1120,6 +1120,28 @@ export class AppComponent implements OnInit {
     current.ctx.fillStyle = "white"
     current.ctx.fill();
     current.ctx.closePath();
+    if(current.player.chestSlot.name != "Nothing") {
+      current.ctx.beginPath();
+      current.ctx.rect(((current.canvas.width / 2) - 5), ((current.canvas.height / 2) -2), 10, 3);
+      current.ctx.fillStyle = current.player.chestSlot.color;
+      current.ctx.fill();
+      current.ctx.closePath();
+    }
+    if(current.player.legSlot.name != "Nothing") {
+      current.ctx.beginPath();
+      current.ctx.rect(((current.canvas.width / 2) - 5), ((current.canvas.height / 2) + 1), 10, 4);
+      current.ctx.fillStyle = current.player.legSlot.color;
+      current.ctx.fill();
+      current.ctx.closePath();
+    }
+    if(current.player.headSlot.name != "Nothing") {
+      current.ctx.beginPath();
+      current.ctx.rect(((current.canvas.width / 2) - 5), ((current.canvas.height / 2) - 5), 10, 2);
+      current.ctx.fillStyle = current.player.headSlot.color;
+      current.ctx.fill();
+      current.ctx.closePath();
+    }
+
 
     //Check character death PLACEHOLDER GAME OVER EVENT
     if(current.player.health <= 0) {
