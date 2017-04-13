@@ -1046,6 +1046,7 @@ export class AppComponent implements OnInit {
   gameLoop() {
     var current = this;
     var attacking: boolean = false;
+    var healthTick = 0;
     var gameTick = setInterval(function(){
       current.velocityVector = [0,0];
       ///////////CONTROLS////////////
@@ -1128,6 +1129,13 @@ export class AppComponent implements OnInit {
     }
     current.invisibleX -= current.velocityVector[0];
     current.invisibleY -= current.velocityVector[1];
+
+    healthTick++;
+    if(healthTick > 200)
+    {
+      current.player.health++;
+      healthTick = 0;
+    }
   }, 20);
   }
 }
