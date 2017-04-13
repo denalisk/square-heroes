@@ -561,13 +561,11 @@ export class AppComponent implements OnInit {
     //Add BOSS to village
     var bossEnemy = new Enemy('enemy');
     bossEnemy.setProperties((this.graveyard.xCoord + (this.graveyard.xDimension/2)), (this.graveyard.yCoord + (this.graveyard.yDimension/2)), 50, 50, "#6b245f");
-    console.log("Boss spawned at: " + bossEnemy.xCoord + ", " + bossEnemy.yCoord);
     this.objectsArray.push(bossEnemy);
     //BOSS Minions
     for(let i = 10; i < 100; i += 10) {
       var bossMinion = new Enemy('enemy');
       bossMinion.setProperties((this.graveyard.xCoord + (this.graveyard.xDimension/2) + i), (this.graveyard.yCoord + (this.graveyard.yDimension/2) + i), 10, 10, "#774f9b");
-      console.log("Boss enemy spawned at:" + bossMinion.xCoord + ", " + bossMinion.yCoord);
       this.objectsArray.push(bossMinion);
     }
   }
@@ -719,7 +717,6 @@ export class AppComponent implements OnInit {
             //ATTACK AND DAMAGE ROLLS FOR COMBAT
             //ATTACK ROLL
             this.atkRoll = Math.floor(Math.random() * (Math.floor(200) - Math.ceil(1)) + Math.ceil(1));
-            console.log(this.atkRoll + ' atk roll');
 
             if(this.atkRoll > (60 - (this.player.attackLvl / 2)))
             {
@@ -727,13 +724,10 @@ export class AppComponent implements OnInit {
               //DAMAGE ROLL
               var maxHit = 10 + (this.player.strengthLvl * 2);
               this.dmgRoll = Math.floor(Math.random() * (Math.floor(maxHit) - Math.ceil(0)) + Math.ceil(0));
-              console.log(this.dmgRoll + ' dmg roll');
               if(this.dmgRoll != 0)
               {
                 this.damageDone = this.dmgRoll; // + (this.player.strengthLvl / 2);
-                console.log(this.damageDone + ' damage done');
                 this.objectsArray[i].health -= this.damageDone;
-                console.log(this.objectsArray[i].health + ' enemy health');
               }
             } else {
               this.hitBool = false;
@@ -1014,6 +1008,7 @@ export class AppComponent implements OnInit {
     this.ctx.lineTo(point4[0], point4[1]);
     this.ctx.fillStyle = frame.color;
     this.ctx.fill();
+    this.ctx.stroke();
     this.ctx.closePath();
   }
 
@@ -1036,7 +1031,7 @@ export class AppComponent implements OnInit {
       for (let index = 1; index <= 9; index++) {
         // Frames for sword attack
         let newAnimation = new GameObject('animation');
-        newAnimation.setProperties(attackRectangle[current.player.direction][0], attackRectangle[current.player.direction][1], attackRectangle[current.player.direction][2], attackRectangle[current.player.direction][3], 'black');
+        newAnimation.setProperties(attackRectangle[current.player.direction][0], attackRectangle[current.player.direction][1], attackRectangle[current.player.direction][2], attackRectangle[current.player.direction][3], current.player.mainHand.color);
         newAnimation.attackAngle = attackRectangle[current.player.direction][4] + angleAduster;
         newAnimation.collidable = false;
         newFrameSet.push(newAnimation);
@@ -1060,6 +1055,7 @@ export class AppComponent implements OnInit {
   gameLoop() {
     var current = this;
     var attacking: boolean = false;
+    var healthTick = 0;
     var gameTick = setInterval(function(){
       current.velocityVector = [0,0];
       ///////////CONTROLS////////////
@@ -1142,6 +1138,13 @@ export class AppComponent implements OnInit {
     }
     current.invisibleX -= current.velocityVector[0];
     current.invisibleY -= current.velocityVector[1];
+
+    healthTick++;
+    if(healthTick > 200)
+    {
+      current.player.health++;
+      healthTick = 0;
+    }
   }, 20);
   }
 }
