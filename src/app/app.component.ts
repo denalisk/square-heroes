@@ -287,7 +287,7 @@ export class AppComponent implements OnInit {
     } else if(item.type === "mainHand") {
       if(this.player.offHand.type === "duoSet") {
         this.unequipGear(this.player.offHand);
-        this.player.offHand = new UserItem("Nothing", "offHand", [0], ["Nothing"]);
+        this.player.offHand = new UserItem("Nothing", "offHand", [0], ["Nothing"], "#d575ef");
       }
       if(item.name === "MH Scimitar") {
         if(this.player.attackLvl >= 20) {
@@ -321,11 +321,11 @@ export class AppComponent implements OnInit {
     } else if(item.type === "offHand") {
       if(this.player.mainHand.type === "duoSet") {
         this.unequipGear(this.player.mainHand);
-        this.player.mainHand = new UserItem("Nothing", "offHand", [0], ["Nothing"]);
+        this.player.mainHand = new UserItem("Nothing", "offHand", [0], ["Nothing"], "#d575ef");
       }
       else if(this.player.mainHand.type === "twoHander") {
         this.unequipGear(this.player.mainHand);
-        this.player.mainHand = new UserItem("Nothing", "mainHand", [0], ["Nothing"]);
+        this.player.mainHand = new UserItem("Nothing", "mainHand", [0], ["Nothing"], "#d575ef");
       }
       if(item.name === "OH Scimitar") {
         if(this.player.attackLvl >= 20) {
@@ -362,7 +362,7 @@ export class AppComponent implements OnInit {
           this.unequipGear(this.player.offHand);
           this.equipGear(item);
           this.player.mainHand = item;
-          this.player.offHand = new UserItem("Nothing", "offHand", [0], ["Nothing"]);
+          this.player.offHand = new UserItem("Nothing", "offHand", [0], ["Nothing"], "#d575ef");
         } else {
           alert("You attack and strength expertise must be 20 or greater to wield these, braveheart");
         }
@@ -372,7 +372,7 @@ export class AppComponent implements OnInit {
             this.unequipGear(this.player.offHand);
             this.equipGear(item);
             this.player.mainHand = item;
-            this.player.offHand = new UserItem("Nothing", "offHand", [0], ["Nothing"]);
+            this.player.offHand = new UserItem("Nothing", "offHand", [0], ["Nothing"], "#d575ef");
           } else {
             alert("You think you can wield the Katana, young one, try again when your attack level is 60");
           }
@@ -382,7 +382,7 @@ export class AppComponent implements OnInit {
             this.unequipGear(this.player.offHand);
             this.equipGear(item);
             this.player.mainHand = item;
-            this.player.offHand = new UserItem("Nothing", "offHand", [0], ["Nothing"]);
+            this.player.offHand = new UserItem("Nothing", "offHand", [0], ["Nothing"], "#d575ef");
           } else {
             alert("Come back when your attack level is atleast 100 you stupid demon hunter");
           }
@@ -391,7 +391,7 @@ export class AppComponent implements OnInit {
           this.unequipGear(this.player.offHand);
           this.equipGear(item);
           this.player.mainHand = item;
-          this.player.offHand = new UserItem("Nothing", "offHand", [0], ["Nothing"]);
+          this.player.offHand = new UserItem("Nothing", "offHand", [0], ["Nothing"], "#d575ef");
         }
     } else if(item.type === "duoSet") {
       if(item.name === "Nunchucks") {
@@ -593,12 +593,12 @@ export class AppComponent implements OnInit {
   //////////ITEM WHEN ENIME DIES////////////
   generateItem(xCoord, yCoord, thing) {
     var roll;
-    var highArray: UserItem[] = [new UserItem("Health Potion", "consumable", [30], ["health"]), new UserItem("Strength Potion", "consumable", [30], ["strength"]), new UserItem("Attack Potion", "consumable", [30], ["attack"]), new UserItem("Defense Potion", "consumable", [30], ["defense"])];
-    var lowGear: UserItem[] = [new UserItem("Iron Helm", "headSlot", [20], ["defense"]), new UserItem("Iron Chestplate", "chestSlot", [20], ["defense"]), new UserItem("Iron Greves", "legSlot", [20], ["defense"]), new UserItem("Sword", "mainHand", [20, 20], ["strength", "attack"]), new UserItem("Shield", "offHand", [30], ["defense"]), new UserItem("Claymore", "twoHander", [40], ["strength"])];
-    var medGear: UserItem[] = [new UserItem("Mithril Helm", "headSlot", [40], ["defense"]), new UserItem("Mithril Chestplate", "chestSlot", [40], ["defense"]), new UserItem("Mithril Greves", "legSlot", [40], ["defense"]), new UserItem("Katana", "twoHander", [10, 120], ["attack", "strength"]), new UserItem("Nunchucks", "duoSet", [50, 50], ["attack", "strength"]), new UserItem("MH Scimitar", "mainHand", [65], ["strength"]), new UserItem("OH Scimitar", "offHand", [60], ["attack"])];
-    var rareGear: UserItem[] = [new UserItem("Robinhood Hat", "headSlot", [150], ["attack"]), new UserItem("Gladiator Chestplate", "chestSlot", [150], ["strength"]), new UserItem("MH Kitten Bomb", "mainHand", [80, 120], ["attack", "strength"]), new UserItem("OH Kitten Bomb", "offHand", [120, 80], ["attack", "strength"])];
-    var epicGear: UserItem[] = [new UserItem("Chad Legs(ULTIMA)", "legSlot", [300], ["attack"]),  new UserItem("Blue Light Saber", "mainHand", [200, 200], ["attack", "strength"]), new UserItem("Green Light Saber", "offHand", [200, 200], ["attack", "strength"]), new UserItem("Illidan's Warglaive", "twoHander", [100, 400], ["attack", "strength"])];
-    var graveGear: UserItem[] = [new UserItem("Tombstone", "twoHander", [150, -30], ["strength", "attack"]), new UserItem("Pumpkin Head", "headSlot", [60, -10], ["defense", "attack"]), new UserItem("Rickity Rib Cage", "chestSlot", [55], ["defense"]), new UserItem("MH Bone Dagger", "mainHand", [65], ["strength"]), new UserItem("OH Bone Dagger", "mainHand", [65], ["attack"])];
+    var highArray: UserItem[] = [new UserItem("Health Potion", "consumable", [30], ["health"], "#ff3f3f"), new UserItem("Strength Potion", "consumable", [30], ["strength"], "#ff3f3f"), new UserItem("Attack Potion", "consumable", [30], ["attack"], "#ff3f3f"), new UserItem("Defense Potion", "consumable", [30], ["defense"], "#ff3f3f")];
+    var lowGear: UserItem[] = [new UserItem("Iron Helm", "headSlot", [20], ["defense"], "#cecece"), new UserItem("Iron Chestplate", "chestSlot", [20], ["defense"], "#cecece"), new UserItem("Iron Greves", "legSlot", [20], ["defense"], "#cecece"), new UserItem("Sword", "mainHand", [20, 20], ["strength", "attack"], "#cecece"), new UserItem("Shield", "offHand", [30], ["defense"], "#cecece"), new UserItem("Claymore", "twoHander", [40], ["strength"], "#cecece")];
+    var medGear: UserItem[] = [new UserItem("Mithril Helm", "headSlot", [40], ["defense"], "#7ca0f9"), new UserItem("Mithril Chestplate", "chestSlot", [40], ["defense"], "#7ca0f9"), new UserItem("Mithril Greves", "legSlot", [40], ["defense"], "#7ca0f9"), new UserItem("Katana", "twoHander", [10, 120], ["attack", "strength"], "#7ca0f9"), new UserItem("Nunchucks", "duoSet", [50, 50], ["attack", "strength"], "#7ca0f9"), new UserItem("MH Scimitar", "mainHand", [65], ["strength"], "#7ca0f9"), new UserItem("OH Scimitar", "offHand", [60], ["attack"], "#7ca0f9")];
+    var rareGear: UserItem[] = [new UserItem("Robinhood Hat", "headSlot", [150], ["attack"], "#d575ef"), new UserItem("Gladiator Chestplate", "chestSlot", [150], ["strength"], "#d575ef"), new UserItem("MH Kitten Bomb", "mainHand", [80, 120], ["attack", "strength"], "#d575ef"), new UserItem("OH Kitten Bomb", "offHand", [120, 80], ["attack", "strength"], "#d575ef")];
+    var epicGear: UserItem[] = [new UserItem("Chad Legs(ULTIMA)", "legSlot", [300], ["attack"], "#ed8055"),  new UserItem("Blue Light Saber", "mainHand", [200, 200], ["attack", "strength"], "#ed8055"), new UserItem("Green Light Saber", "offHand", [200, 200], ["attack", "strength"], "#ed8055"), new UserItem("Illidan's Warglaive", "twoHander", [100, 400], ["attack", "strength"], "#ed8055")];
+    var graveGear: UserItem[] = [new UserItem("Tombstone", "twoHander", [150, -30], ["strength", "attack"], "#d575ef"), new UserItem("Pumpkin Head", "headSlot", [60, -10], ["defense", "attack"], "#d575ef"), new UserItem("Rickity Rib Cage", "chestSlot", [55], ["defense"], "#d575ef"), new UserItem("MH Bone Dagger", "mainHand", [65], ["strength"], "#d575ef"), new UserItem("OH Bone Dagger", "mainHand", [65], ["attack"], "#d575ef")];
 
     var newItem = new Item("item");
 
@@ -960,7 +960,7 @@ export class AppComponent implements OnInit {
     } else if (gameObject.type === "item") {
       this.ctx.beginPath();
       this.ctx.rect(Math.floor(gameObject.xCoord), Math.floor(gameObject.yCoord), Math.floor(gameObject.xDimension), Math.floor(gameObject.yDimension));
-      this.ctx.fillStyle = "yellow";
+      this.ctx.fillStyle = gameObject.color;
       this.ctx.fill();
       this.ctx.closePath();
     } else if (gameObject.type === "village") {

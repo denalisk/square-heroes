@@ -18,13 +18,13 @@ export class Player {
   public health = 300;
   public damageModifier = 10 + (this.strengthLvl * 2);
   //GEAR
-  public mainHand: UserItem = new UserItem("Nothing", "Nothing", [0], ["Nothing"]);
-  public offHand: UserItem = new UserItem("Nothing", "Nothing", [0], ["Nothing"]);
-  public headSlot: UserItem = new UserItem("Nothing", "Nothing", [0], ["Nothing"]);
-  public chestSlot: UserItem = new UserItem("Nothing", "Nothing", [0], ["Nothing"]);
-  public legSlot: UserItem = new UserItem("Nothing", "Nothing", [0], ["Nothing"]);
+  public mainHand: UserItem = new UserItem("Nothing", "Nothing", [0], ["Nothing"], "#d575ef");
+  public offHand: UserItem = new UserItem("Nothing", "Nothing", [0], ["Nothing"], "#d575ef");
+  public headSlot: UserItem = new UserItem("Nothing", "Nothing", [0], ["Nothing"], "#d575ef");
+  public chestSlot: UserItem = new UserItem("Nothing", "Nothing", [0], ["Nothing"], "#d575ef");
+  public legSlot: UserItem = new UserItem("Nothing", "Nothing", [0], ["Nothing"], "#d575ef");
 
-  public inventory: UserItem[] = [new UserItem("Bear Knuckles", "duoSet", [5], ["attack"]), new UserItem("Cap", "headSlot", [1], ["defense"]), new UserItem("Tabard", "chestSlot", [1], ["defense"]), new UserItem("Torn Kilt", "legSlot", [1], ["defense"]), new UserItem("Health Potion", "consumbale", [30], ["health"])];
+  public inventory: UserItem[] = [new UserItem("Bear Knuckles", "duoSet", [5], ["attack"], "#d575ef"), new UserItem("Cap", "headSlot", [1], ["defense"], "#d575ef"), new UserItem("Tabard", "chestSlot", [1], ["defense"], "#d575ef"), new UserItem("Torn Kilt", "legSlot", [1], ["defense"], "#d575ef"), new UserItem("Health Potion", "consumbale", [30], ["health"], "#d575ef")];
   //CONSUMABLES
   public healthPotions = 5;
   public strengthPotions = 0;
@@ -36,7 +36,7 @@ export class Player {
     this.defenseLvl = defense;
     this.attackLvl = attack;
     this.health = health;
-    this.inventory.push(new UserItem("God Sword", "twoHander", [5000], ["strength"]), new UserItem("Off Hand Scimitar", "offHand", [500, 300], ["attack", "strength"]), new UserItem("Main Hand Scimitar", "mainHand", [500, 300], ["attack", "strength"]));
+    this.inventory.push(new UserItem("God Sword", "twoHander", [5000], ["strength"], "#d575ef"), new UserItem("Off Hand Scimitar", "offHand", [500, 300], ["attack", "strength"], "#d575ef"), new UserItem("Main Hand Scimitar", "mainHand", [500, 300], ["attack", "strength"], "#d575ef"));
   }
 
   getXAttack() {
@@ -62,6 +62,5 @@ export class Player {
 
 export class UserItem {
 
-
-  constructor(public name: string, public type: string, public bonus: number[], public stat: string[]){  }
+  constructor(public name: string, public type: string, public bonus: number[], public stat: string[], public color: string){  }
 }
